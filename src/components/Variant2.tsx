@@ -30,6 +30,21 @@ const MARQUEE = [
   "ALOPIT",
 ];
 
+const FEATURES = [
+  { no: "I", title: "Live rooms", body: "Multiple broadcasts running side-by-side." },
+  { no: "II", title: "HD streams", body: "Crisp video, low latency, multi-angle." },
+  { no: "III", title: "Crowd momentum", body: "See where the action is, in real time." },
+  { no: "IV", title: "Fast entry", body: "Jump into a room in two taps." },
+  { no: "V", title: "Mobile-first", body: "Designed for phones, scaled up cleanly." },
+  { no: "VI", title: "Trusted uptime", body: "Premium streams, premium reliability." },
+];
+
+const STEPS = [
+  { no: "I", title: "Browse the lobby", body: "Scan tonight's rooms by crowd and momentum." },
+  { no: "II", title: "Pick your room", body: "Open the room card to preview details and odds." },
+  { no: "III", title: "Tap join", body: "Enter the stream — no app install required." },
+];
+
 export function Variant2() {
   const reduced = usePrefersReducedMotion();
 
@@ -74,7 +89,7 @@ export function Variant2() {
       />
 
       {/* Top sliver: tiny editorial nav */}
-      <header className="relative z-10 mx-auto flex max-w-[1400px] items-center justify-between px-6 pt-8 sm:px-10 lg:px-14">
+      <header className="relative z-10 mx-auto flex max-w-[1400px] items-center justify-center px-6 pt-8 sm:justify-between sm:px-10 lg:px-14">
         <a href="#top" className="flex items-center gap-3">
           <img src="/images/hero-img.svg" alt="Alopit" className="h-28 w-auto" />
         </a>
@@ -87,7 +102,7 @@ export function Variant2() {
           <div className="lg:col-span-7 lg:pr-10">
             <motion.div
               {...reveal(0)}
-              className="flex items-center gap-3 text-[10px] uppercase"
+              className="flex items-center justify-center gap-3 text-[10px] uppercase lg:justify-start"
               style={{
                 fontFamily: '"IBM Plex Mono", monospace',
                 letterSpacing: "0.34em",
@@ -110,7 +125,7 @@ export function Variant2() {
             </motion.div>
 
             <h1
-              className="mt-7 font-light leading-[0.92] tracking-[-0.04em] text-[#f3eee5]"
+              className="mt-7 text-center font-light leading-[0.92] tracking-[-0.04em] text-[#f3eee5] lg:text-left"
               style={{
                 fontFamily: '"Fraunces", serif',
                 fontVariationSettings: '"opsz" 144, "SOFT" 50',
@@ -153,19 +168,19 @@ export function Variant2() {
 
             <motion.p
               {...reveal(4)}
-              className="mt-10 max-w-xl text-[1.05rem] leading-[1.7] sm:text-[1.15rem]"
+              className="mx-auto mt-10 max-w-xl text-center text-[1.05rem] leading-[1.7] sm:text-[1.15rem] lg:mx-0 lg:text-left"
               style={{
                 fontFamily: '"Fraunces", serif',
                 fontVariationSettings: '"opsz" 14',
                 color: "#c8bcae",
               }}
             >
-              Alopit is a curated home for the day's most-watched E-Sabong rooms —
-              shot in cinematic HD, scored by the roar of the crowd, and built for
-              the kind of fan who would rather feel the pit than read about it.
+              HD streams. Real-time crowd momentum. One-tap entry into the night's
+              hottest cards. Built for sabong fans who don't want to miss a single
+              wing.
             </motion.p>
 
-            <motion.div {...reveal(5)} className="mt-12 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+            <motion.div {...reveal(5)} className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row lg:items-start lg:justify-start">
               <a
                 href={APP_URL}
                 target="_blank"
@@ -431,6 +446,278 @@ export function Variant2() {
                   style={{ background: "#c89968" }}
                 />
               </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY ALOPIT */}
+      <section className="relative z-10 mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-14 lg:py-32">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-4">
+            <p
+              className="text-[10px] uppercase"
+              style={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                letterSpacing: "0.34em",
+                color: "#c89968",
+              }}
+            >
+              § Why Alopit
+            </p>
+            <h2
+              className="mt-5 font-light leading-[0.95] tracking-[-0.03em]"
+              style={{
+                fontFamily: '"Fraunces", serif',
+                fontVariationSettings: '"opsz" 144, "SOFT" 60',
+                fontSize: "clamp(2.4rem, 4vw, 3.4rem)",
+                color: "#f3eee5",
+              }}
+            >
+              Built for sabong fans,{" "}
+              <span
+                className="italic"
+                style={{
+                  fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
+                  color: "#c89968",
+                }}
+              >
+                end to end.
+              </span>
+            </h2>
+            <p
+              className="mt-7 max-w-md text-[15px] leading-[1.7]"
+              style={{
+                fontFamily: '"Fraunces", serif',
+                fontVariationSettings: '"opsz" 14',
+                color: "#a89a8d",
+              }}
+            >
+              A focused product: live rooms, clear context, and the shortest
+              path between watching and joining.
+            </p>
+            <div className="mt-10 flex items-center gap-4">
+              <span className="h-px w-16" style={{ background: "#c89968" }} />
+              <span
+                className="text-[10px] uppercase tracking-[0.34em]"
+                style={{
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  color: "#6b5e54",
+                }}
+              >
+                Six chapters
+              </span>
+            </div>
+          </div>
+
+          <div className="grid gap-px sm:grid-cols-2 lg:col-span-8">
+            {FEATURES.map((f, i) => (
+              <motion.article
+                key={f.no}
+                initial={reduced ? false : { opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={
+                  reduced
+                    ? { duration: 0 }
+                    : {
+                        delay: (i % 2) * 0.06 + Math.floor(i / 2) * 0.1,
+                        duration: 0.85,
+                        ease: [0.16, 1, 0.3, 1],
+                      }
+                }
+                className="group relative flex flex-col gap-4 p-7 transition-colors duration-300 hover:bg-[rgba(200,153,104,0.04)]"
+                style={{ border: "1px solid rgba(200,153,104,0.14)" }}
+              >
+                <div className="flex items-baseline justify-between">
+                  <span
+                    className="italic"
+                    style={{
+                      fontFamily: '"Fraunces", serif',
+                      fontVariationSettings:
+                        '"opsz" 144, "SOFT" 100, "WONK" 1',
+                      fontSize: "1.75rem",
+                      color: "#c89968",
+                      lineHeight: 0.9,
+                    }}
+                  >
+                    {f.no}
+                  </span>
+                  <span
+                    className="text-[10px] uppercase"
+                    style={{
+                      fontFamily: '"IBM Plex Mono", monospace',
+                      letterSpacing: "0.3em",
+                      color: "#6b5e54",
+                    }}
+                  >
+                    Feature
+                  </span>
+                </div>
+                <h3
+                  className="mt-1 text-[1.45rem] leading-[1.1] tracking-[-0.02em]"
+                  style={{
+                    fontFamily: '"Fraunces", serif',
+                    fontVariationSettings: '"opsz" 72, "SOFT" 50',
+                    color: "#f3eee5",
+                  }}
+                >
+                  {f.title}
+                </h3>
+                <p
+                  className="text-[14px] leading-[1.65]"
+                  style={{
+                    fontFamily: '"Fraunces", serif',
+                    fontVariationSettings: '"opsz" 14',
+                    color: "#a89a8d",
+                  }}
+                >
+                  {f.body}
+                </p>
+                <div
+                  className="mt-auto h-px w-0 transition-all duration-500 group-hover:w-full"
+                  style={{ background: "#c89968" }}
+                />
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section
+        id="how-it-works"
+        className="relative z-10 border-y"
+        style={{
+          borderColor: "rgba(200,153,104,0.18)",
+          background:
+            "linear-gradient(180deg, rgba(15,10,10,0) 0%, rgba(26,15,16,0.6) 50%, rgba(15,10,10,0) 100%)",
+        }}
+      >
+        <div className="relative mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-14 lg:py-32">
+          <div className="mb-20 grid gap-8 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <p
+                className="text-[10px] uppercase"
+                style={{
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  letterSpacing: "0.34em",
+                  color: "#c89968",
+                }}
+              >
+                § How it works
+              </p>
+              <h2
+                className="mt-5 font-light leading-[0.95] tracking-[-0.035em]"
+                style={{
+                  fontFamily: '"Fraunces", serif',
+                  fontVariationSettings: '"opsz" 144, "SOFT" 60',
+                  fontSize: "clamp(2.6rem, 5vw, 4.4rem)",
+                  color: "#f3eee5",
+                }}
+              >
+                From lobby to live in{" "}
+                <span
+                  className="italic"
+                  style={{
+                    fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
+                    color: "#e1334f",
+                  }}
+                >
+                  three taps.
+                </span>
+              </h2>
+            </div>
+            <div className="lg:col-span-5 lg:pl-10">
+              <p
+                className="text-[15px] leading-[1.7]"
+                style={{
+                  fontFamily: '"Fraunces", serif',
+                  fontVariationSettings: '"opsz" 14',
+                  color: "#a89a8d",
+                }}
+              >
+                Pick a room, hit join, and you're in. No friction. No queues.
+                No waiting room theatrics.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-14 lg:grid-cols-3 lg:gap-10">
+            {STEPS.map((s, i) => (
+              <motion.div
+                key={s.no}
+                initial={reduced ? false : { opacity: 0, y: 36 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={
+                  reduced
+                    ? { duration: 0 }
+                    : {
+                        delay: i * 0.15,
+                        duration: 0.95,
+                        ease: [0.16, 1, 0.3, 1],
+                      }
+                }
+                className="group relative pt-10"
+                style={{ borderTop: "1px solid rgba(200,153,104,0.3)" }}
+              >
+                <span
+                  aria-hidden
+                  className="absolute -top-[5px] left-0 h-2.5 w-2.5 rounded-full"
+                  style={{
+                    background: "#0f0a0a",
+                    boxShadow: "inset 0 0 0 1px #c89968, 0 0 0 4px #0f0a0a",
+                  }}
+                />
+                <p
+                  className="text-[10px] uppercase"
+                  style={{
+                    fontFamily: '"IBM Plex Mono", monospace',
+                    letterSpacing: "0.34em",
+                    color: "#c89968",
+                  }}
+                >
+                  Step · {String(i + 1).padStart(2, "0")}
+                </p>
+
+                <div
+                  className="mt-2 select-none italic transition-all duration-700 group-hover:translate-x-1"
+                  style={{
+                    fontFamily: '"Fraunces", serif',
+                    fontVariationSettings:
+                      '"opsz" 144, "SOFT" 100, "WONK" 1',
+                    fontSize: "clamp(6rem, 9vw, 9rem)",
+                    color: "transparent",
+                    WebkitTextStroke: "1px rgba(200,153,104,0.55)",
+                    fontWeight: 300,
+                    lineHeight: 0.82,
+                  }}
+                >
+                  {s.no}
+                </div>
+
+                <h3
+                  className="mt-6 text-[1.9rem] leading-[1.05] tracking-[-0.02em]"
+                  style={{
+                    fontFamily: '"Fraunces", serif',
+                    fontVariationSettings: '"opsz" 72, "SOFT" 50',
+                    color: "#f3eee5",
+                  }}
+                >
+                  {s.title}
+                </h3>
+                <p
+                  className="mt-4 max-w-xs text-[15px] leading-[1.7]"
+                  style={{
+                    fontFamily: '"Fraunces", serif',
+                    fontVariationSettings: '"opsz" 14',
+                    color: "#a89a8d",
+                  }}
+                >
+                  {s.body}
+                </p>
+              </motion.div>
             ))}
           </div>
         </div>
