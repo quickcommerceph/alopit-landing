@@ -76,13 +76,7 @@ export function Variant2() {
       {/* Top sliver: tiny editorial nav */}
       <header className="relative z-10 mx-auto flex max-w-[1400px] items-center justify-between px-6 pt-8 sm:px-10 lg:px-14">
         <a href="#top" className="flex items-center gap-3">
-          <img src="/images/logo.png" alt="" className="h-7 w-auto" />
-          <span
-            className="text-[15px] font-semibold tracking-[0.18em] uppercase"
-            style={{ fontFamily: '"IBM Plex Mono", monospace', color: "#f3eee5" }}
-          >
-            Alopit
-          </span>
+          <img src="/images/hero-img.svg" alt="Alopit" className="h-28 w-auto" />
         </a>
       </header>
 
