@@ -1,176 +1,299 @@
 import { motion } from "framer-motion";
-import {
-  Activity,
-  CalendarClock,
-  Clock3,
-  Flame,
-  Gauge,
-  Play,
-  Radio,
-  Sparkles,
-  Users,
-} from "lucide-react";
-import { Badge } from "./shared/Badge";
-import { DetailPill } from "./shared/DetailPill";
-import { StatTile } from "./shared/StatTile";
-import { liveRooms, lobbyStats, trustPills } from "../data/rooms";
+import { ArrowRight, Flame, Play, Radio, Users } from "lucide-react";
+import { liveRooms } from "../data/rooms";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
+const HEADLINE = [
+  { text: "The pit.", gradient: false },
+  { text: "The pulse.", gradient: false },
+  { text: "The pay-off.", gradient: true },
+];
+
 export function HeroSection() {
-  const spotlight = liveRooms[0];
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const fadeUp = (delay: number) =>
+  const stagger = (i: number) =>
     prefersReducedMotion
       ? { initial: false, animate: { opacity: 1, y: 0 }, transition: { duration: 0 } }
       : {
-          initial: { opacity: 0, y: 24 },
+          initial: { opacity: 0, y: 32 },
           animate: { opacity: 1, y: 0 },
-          transition: { delay, duration: 0.6 },
+          transition: {
+            delay: 0.15 + i * 0.11,
+            duration: 0.75,
+            ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+          },
         };
 
+  const marqueeItems = liveRooms.map(
+    (r) => `${r.round.toUpperCase()} · ${r.title} · ${r.viewers} watching`
+  );
+  const marqueeFull = [...marqueeItems, ...marqueeItems, ...marqueeItems];
+
   return (
-    <section id="top" className="mx-auto max-w-7xl px-4 pb-16 pt-24 sm:px-6 lg:px-8 lg:pt-28">
-      <motion.header
-        {...fadeUp(0.05)}
-        className="overflow-hidden rounded-[1.6rem] border border-border bg-white shadow-[0_24px_80px_rgba(19,49,112,0.08)]"
+    <section
+      id="hero"
+      className="relative isolate overflow-hidden pt-28 pb-10 lg:pt-32 lg:pb-14"
+    >
+      {/* Dot grid background */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full text-tertiary/40"
       >
-        <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="relative min-h-[280px] overflow-hidden bg-[#0b1020] sm:min-h-[360px] lg:min-h-[580px]">
-            <img
-              src="/images/e-sabong-thumbnail.jpg"
-              alt="E-Sabong live broadcast arena"
-              className="absolute inset-0 h-full w-full object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/12 to-transparent" />
-            <div className="absolute left-4 right-4 top-4 flex flex-wrap items-center justify-between gap-2">
-              <Badge>Live lobby</Badge>
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/14 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-md">
-                <Radio className="h-3.5 w-3.5" />
-                Main broadcast
-              </span>
-            </div>
+        <defs>
+          <pattern id="hero-dots" width="34" height="34" patternUnits="userSpaceOnUse">
+            <circle cx="1.5" cy="1.5" r="1" fill="currentColor" />
+          </pattern>
+          <radialGradient id="hero-dot-fade" cx="50%" cy="40%" r="55%">
+            <stop offset="0%" stopColor="#fff" stopOpacity="0" />
+            <stop offset="100%" stopColor="#fff" stopOpacity="1" />
+          </radialGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#hero-dots)" />
+        <rect width="100%" height="100%" fill="url(#hero-dot-fade)" />
+      </svg>
 
-            <motion.div {...fadeUp(0.2)} className="absolute bottom-5 left-5 right-5">
-              <div className="inline-flex items-center gap-2 rounded-full bg-black/25 px-3 py-1.5 text-xs font-bold text-white/80 backdrop-blur-md">
-                <img src="/images/logo.png" alt="Alopit" className="h-4 w-auto" />
-                Alopit E-Sabong
-              </div>
-              <p className="mt-4 text-xs font-black uppercase tracking-[0.22em] text-white/70">
-                Premium live rooms
-              </p>
-              <h1 className="mt-2 max-w-xl text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-                Live E-Sabong rooms with clear momentum, crowd context, and fast entry.
-              </h1>
-              <p className="mt-4 max-w-xl text-sm font-medium leading-6 text-white/78 sm:text-base">
-                A clean white surface, deep blue utility, and sharp red accents — built end-to-end
-                for sabong fans who want to find the right room and jump in.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {trustPills.map((pill) => (
-                  <span
-                    key={pill}
-                    className="rounded-full border border-white/15 bg-white/12 px-3 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-md"
-                  >
-                    {pill}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="flex min-w-0 flex-col p-6 sm:p-7 lg:p-8">
-            <motion.div {...fadeUp(0.1)} className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-full bg-bg-alt px-3 py-1.5 text-xs font-bold text-secondary ring-1 ring-border-light">
-                <CalendarClock className="h-4 w-4 text-accent" />
-                Next rotation at 8:10 PM
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+          {/* Left: editorial text block */}
+          <div className="relative z-10">
+            <motion.div
+              {...stagger(0)}
+              className="inline-flex items-center gap-2.5 rounded-full border border-border bg-white/85 px-3.5 py-1.5 shadow-[0_10px_30px_rgba(31,94,255,0.06)] backdrop-blur"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#e1334f] opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e1334f]" />
               </span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-accent-warm-bg px-3 py-1.5 text-xs font-bold text-[#d12d49] ring-1 ring-[#e1334f]/10">
-                <Flame className="h-4 w-4" />
-                {spotlight.momentum}% top room
+              <span className="text-[11px] font-black uppercase tracking-[0.22em] text-secondary">
+                Live tonight · Premium E-Sabong
               </span>
             </motion.div>
 
-            <motion.div {...fadeUp(0.15)} className="mt-7">
-              <p className="mb-3 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.22em] text-secondary">
-                <Activity className="h-4 w-4 text-accent" />
-                E-Sabong Arena
-              </p>
-              <h2 className="max-w-2xl text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl lg:text-5xl">
-                One room, one focus.
-              </h2>
-              <p className="mt-4 max-w-xl text-sm font-medium leading-6 text-secondary sm:text-base">
-                A landing page built to convert attention into room entry. Sportsbook-grade
-                hierarchy, stripped to the parts that matter for tonight's broadcast.
-              </p>
-            </motion.div>
-
-            <motion.div {...fadeUp(0.2)} className="mt-7 border-y border-border-light py-5">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="min-w-0">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-tertiary">
-                    Featured room
-                  </p>
-                  <h3 className="mt-1 truncate text-xl font-bold text-primary">
-                    {spotlight.round}
-                  </h3>
-                  <p className="mt-1 text-sm font-medium text-secondary">{spotlight.summary}</p>
-                </div>
-                <div className="shrink-0 rounded-2xl bg-bg-alt px-4 py-3 text-left sm:text-right">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-tertiary">
-                    Starts
-                  </p>
-                  <p className="mt-0.5 text-lg font-bold leading-none text-primary">
-                    {spotlight.startTime}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-5 grid gap-2 sm:grid-cols-3">
-                <DetailPill icon={Users} label="Crowd" value={spotlight.viewers} />
-                <DetailPill icon={Gauge} label="Handle" value={spotlight.handle} />
-                <DetailPill icon={Clock3} label="Entry" value={spotlight.entryWindow} />
-              </div>
-
-              <div className="mt-5">
-                <div className="mb-2 flex items-center justify-between text-xs font-semibold text-secondary">
-                  <span>Room momentum</span>
-                  <span className="text-primary">{spotlight.momentum}%</span>
-                </div>
-                <div className="h-2 overflow-hidden rounded-full bg-bg-alt ring-1 ring-border-light">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#e1334f] via-[#f97316] to-[#1f5eff]"
-                    style={{ width: `${spotlight.momentum}%` }}
-                  />
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div {...fadeUp(0.25)} className="mt-6 grid gap-3 sm:grid-cols-2">
-              {lobbyStats.slice(0, 4).map((stat) => (
-                <StatTile key={stat.label} icon={stat.icon} label={stat.label} value={stat.value} />
+            <h1 className="mt-7 text-[2.7rem] font-black leading-[0.96] tracking-tighter text-primary sm:text-6xl lg:text-[5.2rem]">
+              {HEADLINE.map((part, i) => (
+                <span key={part.text} className="block overflow-hidden">
+                  <motion.span {...stagger(i + 1)} className="inline-block">
+                    {part.gradient ? (
+                      <motion.span
+                        className="bg-gradient-to-r from-[#e1334f] via-[#f97316] to-[#1f5eff] bg-clip-text text-transparent"
+                        style={{ backgroundSize: "220% auto" }}
+                        animate={
+                          prefersReducedMotion
+                            ? undefined
+                            : { backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }
+                        }
+                        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        {part.text}
+                      </motion.span>
+                    ) : (
+                      part.text
+                    )}
+                  </motion.span>
+                </span>
               ))}
-            </motion.div>
+            </h1>
 
-            <motion.div {...fadeUp(0.3)} className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <motion.p
+              {...stagger(4)}
+              className="mt-7 max-w-xl text-base font-medium leading-7 text-secondary sm:text-lg"
+            >
+              HD streams. Real-time crowd momentum. One-tap entry into the night's
+              hottest cards. Built for sabong fans who don't want to miss a single wing.
+            </motion.p>
+
+            <motion.div {...stagger(5)} className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#live-rooms"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#e1334f] to-[#1f5eff] px-6 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(31,94,255,0.2)] transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+                className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#e1334f] to-[#1f5eff] px-7 py-2 text-sm font-semibold text-white shadow-[0_20px_50px_rgba(31,94,255,0.28)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_rgba(31,94,255,0.34)] active:scale-95"
               >
                 <Play className="h-4 w-4 fill-current" />
-                Join Top Room
+                Watch live now
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
               <a
-                href="#features"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border bg-white px-6 py-2 text-sm font-semibold text-secondary shadow-[0_12px_30px_rgba(19,49,112,0.06)] transition-all duration-200 hover:border-accent/25 hover:text-accent active:scale-95"
+                href="#top-room"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border bg-white px-7 py-2 text-sm font-semibold text-secondary shadow-[0_12px_30px_rgba(19,49,112,0.06)] transition-all duration-200 hover:border-accent/30 hover:text-accent active:scale-95"
               >
-                <Sparkles className="h-4 w-4 text-accent" />
-                Explore the lobby
+                <Radio className="h-4 w-4" />
+                See tonight's card
               </a>
             </motion.div>
+
+            <motion.div
+              {...stagger(6)}
+              className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium text-secondary"
+            >
+              <span className="inline-flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                <span>
+                  <span className="font-black text-primary">12.4K</span> watching now
+                </span>
+              </span>
+              <span className="hidden h-4 w-px bg-border sm:inline-block" />
+              <span>
+                <span className="font-black text-primary">₱5.5M</span> handle tonight
+              </span>
+              <span className="hidden h-4 w-px bg-border sm:inline-block" />
+              <span>
+                <span className="font-black text-primary">98%</span> stream uptime
+              </span>
+            </motion.div>
           </div>
+
+          {/* Right: hero image with aura + floating cards */}
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : { delay: 0.2, duration: 0.95, ease: [0.16, 1, 0.3, 1] }
+            }
+            className="relative mx-auto w-full max-w-md lg:max-w-none"
+          >
+            {/* Aura */}
+            <div className="pointer-events-none absolute inset-0 -z-10">
+              <motion.div
+                className="absolute left-1/2 top-1/2 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 50%, rgba(225,51,79,0.22), transparent 55%)",
+                  filter: "blur(20px)",
+                }}
+                animate={
+                  prefersReducedMotion ? undefined : { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
+                }
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute left-[35%] top-[55%] h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 50%, rgba(31,94,255,0.28), transparent 55%)",
+                  filter: "blur(20px)",
+                }}
+                animate={
+                  prefersReducedMotion
+                    ? undefined
+                    : { scale: [1.05, 1, 1.05], opacity: [0.9, 1, 0.9] }
+                }
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+
+            {/* Concentric ring frame */}
+            <div className="pointer-events-none absolute inset-[-6%] -z-10 rounded-full border border-border/60" />
+            <div className="pointer-events-none absolute inset-[6%] -z-10 rounded-full border border-border-light" />
+
+            <motion.img
+              src="/images/hero-img.svg"
+              alt="Live sabong arena illustration"
+              loading="eager"
+              animate={prefersReducedMotion ? undefined : { y: [0, -14, 0] }}
+              transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-full select-none drop-shadow-[0_30px_60px_rgba(19,49,112,0.18)]"
+              draggable={false}
+            />
+
+            {/* Floating card — top right */}
+            <motion.div
+              initial={prefersReducedMotion ? false : { opacity: 0, x: 20, y: -10 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : { delay: 0.7, duration: 0.55, ease: [0.16, 1, 0.3, 1] }
+              }
+              className="absolute -top-2 right-2 inline-flex items-center gap-2.5 rounded-2xl border border-border bg-white px-3.5 py-2.5 shadow-[0_18px_40px_rgba(19,49,112,0.12)] sm:right-6 lg:-right-2"
+            >
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-warm-bg text-[#e1334f]">
+                <Flame className="h-4 w-4" />
+              </span>
+              <div className="text-left">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-tertiary">
+                  Tonight
+                </p>
+                <p className="text-sm font-black leading-tight text-primary">
+                  3 live rounds
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Floating card — bottom left */}
+            <motion.div
+              initial={prefersReducedMotion ? false : { opacity: 0, x: -20, y: 10 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : { delay: 0.85, duration: 0.55, ease: [0.16, 1, 0.3, 1] }
+              }
+              className="absolute -bottom-3 left-2 inline-flex items-center gap-2.5 rounded-2xl border border-border bg-white px-3.5 py-2.5 shadow-[0_18px_40px_rgba(19,49,112,0.12)] sm:left-6 lg:-left-2"
+            >
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-bg text-accent">
+                <Users className="h-4 w-4" />
+              </span>
+              <div className="text-left">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-tertiary">
+                  Peak crowd
+                </p>
+                <p className="text-sm font-black leading-tight text-primary">15.1K</p>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </motion.header>
+
+        {/* On-air marquee ticker */}
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : { delay: 1.05, duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+          }
+          className="mt-14 overflow-hidden rounded-2xl border border-border-light bg-white/75 shadow-[0_14px_50px_rgba(19,49,112,0.06)] backdrop-blur-md"
+        >
+          <div className="flex items-center gap-3 border-b border-border-light px-5 py-2.5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#e1334f] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e1334f]" />
+            </span>
+            <span className="text-[10px] font-black uppercase tracking-[0.22em] text-secondary">
+              On Air
+            </span>
+            <span className="h-3 w-px bg-border" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-tertiary">
+              Now broadcasting
+            </span>
+          </div>
+          <div className="relative overflow-hidden">
+            {/* Edge fades */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-white to-transparent" />
+            <motion.div
+              className="flex whitespace-nowrap py-3"
+              animate={prefersReducedMotion ? undefined : { x: ["0%", "-33.333%"] }}
+              transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+            >
+              {marqueeFull.map((item, i) => (
+                <span
+                  key={i}
+                  className="mx-7 inline-flex shrink-0 items-center gap-3 text-sm font-bold tracking-tight text-primary"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#e1334f]" />
+                  {item}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

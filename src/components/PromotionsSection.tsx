@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Flame, Play } from "lucide-react";
 import { liveRooms } from "../data/rooms";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
+import { APP_URL } from "../lib/constants";
 
 const steps = [
   { num: "01", title: "Browse the lobby", desc: "Scan tonight's rooms by crowd and momentum." },
@@ -37,7 +38,7 @@ export function PromotionsSection() {
           From lobby to live in three taps.
         </h2>
         <p className="mt-3 text-sm font-medium leading-6 text-secondary sm:text-base">
-          No accounts to set up just to look around. Pick a room, hit join, and you're in.
+          Pick a room, hit join, and you're in.
         </p>
       </div>
 
@@ -69,7 +70,9 @@ export function PromotionsSection() {
 
         <motion.a
           {...fadeUp(0.1)}
-          href="#live-rooms"
+          href={APP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="group relative overflow-hidden rounded-[1.4rem] border border-border bg-white p-6 shadow-[0_24px_80px_rgba(19,49,112,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_30px_100px_rgba(31,94,255,0.12)]"
         >
           <div className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-accent-bg blur-3xl" />

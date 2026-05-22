@@ -1,5 +1,6 @@
 import { Navigation } from "./components/Navigation";
 import { HeroSection } from "./components/HeroSection";
+import { TopRoomSection } from "./components/TopRoomSection";
 import { FeaturesGrid } from "./components/FeaturesGrid";
 import { PromotionsSection } from "./components/PromotionsSection";
 import { LiveRoomsSection } from "./components/LiveRoomsSection";
@@ -17,6 +18,7 @@ export default function App() {
 
       <main>
         <HeroSection />
+        <TopRoomSection />
         <FeaturesGrid />
         <PromotionsSection />
         <LiveRoomsSection />

@@ -1,4 +1,5 @@
 import { Play } from "lucide-react";
+import { APP_URL } from "../lib/constants";
 
 type IconProps = { className?: string };
 
@@ -69,7 +70,7 @@ export function Footer() {
       <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
           <div className="col-span-2">
-            <a href="#top" className="inline-flex items-center gap-2.5">
+            <a href="#hero" className="inline-flex items-center gap-2.5">
               <img src="/images/logo.png" alt="Alopit" className="h-9 w-auto" />
               <span className="text-lg font-black tracking-tight text-primary">Alopit</span>
             </a>
@@ -78,7 +79,9 @@ export function Footer() {
               hunting and more time watching the right match.
             </p>
             <a
-              href="#live-rooms"
+              href={APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-gradient-to-r from-[#e1334f] to-[#1f5eff] px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(31,94,255,0.2)] transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
             >
               <Play className="h-4 w-4 fill-current" />
