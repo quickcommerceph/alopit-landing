@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #f6f8fc;
+  --color-bg-alt: #eff4fb;
+  --color-card: #ffffff;
+  --color-border: #d9e3f2;
+  --color-border-light: #e5edf8;
+  --color-primary: #10264b;
+  --color-secondary: #5d6f8c;
+  --color-tertiary: #8da0bf;
+  --color-accent: #1f5eff;
+  --color-accent-strong: #e1334f;
+  --color-accent-bg: #eaf1ff;
+  --color-accent-warm-bg: #fff0f2;
+  --color-selection-bg: #1f5eff;
+  --color-selection-text: #ffffff;
+  --font-sans: "Geist", "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+}
+
+@layer utilities {
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-primary antialiased;
+    margin: 0;
+    background-image:
+      radial-gradient(circle at top left, rgba(225, 51, 79, 0.06), transparent 24%),
+      radial-gradient(circle at top right, rgba(31, 94, 255, 0.09), transparent 26%);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  ::selection {
+    background: var(--color-selection-bg);
+    color: var(--color-selection-text);
+  }
+}
