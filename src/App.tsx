@@ -6,8 +6,11 @@ import { PromotionsSection } from "./components/PromotionsSection";
 import { LiveRoomsSection } from "./components/LiveRoomsSection";
 import { StatsStrip } from "./components/StatsStrip";
 import { Footer } from "./components/Footer";
+import { Variant2 } from "./components/Variant2";
+import { VariantPicker } from "./components/VariantPicker";
+import { useVariant } from "./lib/variant";
 
-export default function App() {
+function Variant1() {
   return (
     <div className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(225,51,79,0.08),transparent_24%),radial-gradient(circle_at_top_right,rgba(31,94,255,0.12),transparent_28%),linear-gradient(180deg,#f7f9fd_0%,#f4f7fc_38%,#edf3fb_100%)]" />
@@ -27,5 +30,16 @@ export default function App() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  const [variant, setVariant] = useVariant();
+
+  return (
+    <>
+      {variant === "1" ? <Variant1 /> : <Variant2 />}
+      <VariantPicker variant={variant} onChange={setVariant} />
+    </>
   );
 }
