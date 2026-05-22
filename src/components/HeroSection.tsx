@@ -70,9 +70,9 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            <h1 className="mt-7 text-[2.7rem] font-black leading-[0.96] tracking-tighter text-primary sm:text-6xl lg:text-[5.2rem]">
+            <h1 className="mt-7 text-[2.7rem] font-black leading-[1] tracking-tighter text-primary sm:text-6xl lg:text-[5.2rem]">
               {HEADLINE.map((part, i) => (
-                <span key={part.text} className="block overflow-hidden">
+                <span key={part.text} className="block overflow-hidden pb-[0.15em]">
                   <motion.span {...stagger(i + 1)} className="inline-block">
                     {part.gradient ? (
                       <motion.span
