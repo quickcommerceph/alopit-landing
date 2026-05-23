@@ -7,6 +7,7 @@ import { LiveRoomsSection } from "./components/LiveRoomsSection";
 import { StatsStrip } from "./components/StatsStrip";
 import { Footer } from "./components/Footer";
 import { Variant2 } from "./components/Variant2";
+import { Variant3 } from "./components/Variant3";
 import { VariantPicker } from "./components/VariantPicker";
 import { useVariant } from "./lib/variant";
 
@@ -38,7 +39,7 @@ export default function App() {
 
   return (
     <>
-      {variant === "1" ? <Variant1 /> : <Variant2 />}
+      {variant === "1" ? <Variant1 /> : variant === "2" ? <Variant2 /> : <Variant3 />}
       <VariantPicker variant={variant} onChange={setVariant} />
     </>
   );
