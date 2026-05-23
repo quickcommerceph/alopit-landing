@@ -1,5 +1,5 @@
 import { Play } from "lucide-react";
-import { APP_URL } from "../lib/constants";
+import { LOGIN_URL } from "../lib/constants";
 
 type IconProps = { className?: string };
 
@@ -79,7 +79,7 @@ export function Footer() {
               hunting and more time watching the right match.
             </p>
             <a
-              href={APP_URL}
+              href={LOGIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-gradient-to-r from-[#e1334f] to-[#1f5eff] px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(31,94,255,0.2)] transition-all duration-200 hover:-translate-y-0.5 active:scale-95"

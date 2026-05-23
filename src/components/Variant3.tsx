@@ -8,7 +8,7 @@ import {
   Trophy,
   Zap,
 } from "lucide-react";
-import { APP_URL } from "../lib/constants";
+import { LOGIN_URL, REGISTER_URL } from "../lib/constants";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
 const MARQUEE = [
@@ -156,12 +156,8 @@ export function Variant3() {
           <span className="hidden text-[10px] font-bold uppercase text-[#f2c14e] sm:inline">
             Premium E-Sabong
           </span>
-          <a href="#top" className="mx-auto sm:mx-0" aria-label="Alopit home">
-            <img
-              src="/images/logo.png"
-              alt="Alopit"
-              className="h-12 w-auto drop-shadow-[0_0_24px_rgba(217,31,38,0.45)] sm:h-14"
-            />
+          <a href="#top" className="mx-auto text-[11px] font-bold uppercase tracking-[0.42em] text-[#f5f5f5] sm:mx-0" aria-label="Alopit home">
+            Alopit
           </a>
           <span className="hidden text-[10px] font-bold uppercase text-[#f5f5f5]/70 sm:inline">
             Play responsibly · 21+
@@ -198,7 +194,53 @@ export function Variant3() {
             className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
           />
 
-          <div className="mx-auto flex min-h-[88svh] max-w-[1440px] flex-col justify-end px-5 pb-8 pt-28 sm:px-8 sm:pb-10 lg:px-12">
+          <div className="relative z-10 mx-auto flex min-h-[88svh] max-w-[1440px] flex-col justify-end px-5 pb-8 pt-28 sm:px-8 sm:pb-10 lg:px-12">
+            <motion.div
+              aria-hidden
+              initial={reduced ? false : { opacity: 0, scale: 0.86, y: 24 }}
+              animate={
+                reduced
+                  ? { opacity: 0.82, scale: 1, y: 0 }
+                  : {
+                      opacity: [0.78, 0.94, 0.78],
+                      scale: [1, 1.035, 1],
+                      y: [0, -16, 0],
+                    }
+              }
+              transition={
+                reduced
+                  ? { duration: 0 }
+                  : {
+                      opacity: { duration: 5.8, repeat: Infinity, ease: "easeInOut" },
+                      scale: { duration: 7.2, repeat: Infinity, ease: "easeInOut" },
+                      y: { duration: 6.4, repeat: Infinity, ease: "easeInOut" },
+                  }
+              }
+              className="pointer-events-none relative mx-auto mb-6 w-[min(72vw,560px)] sm:mb-8 lg:mb-10"
+            >
+              <motion.div
+                className="absolute inset-[9%] rounded-full"
+                animate={
+                  reduced
+                    ? undefined
+                    : {
+                        boxShadow: [
+                          "0 0 50px rgba(30,79,168,0.28), 0 0 90px rgba(217,31,38,0.18)",
+                          "0 0 70px rgba(242,193,78,0.26), 0 0 130px rgba(30,79,168,0.24)",
+                          "0 0 50px rgba(30,79,168,0.28), 0 0 90px rgba(217,31,38,0.18)",
+                        ],
+                      }
+                }
+                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <img
+                src="/images/hero-img.svg"
+                alt=""
+                className="relative w-full select-none object-contain drop-shadow-[0_0_34px_rgba(217,31,38,0.42)]"
+                draggable={false}
+              />
+            </motion.div>
+
             <div className="grid items-end gap-8 lg:grid-cols-[1fr_400px] lg:gap-12">
               <div className="max-w-5xl">
                 <motion.div
@@ -248,7 +290,7 @@ export function Variant3() {
 
                 <motion.div {...reveal(4)} className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <a
-                    href={APP_URL}
+                    href={LOGIN_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group inline-flex min-h-14 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-7 py-3 text-sm font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] active:scale-[0.98]"
@@ -330,16 +372,15 @@ export function Variant3() {
             animate={reduced ? undefined : { x: ["0%", "-50%"] }}
             transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
           >
-            {[...MARQUEE, ...MARQUEE, ...MARQUEE, ...MARQUEE].map((item, i) => (
-              <span
-                key={`${item}-${i}`}
-                className="mx-8 inline-flex shrink-0 items-center gap-8 text-[11px] font-bold uppercase text-[#f5f5f5]/58"
-              >
-                {item}
-                <span className="inline-block h-1.5 w-8 bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]" />
-              </span>
-            ))}
-          </motion.div>
+              {[...MARQUEE, ...MARQUEE, ...MARQUEE, ...MARQUEE].map((item, i) => (
+                <span
+                  key={`${item}-${i}`}
+                  className="mx-8 inline-flex shrink-0 items-center text-[11px] font-bold uppercase text-[#f5f5f5]/58"
+                >
+                  {item}
+                </span>
+              ))}
+            </motion.div>
         </div>
 
         <section className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
@@ -595,7 +636,7 @@ export function Variant3() {
               </div>
               <div className="flex flex-col items-start gap-4 lg:items-end">
                 <a
-                  href={APP_URL}
+                  href={REGISTER_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex min-h-14 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] active:scale-[0.98]"

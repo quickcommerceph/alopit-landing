@@ -6,7 +6,7 @@ type Props = {
   onChange: (v: Variant) => void;
 };
 
-const OPTIONS: Variant[] = ["1", "2", "3"];
+const OPTIONS: Variant[] = ["1", "2", "3", "4"];
 
 export function VariantPicker({ variant, onChange }: Props) {
   return (

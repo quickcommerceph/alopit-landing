@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { APP_URL } from "../lib/constants";
+import { LOGIN_URL, REGISTER_URL } from "../lib/constants";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
 const PILLARS = [
@@ -182,7 +182,7 @@ export function Variant2() {
 
             <motion.div {...reveal(5)} className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row lg:items-start lg:justify-start">
               <a
-                href={APP_URL}
+                href={LOGIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-9 py-5 text-[13px] font-semibold uppercase tracking-[0.3em] transition-all duration-300 hover:gap-6 hover:-translate-y-0.5"
@@ -867,7 +867,7 @@ export function Variant2() {
 
             <div className="flex flex-col items-start gap-5 lg:items-end">
               <a
-                href={APP_URL}
+                href={REGISTER_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-4 rounded-full px-10 py-6 text-[13px] font-semibold uppercase tracking-[0.3em] transition-all duration-300 hover:-translate-y-1"

@@ -15,7 +15,7 @@ import { DetailPill } from "./shared/DetailPill";
 import { StatTile } from "./shared/StatTile";
 import { liveRooms, lobbyStats, trustPills } from "../data/rooms";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
-import { APP_URL } from "../lib/constants";
+import { LOGIN_URL } from "../lib/constants";
 
 export function TopRoomSection() {
   const spotlight = liveRooms[0];
@@ -197,7 +197,7 @@ export function TopRoomSection() {
 
             <motion.div {...fadeUp(0.3)} className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
-                href={APP_URL}
+                href={LOGIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#e1334f] to-[#1f5eff] px-6 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(31,94,255,0.2)] transition-all duration-200 hover:-translate-y-0.5 active:scale-95"

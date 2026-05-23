@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Flame, Play } from "lucide-react";
 import { liveRooms } from "../data/rooms";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
-import { APP_URL } from "../lib/constants";
+import { LOGIN_URL } from "../lib/constants";
 
 const steps = [
   { num: "01", title: "Browse the lobby", desc: "Scan tonight's rooms by crowd and momentum." },
@@ -70,7 +70,7 @@ export function PromotionsSection() {
 
         <motion.a
           {...fadeUp(0.1)}
-          href={APP_URL}
+          href={LOGIN_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="group relative overflow-hidden rounded-[1.4rem] border border-border bg-white p-6 shadow-[0_24px_80px_rgba(19,49,112,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_30px_100px_rgba(31,94,255,0.12)]"

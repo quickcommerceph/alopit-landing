@@ -8,6 +8,7 @@ import { StatsStrip } from "./components/StatsStrip";
 import { Footer } from "./components/Footer";
 import { Variant2 } from "./components/Variant2";
 import { Variant3 } from "./components/Variant3";
+import { Variant4 } from "./components/Variant4";
 import { VariantPicker } from "./components/VariantPicker";
 import { useVariant } from "./lib/variant";
 
@@ -39,7 +40,15 @@ export default function App() {
 
   return (
     <>
-      {variant === "1" ? <Variant1 /> : variant === "2" ? <Variant2 /> : <Variant3 />}
+      {variant === "1" ? (
+        <Variant1 />
+      ) : variant === "2" ? (
+        <Variant2 />
+      ) : variant === "3" ? (
+        <Variant3 />
+      ) : (
+        <Variant4 />
+      )}
       <VariantPicker variant={variant} onChange={setVariant} />
     </>
   );

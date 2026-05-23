@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, Play, X } from "lucide-react";
-import { APP_URL } from "../lib/constants";
+import { LOGIN_URL } from "../lib/constants";
 
 const navLinks = [
   { label: "Live Rooms", href: "#live-rooms" },
@@ -34,7 +34,7 @@ export function Navigation() {
 
           <div className="flex items-center gap-3">
             <a
-              href={APP_URL}
+              href={LOGIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex min-h-10 items-center gap-2 rounded-full bg-gradient-to-r from-[#e1334f] to-[#1f5eff] px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(31,94,255,0.2)] transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
@@ -69,7 +69,7 @@ export function Navigation() {
                 </a>
               ))}
               <a
-                href={APP_URL}
+                href={LOGIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}

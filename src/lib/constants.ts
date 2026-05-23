@@ -1,1 +1,2 @@
-export const APP_URL = "https://apc-7iyxszuy.on-forge.com/";
+export const LOGIN_URL = "https://alopit.club/login";
+export const REGISTER_URL = "https://alopit.club/register";
