@@ -104,7 +104,7 @@ const ROOM_BOARD = [
   },
 ];
 
-export function Variant3() {
+export function LandingPage() {
   const reduced = usePrefersReducedMotion();
 
   const reveal = (i: number) =>
@@ -159,9 +159,29 @@ export function Variant3() {
           <a href="#top" className="mx-auto text-[11px] font-bold uppercase tracking-[0.42em] text-[#f5f5f5] sm:mx-0" aria-label="Alopit home">
             Alopit
           </a>
-          <span className="hidden text-[10px] font-bold uppercase text-[#f5f5f5]/70 sm:inline">
-            Play responsibly · 21+
-          </span>
+          <div className="flex items-center gap-2.5 sm:gap-4">
+            <a
+              href={LOGIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#f5f5f5]/75 transition hover:text-[#f2c14e]"
+            >
+              Login
+            </a>
+            <a
+              href={REGISTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1.5 border border-[#f2c14e]/60 bg-[#f2c14e] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
+              style={{
+                clipPath:
+                  "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+              }}
+            >
+              Register
+              <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" />
+            </a>
+          </div>
         </div>
       </header>
 
