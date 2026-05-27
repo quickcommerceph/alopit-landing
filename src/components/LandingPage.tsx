@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
   Headphones,
@@ -23,7 +24,7 @@ const MARQUEE = [
 
 const HERO_STATS = [
   { value: "12.4K", label: "watching now" },
-  { value: "3", label: "live rooms" },
+  { value: "1", label: "live rooms" },
   { value: "98%", label: "stream uptime" },
 ];
 
@@ -85,27 +86,38 @@ const STEPS = [
 
 const ROOM_BOARD = [
   {
-    title: "Sabong Traditional Worldwide",
-    round: "Round 18",
+    title: "Sabong Traditional",
     crowd: "12.4K",
     state: "Live now",
   },
-  {
-    title: "Sabong World Cup",
-    round: "Round 12",
-    crowd: "8.7K",
-    state: "Heating up",
-  },
-  {
-    title: "Sabong Grand Finals",
-    round: "Round 26",
-    crowd: "15.1K",
-    state: "Trending",
-  },
 ];
+
+const PROMOS = [
+  { src: "/images/promotion-1.jpeg", alt: "Alopit promotion 1" },
+  { src: "/images/promotion-1.jpeg", alt: "Alopit promotion 2" },
+  { src: "/images/promotion-1.jpeg", alt: "Alopit promotion 3" },
+];
+
+const promoVariants = {
+  enter: (dir: number) => ({ x: dir >= 0 ? "100%" : "-100%", opacity: 0.5 }),
+  center: { x: "0%", opacity: 1 },
+  exit: (dir: number) => ({ x: dir >= 0 ? "-100%" : "100%", opacity: 0.5 }),
+};
 
 export function LandingPage() {
   const reduced = usePrefersReducedMotion();
+
+  const [[promoIndex, promoDir], setPromo] = useState<[number, number]>([0, 0]);
+  const goToPromo = (i: number) => setPromo(([cur]) => [i, i >= cur ? 1 : -1]);
+
+  useEffect(() => {
+    if (reduced) return;
+    const id = setInterval(
+      () => setPromo(([cur]) => [(cur + 1) % PROMOS.length, 1]),
+      5000,
+    );
+    return () => clearInterval(id);
+  }, [reduced, promoIndex]);
 
   const reveal = (i: number) =>
     reduced
@@ -403,7 +415,76 @@ export function LandingPage() {
             </motion.div>
         </div>
 
-        <section className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+        <section className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
+          <div
+            className="relative overflow-hidden border border-[#f2c14e]/18 bg-[#070707]"
+            style={{
+              clipPath:
+                "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+            }}
+          >
+            <div className="relative h-[200px] sm:h-[280px] lg:h-[360px]">
+              <AnimatePresence initial={false} custom={promoDir}>
+                <motion.img
+                  key={promoIndex}
+                  src={PROMOS[promoIndex].src}
+                  alt={PROMOS[promoIndex].alt}
+                  custom={promoDir}
+                  variants={promoVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={
+                    reduced
+                      ? { duration: 0 }
+                      : {
+                          x: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                          opacity: { duration: 0.35 },
+                        }
+                  }
+                  className="absolute inset-0 h-full w-full object-cover"
+                  draggable={false}
+                />
+              </AnimatePresence>
+
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(5,5,5,0.55) 0%, transparent 22%, transparent 78%, rgba(5,5,5,0.55) 100%), linear-gradient(180deg, transparent 60%, rgba(5,5,5,0.75) 100%)",
+                }}
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
+              />
+            </div>
+          </div>
+
+          <div className="mt-5 flex items-center justify-center gap-3">
+            {PROMOS.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goToPromo(i)}
+                aria-label={`Show promotion ${i + 1}`}
+                aria-current={i === promoIndex}
+                className="group flex h-10 items-center justify-center px-1"
+              >
+                <span
+                  className={`block h-2.5 rounded-full transition-all duration-300 ${
+                    i === promoIndex
+                      ? "w-12 bg-[#f2c14e] shadow-[0_0_14px_rgba(242,193,78,0.65)]"
+                      : "w-2.5 bg-white/45 group-hover:w-5 group-hover:bg-white/80"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-[1440px] px-5 pb-20 sm:px-8 lg:px-12 lg:pb-20 pt-10">
           <div className="grid gap-9 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
@@ -480,7 +561,7 @@ export function LandingPage() {
                   >
                     <div>
                       <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                        {room.round} · {room.state}
+                        Alopit Arena · {room.state}
                       </p>
                       <p className="mt-1 text-sm font-bold uppercase text-[#f5f5f5]">
                         {room.title}
