@@ -9,6 +9,7 @@ import {
   Zap,
 } from "lucide-react";
 import { LOGIN_URL, REGISTER_URL } from "../lib/constants";
+import { openLiveChat } from "../lib/liveChat";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
 const MARQUEE = [
@@ -41,26 +42,10 @@ const TRUST = [
     icon: Headphones,
     title: "Live support",
     body: "Help is close when the card is running.",
+    liveChat: true,
   },
 ];
 
-const PILLARS = [
-  {
-    no: "01",
-    title: "Cinema-grade broadcast",
-    body: "Every wing, every clash, captured in HD across multi-angle feeds tuned for the pit.",
-  },
-  {
-    no: "02",
-    title: "Crowd momentum, live",
-    body: "Feel the roar before you place. Real-time crowd pulse turns every round into ringside.",
-  },
-  {
-    no: "03",
-    title: "One-tap into the ring",
-    body: "No friction. No queues. From the menu to the main card in a single, deliberate tap.",
-  },
-];
 
 const FEATURES = [
   { no: "I", title: "HD streams", body: "Crisp video, low latency, multi-angle." },
@@ -70,11 +55,6 @@ const FEATURES = [
   { no: "V", title: "Trusted uptime", body: "Premium streams, premium reliability." },
 ];
 
-const STEPS = [
-  { no: "I", title: "Browse the lobby", body: "Scan tonight's rooms by crowd and momentum." },
-  { no: "II", title: "Pick your room", body: "Open the room card to preview details and odds." },
-  { no: "III", title: "Tap join", body: "Enter the stream with no app install required." },
-];
 
 const ROOM_BOARD = [
   {
@@ -338,24 +318,46 @@ export function LandingPage() {
               {...reveal(6)}
               className="mt-8 grid border border-[#f2c14e]/24 bg-black/58 backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4"
             >
-              {TRUST.map((item) => (
-                <div
-                  key={item.title}
-                  className="flex items-center gap-3 border-[#f2c14e]/14 px-4 py-4 even:border-t sm:even:border-t-0 sm:[&:not(:last-child)]:border-r"
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/40 bg-[#f2c14e]/10 text-[#f2c14e]">
-                    <item.icon className="h-5 w-5" />
-                  </span>
-                  <span>
-                    <span className="block text-[11px] font-bold uppercase text-[#f5f5f5]">
-                      {item.title}
+              {TRUST.map((item) => {
+                const isLiveSupport = "liveChat" in item && item.liveChat;
+                const content = (
+                  <>
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/40 bg-[#f2c14e]/10 text-[#f2c14e]">
+                      <item.icon className="h-5 w-5" />
                     </span>
-                    <span className="mt-0.5 block text-[10px] leading-4 text-[#d7d7d7]/72">
-                      {item.body}
+                    <span>
+                      <span className="block text-[11px] font-bold uppercase text-[#f5f5f5]">
+                        {item.title}
+                      </span>
+                      <span className="mt-0.5 block text-[10px] leading-4 text-[#d7d7d7]/72">
+                        {item.body}
+                      </span>
                     </span>
-                  </span>
-                </div>
-              ))}
+                  </>
+                );
+
+                const className =
+                  "flex items-center gap-3 border-[#f2c14e]/14 px-4 py-4 even:border-t sm:even:border-t-0 sm:[&:not(:last-child)]:border-r";
+
+                if (isLiveSupport) {
+                  return (
+                    <button
+                      key={item.title}
+                      type="button"
+                      onClick={openLiveChat}
+                      className={`${className} text-left transition hover:bg-[#f2c14e]/8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#f2c14e]`}
+                    >
+                      {content}
+                    </button>
+                  );
+                }
+
+                return (
+                  <div key={item.title} className={className}>
+                    {content}
+                  </div>
+                );
+              })}
             </motion.div>
           </div>
         </section>
@@ -451,54 +453,8 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-[1440px] px-5 pb-20 sm:px-8 lg:px-12 lg:pb-20 pt-10">
-          <div className="grid gap-9 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-              <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                The proposition
-              </p>
-              <h2
-                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
-                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-              >
-                An arena{" "}
-                <span className="text-[#ff7a00]">in your pocket.</span>
-              </h2>
-            </div>
 
-            <div className="grid gap-px bg-[#f2c14e]/16 lg:col-span-8 lg:grid-cols-3">
-              {PILLARS.map((pillar, i) => (
-                <motion.article
-                  key={pillar.no}
-                  {...viewReveal(i)}
-                  className="group relative min-h-72 bg-[#080808] p-6 transition duration-300 hover:bg-[#100b0b]"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase text-[#f2c14e]">
-                      {pillar.no}
-                    </span>
-                    <span className="h-px w-12 bg-[#d91f26]" />
-                  </div>
-                  <h3
-                    className="mt-8 text-4xl leading-none text-[#f5f5f5]"
-                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                  >
-                    {pillar.title}
-                  </h3>
-                  <p
-                    className="mt-5 text-[15px] leading-7 text-[#d7d7d7]/76"
-                    style={{ fontFamily: '"Fraunces", serif' }}
-                  >
-                    {pillar.body}
-                  </p>
-                  <div className="absolute inset-x-0 bottom-0 h-1 scale-x-0 bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26] transition duration-500 group-hover:scale-x-100" />
-                </motion.article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="rooms" className="border-y border-[#1e4fa8]/24 bg-[#070707]">
+<section id="rooms" className="border-y border-[#1e4fa8]/24 bg-[#070707]">
           <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-28">
             <div className="lg:col-span-5">
               <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
@@ -576,76 +532,8 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden">
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-40"
-            style={{
-              background:
-                "linear-gradient(135deg, transparent 0 35%, rgba(30,79,168,0.25) 35% 36%, transparent 36% 58%, rgba(217,31,38,0.28) 58% 59%, transparent 59% 100%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-            <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-              <div className="lg:col-span-7">
-                <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                  How it works
-                </p>
-                <h2
-                  className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-7xl"
-                  style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                >
-                  From lobby to live in{" "}
-                  <span className="text-[#d91f26]">three taps.</span>
-                </h2>
-              </div>
-              <p
-                className="max-w-lg text-[15px] leading-7 text-[#d7d7d7]/76 lg:col-span-5"
-                style={{ fontFamily: '"Fraunces", serif' }}
-              >
-                Pick a room, hit join, and you're in. No friction. No queues. No
-                waiting room theatrics.
-              </p>
-            </div>
 
-            <div className="mt-16 grid gap-5 lg:grid-cols-3">
-              {STEPS.map((step, i) => (
-                <motion.article
-                  key={step.no}
-                  {...viewReveal(i)}
-                  className="relative min-h-80 border border-[#f2c14e]/20 bg-black/58 p-6"
-                >
-                  <span
-                    className="absolute right-5 top-5 text-8xl leading-none text-transparent"
-                    style={{
-                      fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace',
-                      WebkitTextStroke: "1px rgba(242,193,78,0.42)",
-                    }}
-                  >
-                    {step.no}
-                  </span>
-                  <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                    Step {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3
-                    className="mt-24 text-4xl leading-none text-[#f5f5f5]"
-                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                  >
-                    {step.title}
-                  </h3>
-                  <p
-                    className="mt-5 text-[15px] leading-7 text-[#d7d7d7]/76"
-                    style={{ fontFamily: '"Fraunces", serif' }}
-                  >
-                    {step.body}
-                  </p>
-                </motion.article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-[1120px] px-5 py-20 text-center sm:px-8 lg:py-28">
+<section className="mx-auto max-w-[1120px] px-5 py-20 text-center sm:px-8 lg:py-28">
           <motion.p
             {...viewReveal(0)}
             className="text-5xl leading-tight text-[#f5f5f5] sm:text-6xl lg:text-7xl"
