@@ -5,7 +5,10 @@ import {
   Headphones,
   Play,
   ShieldCheck,
+  Smartphone,
   Trophy,
+  Users,
+  Wallet,
   Zap,
 } from "lucide-react";
 import { LOGIN_URL, REGISTER_URL } from "../lib/constants";
@@ -20,46 +23,112 @@ const MARQUEE = [
   "ONE COMMUNITY",
   "BROADCAST DAILY",
   "ALOPIT",
+  "MAS SIMPLE",
+  "MAS CONVENIENT",
+  "ORIGINAL LIVE FEED",
 ];
 
 const TRUST = [
   {
     icon: ShieldCheck,
     title: "Safe & secure",
-    body: "Trusted room entry and clear live context.",
+    body: "Trusted room entry and reliable system.",
   },
   {
     icon: Zap,
-    title: "Fast & fair",
-    body: "Low-friction access into live action.",
+    title: "Self cash-in & out",
+    body: "Fast deposits and withdrawals on your terms.",
   },
   {
-    icon: Trophy,
-    title: "Big rooms",
-    body: "Find where the crowd is moving today.",
+    icon: Smartphone,
+    title: "Mobile-first",
+    body: "Designed for phones, scaled up cleanly.",
   },
   {
     icon: Headphones,
     title: "Live support",
-    body: "Help is close when the card is running.",
+    body: "Help is close when you need it most.",
     liveChat: true,
   },
 ];
 
-
 const FEATURES = [
-  { no: "I", title: "HD streams", body: "Crisp video, low latency, multi-angle." },
-  { no: "II", title: "Crowd momentum", body: "See where the action is, in real time." },
-  { no: "III", title: "Fast entry", body: "Jump into a room in two taps." },
-  { no: "IV", title: "Mobile-first", body: "Designed for phones, scaled up cleanly." },
-  { no: "V", title: "Trusted uptime", body: "Premium streams, premium reliability." },
+  { no: "I", title: "Original live feed", body: "Crystal-clear HD streams with low latency. Not all live viewing is created equal." },
+  { no: "II", title: "Self-service transactions", body: "Cash in and cash out anytime — no manual process, no waiting." },
+  { no: "III", title: "Multiple payment channels", body: "GCash, Maya, and QRPH-supported banks all in one platform." },
+  { no: "IV", title: "Smooth viewing", body: "A dedicated platform environment built for uninterrupted streaming." },
+  { no: "V", title: "Exclusive community", body: "Invite players, grow your network, and unlock more rewards together." },
 ];
-
 
 const ROOM_BOARD = [
   {
     title: "Sabong Traditional",
     state: "Live now",
+  },
+];
+
+const VIEWING_PERKS = [
+  {
+    icon: Play,
+    title: "Original Live Feed",
+    body: "Direct from the arena — not a rebroadcast, not a copy.",
+  },
+  {
+    icon: Zap,
+    title: "Smooth Viewing",
+    body: "Low-latency streams with zero buffering, every match.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Dedicated Platform",
+    body: "A focused environment built exclusively for sabong fans.",
+  },
+  {
+    icon: Users,
+    title: "Exclusive Community",
+    body: "Connect with fellow enthusiasts and grow your network.",
+  },
+];
+
+const PAYMENTS = [
+  {
+    name: "GCash",
+    body: "Instant cash-in and cash-out via GCash wallet.",
+    color: "#1e4fa8",
+    logo: "/images/gcash-logo.svg",
+  },
+  {
+    name: "Maya",
+    body: "Seamless transactions with Maya support.",
+    color: "#d91f26",
+    logo: "/images/maya-logo.svg",
+  },
+  {
+    name: "QRPH Banks",
+    body: "Supported bank transfers via QRPH nationwide.",
+    color: "#f2c14e",
+    logo: "/images/qrph-logo.svg",
+  },
+];
+
+const COMMUNITY_PERKS = [
+  {
+    icon: Users,
+    step: "01",
+    title: "Invite Easily",
+    body: "Simple tools to invite more players in just a few clicks.",
+  },
+  {
+    icon: Zap,
+    step: "02",
+    title: "Grow Faster",
+    body: "More invites, stronger community. Build your network.",
+  },
+  {
+    icon: Trophy,
+    step: "03",
+    title: "Earn Rewards",
+    body: "Grow with your players and unlock more opportunities.",
   },
 ];
 
@@ -288,9 +357,9 @@ export function LandingPage() {
                   className="mt-6 max-w-2xl text-base leading-7 text-[#d7d7d7] sm:text-lg"
                   style={{ fontFamily: '"Fraunces", serif' }}
                 >
-                  HD streams. Real-time crowd momentum. One-tap entry into the night's
-                  hottest cards. Built for sabong fans who don't want to miss a single
-                  wing.
+                  Original live feeds. Self-service transactions. GCash, Maya, QRPH
+                  — all in one platform. A premium experience built for sabong fans
+                  who demand more.
                 </motion.p>
 
                 <motion.div {...reveal(4)} className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -311,7 +380,7 @@ export function LandingPage() {
                 </motion.div>
               </div>
 
-            
+
             </div>
 
             <motion.div
@@ -471,8 +540,8 @@ export function LandingPage() {
                 className="mt-6 max-w-md text-[15px] leading-7 text-[#d7d7d7]/76"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                A focused product: clear context, and the shortest path
-                between watching and joining.
+                Original feeds, smooth viewing, self-service transactions —
+                everything you need in one platform.
               </p>
 
               <div className="mt-10 space-y-3">
@@ -532,20 +601,265 @@ export function LandingPage() {
           </div>
         </section>
 
-
-<section className="mx-auto max-w-[1120px] px-5 py-20 text-center sm:px-8 lg:py-28">
-          <motion.p
-            {...viewReveal(0)}
-            className="text-5xl leading-tight text-[#f5f5f5] sm:text-6xl lg:text-7xl"
-            style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-          >
-            <span className="text-[#f2c14e]">Live action.</span>{" "}
-            <span className="text-[#d91f26]">Real passion.</span> Alopit is what
-            happens when the pit comes home with you.
-          </motion.p>
+        <section className="relative border-y border-[#f2c14e]/16 bg-[#070707]">
+          <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:px-12 lg:py-28">
+            <div>
+              <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                Premium Experience
+              </motion.p>
+              <motion.h2
+                {...viewReveal(1)}
+                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
+                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+              >
+                Not all live viewing{" "}
+                <span className="text-[#d91f26]">is created equal.</span>
+              </motion.h2>
+              <motion.p
+                {...viewReveal(2)}
+                className="mt-6 max-w-md text-[15px] leading-7 text-[#d7d7d7]/76"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                Original feeds, dedicated platform, exclusive community — the full
+                premium experience for sabong fans who know the difference.
+              </motion.p>
+            </div>
+            <div className="grid gap-px sm:grid-cols-2">
+              {VIEWING_PERKS.map((perk, i) => (
+                <motion.div
+                  key={perk.title}
+                  {...viewReveal(i)}
+                  className="group border border-[#1e4fa8]/20 bg-[#050505] p-6 transition duration-300 hover:bg-[#0a0c14]"
+                >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/30 bg-[#f2c14e]/8 text-[#f2c14e]">
+                    <perk.icon className="h-5 w-5" />
+                  </span>
+                  <h3
+                    className="mt-5 text-xl leading-none text-[#f5f5f5]"
+                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                  >
+                    {perk.title}
+                  </h3>
+                  <p
+                    className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
+                    style={{ fontFamily: '"Fraunces", serif' }}
+                  >
+                    {perk.body}
+                  </p>
+                  <div className="mt-5 h-px w-full origin-left scale-x-0 bg-[#1e4fa8] transition duration-500 group-hover:scale-x-100" />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
+          />
         </section>
 
-        <section className="px-5 pb-20 sm:px-8 lg:px-12 lg:pb-28">
+        <section className="border-y border-[#1e4fa8]/20 bg-[#080808]">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+            <div className="text-center">
+              <motion.div {...viewReveal(0)} className="inline-flex items-center gap-3">
+                <Wallet className="h-5 w-5 text-[#f2c14e]" />
+                <span className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                  Convenience Matters
+                </span>
+              </motion.div>
+              <motion.h2
+                {...viewReveal(1)}
+                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
+                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+              >
+                Self-service{" "}
+                <span className="text-[#f2c14e]">transactions.</span>
+              </motion.h2>
+              <motion.p
+                {...viewReveal(2)}
+                className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                Smooth deposits, fast withdrawals, multiple payment channels — all
+                in one reliable platform. No manual process, no waiting.
+              </motion.p>
+            </div>
+
+            <div className="mt-14 grid gap-6 sm:grid-cols-3">
+              {PAYMENTS.map((pm, i) => (
+                <motion.div
+                  key={pm.name}
+                  {...viewReveal(i)}
+                  className="relative overflow-hidden border border-white/8 bg-[#050505] p-8 transition duration-300 hover:border-white/16"
+                  style={{
+                    clipPath:
+                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                  }}
+                >
+                  <div
+                    className="absolute top-0 left-0 right-0 h-1"
+                    style={{ backgroundColor: pm.color }}
+                  />
+                  <span
+                    className="flex h-20 w-20 items-center justify-center border p-3"
+                    style={{
+                      borderColor: pm.color + "30",
+                      backgroundColor: pm.color + "12",
+                    }}
+                  >
+                    <img
+                      src={pm.logo}
+                      alt={pm.name}
+                      className="h-full w-full object-contain"
+                    />
+                  </span>
+                  <p
+                    className="mt-5 text-2xl font-bold text-[#f5f5f5]"
+                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                  >
+                    {pm.name}
+                  </p>
+                  <p
+                    className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
+                    style={{ fontFamily: '"Fraunces", serif' }}
+                  >
+                    {pm.body}
+                  </p>
+                  <div className="mt-6 flex items-center gap-2 border-t border-white/6 pt-4">
+                    <span
+                      className="h-1.5 w-6 rounded-full"
+                      style={{ backgroundColor: pm.color }}
+                    />
+                    <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/52">
+                      Supported
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              {...viewReveal(3)}
+              className="mt-10 flex flex-wrap items-center justify-center gap-8 text-[10px] font-bold uppercase text-[#d7d7d7]/48"
+            >
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#1e4fa8]" />
+                Self Cash-In
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#d91f26]" />
+                Self Cash-Out
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f2c14e]" />
+                Fast Processing
+              </span>
+            </motion.div>
+          </div>
+        </section>
+
+
+        <section className="border-y border-[#f2c14e]/16 bg-[#070707]">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+            <div className="text-center">
+              <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                Community
+              </motion.p>
+              <motion.h2
+                {...viewReveal(1)}
+                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
+                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+              >
+                Grow with{" "}
+                <span className="text-[#f2c14e]">less stress.</span>
+              </motion.h2>
+              <motion.p
+                {...viewReveal(2)}
+                className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                When the process is simpler, it's easier to focus on building
+                your community. Invite more players, grow together.
+              </motion.p>
+            </div>
+
+            <div className="mt-14 grid gap-6 sm:grid-cols-3">
+              {COMMUNITY_PERKS.map((perk, i) => (
+                <motion.div
+                  key={perk.title}
+                  {...viewReveal(i)}
+                  className="relative border border-[#f2c14e]/16 bg-[#050505] p-8"
+                  style={{
+                    clipPath:
+                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                  }}
+                >
+                  <div className="flex items-center gap-4">
+                    <span
+                      className="text-3xl leading-none text-[#f2c14e]/32"
+                      style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                    >
+                      {perk.step}
+                    </span>
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/30 bg-[#f2c14e]/8 text-[#f2c14e]">
+                      <perk.icon className="h-5 w-5" />
+                    </span>
+                  </div>
+                  <h3
+                    className="mt-6 text-2xl leading-none text-[#f5f5f5]"
+                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                  >
+                    {perk.title}
+                  </h3>
+                  <p
+                    className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
+                    style={{ fontFamily: '"Fraunces", serif' }}
+                  >
+                    {perk.body}
+                  </p>
+                  {i < COMMUNITY_PERKS.length - 1 && (
+                    <span
+                      aria-hidden
+                      className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-[#f2c14e]/32 sm:block"
+                    >
+                      <ArrowUpRight className="h-5 w-5 -rotate-0" />
+                    </span>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              {...viewReveal(3)}
+              className="mt-12 text-center"
+            >
+              <a
+                href={REGISTER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] active:scale-[0.98]"
+                style={{
+                  clipPath:
+                    "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                }}
+              >
+                Invite more players
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+              </a>
+              <p
+                className="mt-4 text-[12px] text-[#d7d7d7]/48"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                Build a stronger community together
+              </p>
+            </motion.div>
+          </div>
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
+          />
+        </section>
+
+        <section className="px-5 pb-20 pt-20 sm:px-8 lg:px-12 lg:pb-28 lg:pt-28">
           <div className="relative mx-auto max-w-[1440px] overflow-hidden border border-[#f2c14e]/24 bg-[#080808]">
             <img
               src="/images/e-sabong-thumbnail.jpg"
@@ -564,21 +878,21 @@ export function LandingPage() {
             <div className="relative grid items-end gap-8 p-6 sm:p-10 lg:grid-cols-[1.35fr_1fr] lg:p-16">
               <div>
                 <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                  Live now
+                  Join today
                 </p>
                 <h2
                   className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-7xl"
                   style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
                 >
-                  The roar is{" "}
-                  <span className="text-[#d91f26]">already starting.</span>
+                  Welcome to the{" "}
+                  <span className="text-[#d91f26]">Alopit community.</span>
                 </h2>
                 <p
                   className="mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
                   style={{ fontFamily: '"Fraunces", serif' }}
                 >
-                  No sign-up theatrics, no waiting room. Just a single tap into the
-                  rooms our regulars are filling today.
+                  Where convenience meets community. Self-service transactions,
+                  premium streams, and exclusive access — all in one platform.
                 </p>
               </div>
               <div className="flex flex-col items-start gap-4 lg:items-end">
