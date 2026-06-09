@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   ArrowUpRight,
+  Check,
+  ChevronRight,
   Headphones,
   Play,
   ShieldCheck,
@@ -9,6 +11,7 @@ import {
   Trophy,
   Users,
   Wallet,
+  X,
   Zap,
 } from "lucide-react";
 import { LOGIN_URL, REGISTER_URL } from "../lib/constants";
@@ -130,6 +133,61 @@ const COMMUNITY_PERKS = [
     title: "Earn Rewards",
     body: "Grow with your players and unlock more opportunities.",
   },
+];
+
+const AGENT_TIERS = [
+  {
+    tier: "Bronze",
+    headerGradient: "linear-gradient(135deg, #6d4c41, #33211a)",
+    accent: "#a87850",
+    commission: "2%",
+    badge: null as string | null,
+    features: [
+      { text: "GGR or Turnover-based commissions", included: true },
+      { text: "Separate commission wallet", included: true },
+      { text: "Transfer-to-balance anytime", included: true },
+      { text: "Can create downline agents", included: false },
+      { text: "Deposit/Withdraw to downlines", included: false },
+    ],
+    createdBy: "Gold, Silver, or Master agent",
+  },
+  {
+    tier: "Gold",
+    headerGradient: "linear-gradient(135deg, #b8860b, #5c4a1e)",
+    accent: "#f5d880",
+    commission: "5%",
+    badge: "Recommended" as string | null,
+    features: [
+      { text: "GGR or Turnover-based commissions", included: true },
+      { text: "Separate commission wallet", included: true },
+      { text: "Transfer-to-balance anytime", included: true },
+      { text: "Create Silver & Bronze agents", included: true },
+      { text: "Full deposit/withdraw to downlines", included: true },
+    ],
+    createdBy: "Master agent only",
+  },
+  {
+    tier: "Silver",
+    headerGradient: "linear-gradient(135deg, #4a5568, #1a2332)",
+    accent: "#94a8bc",
+    commission: "3.5%",
+    badge: null as string | null,
+    features: [
+      { text: "GGR or Turnover-based commissions", included: true },
+      { text: "Separate commission wallet", included: true },
+      { text: "Transfer-to-balance anytime", included: true },
+      { text: "Create Bronze agents", included: true },
+      { text: "Deposit/Withdraw to downlines", included: false },
+    ],
+    createdBy: "Gold or Master agent",
+  },
+];
+
+const AGENT_HIERARCHY = [
+  { label: "Master", color: "#d91f26" },
+  { label: "Gold", color: "#b8860b" },
+  { label: "Silver", color: "#4a5568" },
+  { label: "Bronze", color: "#6d4c41" },
 ];
 
 const PROMOS = [
@@ -850,6 +908,177 @@ export function LandingPage() {
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
                 Build a stronger community together
+              </p>
+            </motion.div>
+          </div>
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
+          />
+        </section>
+
+        <section className="relative border-y border-[#f2c14e]/16 bg-[#070707]">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+            <div className="text-center">
+              <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                Agent Partner Program
+              </motion.p>
+              <motion.h2
+                {...viewReveal(1)}
+                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
+                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+              >
+                Grow your network,{" "}
+                <span className="text-[#f2c14e]">earn real commissions.</span>
+              </motion.h2>
+              <motion.p
+                {...viewReveal(2)}
+                className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-[#d7d7d7]/76"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                Become an Alopit agent and earn commissions from downline betting
+                turnover across Sabong Arena. Choose GGR or Turnover-based commissions — your network, your earnings.
+              </motion.p>
+            </div>
+
+            <div className="mt-14 grid items-end gap-5 lg:grid-cols-3">
+              {AGENT_TIERS.map((t, i) => (
+                <motion.div
+                  key={t.tier}
+                  {...viewReveal(i)}
+                  className={`relative overflow-hidden border ${
+                    t.badge
+                      ? "border-[#f5d880]/30 lg:-mt-6 shadow-[0_20px_80px_rgba(184,134,11,0.18)]"
+                      : "border-white/8"
+                  }`}
+                  style={{
+                    background: "#0a0a0a",
+                    clipPath:
+                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                  }}
+                >
+                  {t.badge && (
+                    <div
+                      className="absolute top-4 right-4 z-10 px-3 py-1 text-[9px] font-bold uppercase tracking-wider"
+                      style={{
+                        backgroundColor: t.accent,
+                        color: "#1a1a1a",
+                        clipPath:
+                          "polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px)",
+                      }}
+                    >
+                      {t.badge}
+                    </div>
+                  )}
+
+                  <div
+                    className="px-7 pt-8 pb-6"
+                    style={{ background: t.headerGradient }}
+                  >
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-white/70">
+                      {t.tier} Agent
+                    </p>
+                    <p
+                      className="mt-2 text-5xl leading-none text-white sm:text-6xl"
+                      style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                    >
+                      {t.commission}
+                    </p>
+                    <p className="mt-1 text-[11px] font-medium text-white/56">
+                      max commission rate
+                    </p>
+                  </div>
+
+                  <div className="px-7 pt-6 pb-7">
+                    <div className="space-y-3.5">
+                      {t.features.map((f) => (
+                        <div key={f.text} className="flex items-start gap-3">
+                          {f.included ? (
+                            <span
+                              className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
+                              style={{ backgroundColor: t.accent + "24" }}
+                            >
+                              <Check className="h-3 w-3" style={{ color: t.accent }} />
+                            </span>
+                          ) : (
+                            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white/6">
+                              <X className="h-3 w-3 text-white/24" />
+                            </span>
+                          )}
+                          <span
+                            className={`text-[13px] leading-5 ${
+                              f.included ? "text-[#d7d7d7]/80" : "text-white/26 line-through"
+                            }`}
+                            style={{ fontFamily: '"Fraunces", serif' }}
+                          >
+                            {f.text}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-8">
+                      <a
+                        href={REGISTER_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-[11px] font-bold uppercase tracking-wider transition duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+                        style={{
+                          backgroundColor: t.accent,
+                          color: "#0a0a0a",
+                          clipPath:
+                            "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                        }}
+                      >
+                        Become a Partner
+                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-45" />
+                      </a>
+                    </div>
+
+                    <p className="mt-4 text-center text-[10px] text-white/26">
+                      Created by: {t.createdBy}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              {...viewReveal(3)}
+              className="mt-16 flex flex-col items-center"
+            >
+              <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                Recruitment Hierarchy
+              </p>
+              <div className="mt-5 flex items-center">
+                {AGENT_HIERARCHY.map((h, i) => (
+                  <Fragment key={h.label}>
+                    {i > 0 && (
+                      <div className="mx-2 flex items-center sm:mx-3">
+                        <div className="h-px w-4 bg-white/12 sm:w-8" />
+                        <ChevronRight className="h-3.5 w-3.5 text-white/24" />
+                      </div>
+                    )}
+                    <div className="flex flex-col items-center gap-2">
+                      <span
+                        className="flex h-12 w-12 items-center justify-center rounded-full border-2 text-[9px] font-bold uppercase text-white sm:h-14 sm:w-14 sm:text-[10px]"
+                        style={{
+                          borderColor: h.color,
+                          backgroundColor: h.color + "18",
+                          boxShadow: `0 0 24px ${h.color}20`,
+                        }}
+                      >
+                        {h.label}
+                      </span>
+                    </div>
+                  </Fragment>
+                ))}
+              </div>
+              <p
+                className="mt-4 max-w-md text-center text-[12px] text-[#d7d7d7]/44"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                Each tier can recruit and manage agents below them in the chain
               </p>
             </motion.div>
           </div>
