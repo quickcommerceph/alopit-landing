@@ -4,7 +4,6 @@ import {
   ArrowUpRight,
   Headphones,
   Play,
-  Radio,
   ShieldCheck,
   Trophy,
   Zap,
@@ -20,12 +19,6 @@ const MARQUEE = [
   "ONE COMMUNITY",
   "BROADCAST DAILY",
   "ALOPIT",
-];
-
-const HERO_STATS = [
-  { value: "12.4K", label: "watching now" },
-  { value: "1", label: "live rooms" },
-  { value: "98%", label: "stream uptime" },
 ];
 
 const TRUST = [
@@ -70,12 +63,11 @@ const PILLARS = [
 ];
 
 const FEATURES = [
-  { no: "I", title: "Live rooms", body: "Multiple broadcasts running side-by-side." },
-  { no: "II", title: "HD streams", body: "Crisp video, low latency, multi-angle." },
-  { no: "III", title: "Crowd momentum", body: "See where the action is, in real time." },
-  { no: "IV", title: "Fast entry", body: "Jump into a room in two taps." },
-  { no: "V", title: "Mobile-first", body: "Designed for phones, scaled up cleanly." },
-  { no: "VI", title: "Trusted uptime", body: "Premium streams, premium reliability." },
+  { no: "I", title: "HD streams", body: "Crisp video, low latency, multi-angle." },
+  { no: "II", title: "Crowd momentum", body: "See where the action is, in real time." },
+  { no: "III", title: "Fast entry", body: "Jump into a room in two taps." },
+  { no: "IV", title: "Mobile-first", body: "Designed for phones, scaled up cleanly." },
+  { no: "V", title: "Trusted uptime", body: "Premium streams, premium reliability." },
 ];
 
 const STEPS = [
@@ -87,15 +79,16 @@ const STEPS = [
 const ROOM_BOARD = [
   {
     title: "Sabong Traditional",
-    crowd: "12.4K",
     state: "Live now",
   },
 ];
 
 const PROMOS = [
-  { src: "/images/promotion-1.jpeg", alt: "Alopit promotion 1" },
-  { src: "/images/promotion-1.jpeg", alt: "Alopit promotion 2" },
-  { src: "/images/promotion-1.jpeg", alt: "Alopit promotion 3" },
+  { src: "/images/banner-1.png", alt: "Alopit banner 1" },
+  { src: "/images/banner-2.png", alt: "Alopit banner 2" },
+  { src: "/images/banner-3.png", alt: "Alopit banner 3" },
+  { src: "/images/banner-4.png", alt: "Alopit banner 4" },
+  { src: "/images/banner-5.png", alt: "Alopit banner 5" },
 ];
 
 const promoVariants = {
@@ -335,41 +328,10 @@ export function LandingPage() {
                     Step into the ring
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
                   </a>
-                  <a
-                    href="#rooms"
-                    className="inline-flex min-h-14 items-center justify-center gap-3 border border-[#1e4fa8]/70 bg-[#050505]/70 px-7 py-3 text-sm font-bold uppercase text-[#f5f5f5] backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:border-[#f2c14e]/80 active:scale-[0.98]"
-                    style={{
-                      clipPath:
-                        "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    }}
-                  >
-                    <Radio className="h-4 w-4 text-[#1e4fa8]" />
-                    See tonight's card
-                  </a>
                 </motion.div>
               </div>
 
-              <motion.div
-                {...reveal(5)}
-                className="grid grid-cols-3 border border-white/12 bg-black/50 backdrop-blur-md lg:grid-cols-1"
-              >
-                {HERO_STATS.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="border-white/10 px-4 py-4 first:border-r last:border-l lg:border-b lg:first:border-r-0 lg:last:border-b-0 lg:last:border-l-0"
-                  >
-                    <p
-                      className="text-3xl leading-none text-[#f2c14e] sm:text-4xl"
-                      style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                    >
-                      {stat.value}
-                    </p>
-                    <p className="mt-1 text-[10px] font-bold uppercase text-white/62">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </motion.div>
+            
             </div>
 
             <motion.div
@@ -416,36 +378,41 @@ export function LandingPage() {
         </div>
 
         <section className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
-          <div
-            className="relative overflow-hidden border border-[#f2c14e]/18 bg-[#070707]"
+          <a
+            href={LOGIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block relative overflow-hidden border border-[#f2c14e]/18 bg-[#070707] cursor-pointer"
             style={{
               clipPath:
                 "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
             }}
           >
-            <div className="relative h-[200px] sm:h-[280px] lg:h-[360px]">
-              <AnimatePresence initial={false} custom={promoDir}>
-                <motion.img
-                  key={promoIndex}
-                  src={PROMOS[promoIndex].src}
-                  alt={PROMOS[promoIndex].alt}
-                  custom={promoDir}
-                  variants={promoVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={
-                    reduced
-                      ? { duration: 0 }
-                      : {
-                          x: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                          opacity: { duration: 0.35 },
-                        }
-                  }
-                  className="absolute inset-0 h-full w-full object-cover"
-                  draggable={false}
-                />
-              </AnimatePresence>
+            <div className="relative" style={{ aspectRatio: "1365 / 455" }}>
+               <AnimatePresence initial={false} custom={promoDir}>
+                  <motion.img
+                    key={promoIndex}
+                    src={PROMOS[promoIndex].src}
+                    alt={PROMOS[promoIndex].alt}
+                    width={1365}
+                    height={455}
+                    custom={promoDir}
+                    variants={promoVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={
+                      reduced
+                        ? { duration: 0 }
+                        : {
+                            x: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                            opacity: { duration: 0.35 },
+                          }
+                    }
+                    className="absolute inset-0 h-full w-full object-cover"
+                    draggable={false}
+                  />
+                </AnimatePresence>
 
               <div
                 aria-hidden
@@ -460,7 +427,7 @@ export function LandingPage() {
                 className="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
               />
             </div>
-          </div>
+          </a>
 
           <div className="mt-5 flex items-center justify-center gap-3">
             {PROMOS.map((_, i) => (
@@ -548,7 +515,7 @@ export function LandingPage() {
                 className="mt-6 max-w-md text-[15px] leading-7 text-[#d7d7d7]/76"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                A focused product: live rooms, clear context, and the shortest path
+                A focused product: clear context, and the shortest path
                 between watching and joining.
               </p>
 
@@ -567,21 +534,12 @@ export function LandingPage() {
                         {room.title}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p
-                        className="text-3xl leading-none text-[#1e4fa8]"
-                        style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                      >
-                        {room.crowd}
-                      </p>
-                      <p className="text-[10px] font-bold uppercase text-white/45">crowd</p>
-                    </div>
                   </motion.div>
                 ))}
               </div>
             </div>
 
-            <div className="grid gap-px bg-[#f2c14e]/16 sm:grid-cols-2 lg:col-span-7">
+            <div className="grid gap-px sm:grid-cols-2 lg:col-span-7">
               {FEATURES.map((feature, i) => (
                 <motion.article
                   key={feature.no}
@@ -718,7 +676,7 @@ export function LandingPage() {
             <div className="relative grid items-end gap-8 p-6 sm:p-10 lg:grid-cols-[1.35fr_1fr] lg:p-16">
               <div>
                 <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                  Today's card · Live now
+                  Live now
                 </p>
                 <h2
                   className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-7xl"
