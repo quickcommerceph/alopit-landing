@@ -216,16 +216,17 @@ export function LandingPage() {
 
   const [[promoIndex, promoDir], setPromo] = useState<[number, number]>([0, 0]);
   const [activeCategory, setActiveCategory] = useState<GameCategory>("All");
+  const [promoPaused, setPromoPaused] = useState(false);
   const goToPromo = (i: number) => setPromo(([cur]) => [i, i >= cur ? 1 : -1]);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || promoPaused) return;
     const id = setInterval(
       () => setPromo(([cur]) => [(cur + 1) % PROMOS.length, 1]),
       5000,
     );
     return () => clearInterval(id);
-  }, [reduced, promoIndex]);
+  }, [reduced, promoIndex, promoPaused]);
 
   const reveal = (i: number) =>
     reduced
@@ -524,6 +525,8 @@ export function LandingPage() {
               clipPath:
                 "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
             }}
+            onMouseEnter={() => setPromoPaused(true)}
+            onMouseLeave={() => setPromoPaused(false)}
           >
             <div className="relative" style={{ aspectRatio: "1365 / 455" }}>
                <AnimatePresence initial={false} custom={promoDir}>
