@@ -14,7 +14,7 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { LOGIN_URL, REGISTER_URL } from "../lib/constants";
+import { ALOWIN_URL, LOGIN_URL, REGISTER_URL } from "../lib/constants";
 import { openLiveChat } from "../lib/liveChat";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
@@ -185,10 +185,37 @@ const promoVariants = {
   exit: (dir: number) => ({ x: dir >= 0 ? "-100%" : "100%", opacity: 0.5 }),
 };
 
+const GAME_CATEGORIES = ["All", "Casino", "Live Casino", "Games"] as const;
+type GameCategory = (typeof GAME_CATEGORIES)[number];
+
+const ALOWIN_GAMES: {
+  name: string;
+  category: GameCategory;
+  thumb: string;
+  path: string;
+}[] = [
+  { name: "Super Ace Deluxe", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/95fe3270a1002bf3793311b20fe2e473_casinoGameIcon3.webp", path: "/en/casino/slots/" },
+  { name: "Sweet Bonanza 1000", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/e8859ce1d80a188cc3e65ee14d48b7fe_casinoGameIcon3.svg", path: "/en/casino/slots/" },
+  { name: "Gates of Olympus Super Scatter", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/f37451e67e4dffc1e1dac08ba8e6f4a9_casinoGameIcon3.svg", path: "/en/casino/slots/" },
+  { name: "Pinata Wins", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/e0dda6320a58ac2df5e8fd33e6f1b528_casinoGameIcon3.webp", path: "/en/casino/slots/" },
+  { name: "Super Ace 2", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/e182b0d8904ea392723cc82f8d569810_casinoGameIcon3.webp", path: "/en/casino/slots/" },
+  { name: "Super Color Game", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/53d072e492e036d0d2f3d54e2e71496e_casinoGameIcon3.webp", path: "/en/live-casino/home" },
+  { name: "Speed Baccarat A", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/5862ad95cb3499606cc0661e058ceaaf_casinoGameIcon3.webp", path: "/en/live-casino/home" },
+  { name: "Klasik Free Bet Blackjack 1", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/6a0d095980275571a1c6f0ed14531f46_casinoGameIcon3.webp", path: "/en/live-casino/home" },
+  { name: "Turkish Crazy Time", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/02fa7864ae587e4e9ba4701f1bc24d67_casinoGameIcon3.webp", path: "/en/live-casino/home" },
+  { name: "VIP Always 6 Blackjack 1", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/442e8c2c8bd825062e7d55cd83a5564d_casinoGameIcon3.webp", path: "/en/live-casino/home" },
+  { name: "Color Game", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/bd52470b4d6c76c7c4791735b5951e65_casinoGameIcon3.webp", path: "/en/games/home" },
+  { name: "Color Hunt", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/ff8e0d0db54429196eda2e930675e038_casinoGameIcon3.webp", path: "/en/games/home" },
+  { name: "Chicky Choice", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/cfceb577827a86981c4e68eb289ed811_casinoGameIcon3.gif", path: "/en/games/home" },
+  { name: "Fruit X", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/f22dfb48471daec21aa54436e251d29c_casinoGameIcon3.webp", path: "/en/games/home" },
+  { name: "Mines", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/51a4bb644233ca36ecf61aba4c3d86d4_casinoGameIcon3.svg", path: "/en/games/home" },
+];
+
 export function LandingPage() {
   const reduced = usePrefersReducedMotion();
 
   const [[promoIndex, promoDir], setPromo] = useState<[number, number]>([0, 0]);
+  const [activeCategory, setActiveCategory] = useState<GameCategory>("All");
   const goToPromo = (i: number) => setPromo(([cur]) => [i, i >= cur ? 1 : -1]);
 
   useEffect(() => {
@@ -1004,6 +1031,132 @@ export function LandingPage() {
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
                 Each tier can recruit and manage agents below them in the chain
+              </p>
+            </motion.div>
+          </div>
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
+          />
+        </section>
+
+        <section className="border-y border-[#1e4fa8]/20 bg-[#070707]">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+            <div className="text-center">
+              <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                Beyond Sabong
+              </motion.p>
+              <motion.h2
+                {...viewReveal(1)}
+                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
+                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+              >
+                Like Alopit?{" "}
+                <span className="text-[#f2c14e]">Try Alowin.</span>
+              </motion.h2>
+              <motion.p
+                {...viewReveal(2)}
+                className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                World-class slots, live casino, and game shows — all on one
+                platform. Same trusted experience, unlimited entertainment.
+              </motion.p>
+            </div>
+
+            <motion.div
+              {...viewReveal(3)}
+              className="mt-10 flex flex-wrap items-center justify-center gap-2"
+            >
+              {GAME_CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setActiveCategory(cat)}
+                  className="px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition duration-300"
+                  style={{
+                    backgroundColor:
+                      activeCategory === cat ? "#f2c14e" : "transparent",
+                    color:
+                      activeCategory === cat ? "#050505" : "rgba(215,215,215,0.72)",
+                    border: `1px solid ${
+                      activeCategory === cat ? "#f2c14e" : "rgba(255,255,255,0.1)"
+                    }`,
+                    clipPath:
+                      "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </motion.div>
+
+            <div className="mt-10 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+              {ALOWIN_GAMES.filter(
+                (g) => activeCategory === "All" || g.category === activeCategory,
+              ).map((game, i) => (
+                <motion.a
+                  key={game.name}
+                  href={`${ALOWIN_URL}${game.path}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  {...viewReveal(i % 4)}
+                  className="group relative block overflow-hidden border border-white/8 bg-[#0a0a0a] transition duration-300 hover:border-white/20"
+                  style={{
+                    clipPath:
+                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  }}
+                >
+                  <div className="relative" style={{ aspectRatio: "4 / 3" }}>
+                    <img
+                      src={game.thumb}
+                      alt={game.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition duration-300 group-hover:opacity-100"
+                    >
+                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f2c14e] text-[#050505] shadow-lg shadow-[#f2c14e]/40">
+                        <Play className="h-5 w-5 fill-current" />
+                      </span>
+                    </div>
+                  </div>
+                  <div className="px-4 py-3">
+                    <p className="truncate text-[12px] font-bold uppercase text-[#f5f5f5]">
+                      {game.name}
+                    </p>
+                    <p className="mt-0.5 text-[9px] font-bold uppercase text-[#f2c14e]/70">
+                      {game.category}
+                    </p>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+
+            <motion.div
+              {...viewReveal(4)}
+              className="mt-12 text-center"
+            >
+              <a
+                href={ALOWIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] active:scale-[0.98]"
+                style={{
+                  clipPath:
+                    "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                }}
+              >
+                Explore all games on Alowin
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+              </a>
+              <p
+                className="mt-4 text-[12px] text-[#d7d7d7]/48"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                Slots · Live Casino · Table Games · Game Shows
               </p>
             </motion.div>
           </div>
