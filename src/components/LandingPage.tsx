@@ -768,107 +768,6 @@ export function LandingPage() {
         </section>
 
 
-        <section className="border-y border-[#f2c14e]/16 bg-[#070707]">
-          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-            <div className="text-center">
-              <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Community
-              </motion.p>
-              <motion.h2
-                {...viewReveal(1)}
-                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
-                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-              >
-                Grow with{" "}
-                <span className="text-[#f2c14e]">less stress.</span>
-              </motion.h2>
-              <motion.p
-                {...viewReveal(2)}
-                className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
-                style={{ fontFamily: '"Fraunces", serif' }}
-              >
-                When the process is simpler, it's easier to focus on building
-                your community. Invite more players, grow together.
-              </motion.p>
-            </div>
-
-            <div className="mt-14 grid gap-6 sm:grid-cols-3">
-              {COMMUNITY_PERKS.map((perk, i) => (
-                <motion.div
-                  key={perk.title}
-                  {...viewReveal(i)}
-                  className="relative border border-[#f2c14e]/16 bg-[#050505] p-8"
-                  style={{
-                    clipPath:
-                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
-                  }}
-                >
-                  <div className="flex items-center gap-4">
-                    <span
-                      className="text-3xl leading-none text-[#f2c14e]/32"
-                      style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                    >
-                      {perk.step}
-                    </span>
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/30 bg-[#f2c14e]/8 text-[#f2c14e]">
-                      <perk.icon className="h-5 w-5" />
-                    </span>
-                  </div>
-                  <h3
-                    className="mt-6 text-2xl leading-none text-[#f5f5f5]"
-                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                  >
-                    {perk.title}
-                  </h3>
-                  <p
-                    className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
-                    style={{ fontFamily: '"Fraunces", serif' }}
-                  >
-                    {perk.body}
-                  </p>
-                  {i < COMMUNITY_PERKS.length - 1 && (
-                    <span
-                      aria-hidden
-                      className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-[#f2c14e]/32 sm:block"
-                    >
-                      <ArrowUpRight className="h-5 w-5 -rotate-0" />
-                    </span>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              {...viewReveal(3)}
-              className="mt-12 text-center"
-            >
-              <a
-                href="https://wkf.ms/4uzhYLR"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] active:scale-[0.98]"
-                style={{
-                  clipPath:
-                    "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
-                }}
-              >
-                Invite more players
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
-              </a>
-              <p
-                className="mt-4 text-[12px] text-[#d7d7d7]/48"
-                style={{ fontFamily: '"Fraunces", serif' }}
-              >
-                Build a stronger community together
-              </p>
-            </motion.div>
-          </div>
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
-          />
-        </section>
-
         <section className="relative border-y border-[#f2c14e]/16 bg-[#070707]">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <div className="text-center">
@@ -1040,6 +939,107 @@ export function LandingPage() {
           />
         </section>
 
+        <section className="border-y border-[#f2c14e]/16 bg-[#070707]">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+            <div className="text-center">
+              <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                Community
+              </motion.p>
+              <motion.h2
+                {...viewReveal(1)}
+                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
+                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+              >
+                Grow with{" "}
+                <span className="text-[#f2c14e]">less stress.</span>
+              </motion.h2>
+              <motion.p
+                {...viewReveal(2)}
+                className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                When the process is simpler, it's easier to focus on building
+                your community. Invite more players, grow together.
+              </motion.p>
+            </div>
+
+            <div className="mt-14 grid gap-6 sm:grid-cols-3">
+              {COMMUNITY_PERKS.map((perk, i) => (
+                <motion.div
+                  key={perk.title}
+                  {...viewReveal(i)}
+                  className="relative border border-[#f2c14e]/16 bg-[#050505] p-8"
+                  style={{
+                    clipPath:
+                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                  }}
+                >
+                  <div className="flex items-center gap-4">
+                    <span
+                      className="text-3xl leading-none text-[#f2c14e]/32"
+                      style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                    >
+                      {perk.step}
+                    </span>
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/30 bg-[#f2c14e]/8 text-[#f2c14e]">
+                      <perk.icon className="h-5 w-5" />
+                    </span>
+                  </div>
+                  <h3
+                    className="mt-6 text-2xl leading-none text-[#f5f5f5]"
+                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                  >
+                    {perk.title}
+                  </h3>
+                  <p
+                    className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
+                    style={{ fontFamily: '"Fraunces", serif' }}
+                  >
+                    {perk.body}
+                  </p>
+                  {i < COMMUNITY_PERKS.length - 1 && (
+                    <span
+                      aria-hidden
+                      className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-[#f2c14e]/32 sm:block"
+                    >
+                      <ArrowUpRight className="h-5 w-5 -rotate-0" />
+                    </span>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              {...viewReveal(3)}
+              className="mt-12 text-center"
+            >
+              <a
+                href="https://wkf.ms/4uzhYLR"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-7 py-3 text-sm font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] active:scale-[0.98]"
+                style={{
+                  clipPath:
+                    "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                }}
+              >
+                Invite more players
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+              </a>
+              <p
+                className="mt-4 text-[12px] text-[#d7d7d7]/48"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                Build a stronger community together
+              </p>
+            </motion.div>
+          </div>
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
+          />
+        </section>
+
         <section className="border-y border-[#1e4fa8]/20 bg-[#070707]">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <div className="text-center">
@@ -1107,7 +1107,7 @@ export function LandingPage() {
                       "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                   }}
                 >
-                  <div className="relative" style={{ aspectRatio: "4 / 3" }}>
+                  <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
                     <img
                       src={game.thumb}
                       alt={game.name}
@@ -1143,7 +1143,7 @@ export function LandingPage() {
                 href={ALOWIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] active:scale-[0.98]"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-7 py-3 text-sm font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] active:scale-[0.98]"
                 style={{
                   clipPath:
                     "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
@@ -1166,8 +1166,8 @@ export function LandingPage() {
           />
         </section>
 
-        <section className="px-5 pb-20 pt-20 sm:px-8 lg:px-12 lg:pb-28 lg:pt-28">
-          <div className="relative mx-auto max-w-[1440px] overflow-hidden border border-[#f2c14e]/24 bg-[#080808]">
+        <section className="mx-auto max-w-[1440px] px-5 pb-20 pt-20 sm:px-8 lg:px-12 lg:pb-28 lg:pt-28">
+          <div className="relative overflow-hidden border border-[#f2c14e]/24 bg-[#080808]">
             <img
               src="/images/e-sabong-thumbnail.jpg"
               alt=""
@@ -1207,7 +1207,7 @@ export function LandingPage() {
                   href={REGISTER_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex min-h-14 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] active:scale-[0.98]"
+                  className="group inline-flex min-h-14 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-7 py-3 text-sm font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] active:scale-[0.98]"
                   style={{
                     clipPath:
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
@@ -1230,7 +1230,7 @@ export function LandingPage() {
           <div className="flex items-center gap-3">
             <img src="/images/logo.png" alt="" className="h-7 w-auto opacity-85" />
             <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/54">
-              Alopit · MNL
+              Alopit
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase text-[#d7d7d7]/45">
