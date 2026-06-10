@@ -70,29 +70,6 @@ const ROOM_BOARD = [
   },
 ];
 
-const VIEWING_PERKS = [
-  {
-    icon: Play,
-    title: "Original Live Feed",
-    body: "Direct from the arena — not a rebroadcast, not a copy.",
-  },
-  {
-    icon: Zap,
-    title: "Smooth Viewing",
-    body: "Low-latency streams with zero buffering, every match.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Dedicated Platform",
-    body: "A focused environment built exclusively for sabong fans.",
-  },
-  {
-    icon: Users,
-    title: "Exclusive Community",
-    body: "Connect with fellow enthusiasts and grow your network.",
-  },
-];
-
 const PAYMENTS = [
   {
     name: "GCash",
@@ -196,6 +173,10 @@ const PROMOS = [
   { src: "/images/banner-3.png", alt: "Alopit banner 3" },
   { src: "/images/banner-4.png", alt: "Alopit banner 4" },
   { src: "/images/banner-5.png", alt: "Alopit banner 5" },
+  { src: "/images/banner-6.png", alt: "Alopit banner 6" },
+  { src: "/images/banner-7.png", alt: "Alopit banner 7" },
+  { src: "/images/banner-8.png", alt: "Alopit banner 8" },
+  { src: "/images/banner-9.png", alt: "Alopit banner 9" },
 ];
 
 const promoVariants = {
@@ -659,62 +640,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="relative border-y border-[#f2c14e]/16 bg-[#070707]">
-          <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:px-12 lg:py-28">
-            <div>
-              <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Premium Experience
-              </motion.p>
-              <motion.h2
-                {...viewReveal(1)}
-                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
-                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-              >
-                Not all live viewing{" "}
-                <span className="text-[#d91f26]">is created equal.</span>
-              </motion.h2>
-              <motion.p
-                {...viewReveal(2)}
-                className="mt-6 max-w-md text-[15px] leading-7 text-[#d7d7d7]/76"
-                style={{ fontFamily: '"Fraunces", serif' }}
-              >
-                Original feeds, dedicated platform, exclusive community — the full
-                premium experience for sabong fans who know the difference.
-              </motion.p>
-            </div>
-            <div className="grid gap-px sm:grid-cols-2">
-              {VIEWING_PERKS.map((perk, i) => (
-                <motion.div
-                  key={perk.title}
-                  {...viewReveal(i)}
-                  className="group border border-[#1e4fa8]/20 bg-[#050505] p-6 transition duration-300 hover:bg-[#0a0c14]"
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/30 bg-[#f2c14e]/8 text-[#f2c14e]">
-                    <perk.icon className="h-5 w-5" />
-                  </span>
-                  <h3
-                    className="mt-5 text-xl leading-none text-[#f5f5f5]"
-                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                  >
-                    {perk.title}
-                  </h3>
-                  <p
-                    className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
-                    style={{ fontFamily: '"Fraunces", serif' }}
-                  >
-                    {perk.body}
-                  </p>
-                  <div className="mt-5 h-px w-full origin-left scale-x-0 bg-[#1e4fa8] transition duration-500 group-hover:scale-x-100" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
-          />
-        </section>
-
         <section className="border-y border-[#1e4fa8]/20 bg-[#080808]">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <div className="text-center">
@@ -891,7 +816,7 @@ export function LandingPage() {
               className="mt-12 text-center"
             >
               <a
-                href={REGISTER_URL}
+                href="https://wkf.ms/4uzhYLR"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] active:scale-[0.98]"
@@ -1019,7 +944,7 @@ export function LandingPage() {
 
                     <div className="mt-8">
                       <a
-                        href={REGISTER_URL}
+                        href="https://wkf.ms/4uzhYLR"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-[11px] font-bold uppercase tracking-wider transition duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
