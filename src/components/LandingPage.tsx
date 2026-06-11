@@ -114,49 +114,49 @@ const COMMUNITY_PERKS = [
 
 const AGENT_TIERS = [
   {
-    tier: "Bronze",
-    headerGradient: "linear-gradient(135deg, #6d4c41, #33211a)",
-    accent: "#a87850",
-    commission: "2%",
-    badge: null as string | null,
-    features: [
-      { text: "GGR or Turnover-based commissions", included: true },
-      { text: "Separate commission wallet", included: true },
-      { text: "Transfer-to-balance anytime", included: true },
-      { text: "Can create downline agents", included: false },
-      { text: "Deposit/Withdraw to downlines", included: false },
-    ],
-    createdBy: "Gold, Silver, or Master agent",
-  },
-  {
     tier: "Gold",
     headerGradient: "linear-gradient(135deg, #b8860b, #5c4a1e)",
     accent: "#f5d880",
-    commission: "5%",
+    commission: "3%",
     badge: "Recommended" as string | null,
     features: [
-      { text: "GGR or Turnover-based commissions", included: true },
+      { text: "Turnover-based commissions", included: true },
       { text: "Separate commission wallet", included: true },
       { text: "Transfer-to-balance anytime", included: true },
-      { text: "Create Silver & Bronze agents", included: true },
+      { text: "Create Silver & Bronze affiliates", included: true },
       { text: "Full deposit/withdraw to downlines", included: true },
     ],
-    createdBy: "Master agent only",
+    createdBy: "Master affiliate only",
   },
   {
     tier: "Silver",
     headerGradient: "linear-gradient(135deg, #4a5568, #1a2332)",
     accent: "#94a8bc",
-    commission: "3.5%",
+    commission: "2%",
     badge: null as string | null,
     features: [
-      { text: "GGR or Turnover-based commissions", included: true },
+      { text: "Turnover-based commissions", included: true },
       { text: "Separate commission wallet", included: true },
       { text: "Transfer-to-balance anytime", included: true },
-      { text: "Create Bronze agents", included: true },
+      { text: "Create Bronze affiliates", included: true },
       { text: "Deposit/Withdraw to downlines", included: false },
     ],
-    createdBy: "Gold or Master agent",
+    createdBy: "Gold or Master affiliate",
+  },
+  {
+    tier: "Bronze",
+    headerGradient: "linear-gradient(135deg, #6d4c41, #33211a)",
+    accent: "#a87850",
+    commission: "1%",
+    badge: null as string | null,
+    features: [
+      { text: "Turnover-based commissions", included: true },
+      { text: "Separate commission wallet", included: true },
+      { text: "Transfer-to-balance anytime", included: true },
+      { text: "Can create downline affiliates", included: false },
+      { text: "Deposit/Withdraw to downlines", included: false },
+    ],
+    createdBy: "Gold, Silver, or Master affiliate",
   },
 ];
 
@@ -775,7 +775,7 @@ export function LandingPage() {
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <div className="text-center">
               <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Agent Partner Program
+                Affiliate Partner Program
               </motion.p>
               <motion.h2
                 {...viewReveal(1)}
@@ -790,8 +790,8 @@ export function LandingPage() {
                 className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-[#d7d7d7]/76"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                Become an Alopit agent and earn commissions from downline betting
-                turnover across Sabong Arena. Choose GGR or Turnover-based commissions — your network, your earnings.
+                Become an Alopit affiliate and earn commissions from downline betting
+                turnover across Sabong Arena. Turnover-based commissions — your network, your earnings.
               </motion.p>
             </div>
 
@@ -830,7 +830,7 @@ export function LandingPage() {
                     style={{ background: t.headerGradient }}
                   >
                     <p className="text-[10px] font-bold uppercase tracking-wider text-white/70">
-                      {t.tier} Agent
+                      {t.tier} Affiliate
                     </p>
                     <p
                       className="mt-2 text-5xl leading-none text-white sm:text-6xl"
@@ -884,7 +884,7 @@ export function LandingPage() {
                             "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                         }}
                       >
-                        Become a Partner
+                        Become an Affiliate
                         <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-45" />
                       </a>
                     </div>
@@ -932,7 +932,7 @@ export function LandingPage() {
                 className="mt-4 max-w-md text-center text-[12px] text-[#d7d7d7]/44"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                Each tier can recruit and manage agents below them in the chain
+                Each tier can recruit and manage affiliates below them in the chain
               </p>
             </motion.div>
           </div>
