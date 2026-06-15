@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 310" role="img" aria-label="Alowin game thumbnail">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a2742" />
+      <stop offset="1" stop-color="#3f1f2b" />
+    </linearGradient>
+    <radialGradient id="shine" cx="35%" cy="28%" r="72%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22" />
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="440" height="310" fill="url(#bg)" />
+  <circle cx="78" cy="56" r="118" fill="url(#shine)" />
+  <circle cx="374" cy="48" r="72" fill="#f2c14e" fill-opacity="0.16" />
+  <path d="M0 244 L118 184 L210 232 L298 160 L440 218 L440 310 L0 310 Z" fill="#000000" fill-opacity="0.18" />
+  <path d="M0 260 L96 206 L182 248 L276 178 L440 238" fill="none" stroke="#f2c14e" stroke-opacity="0.35" stroke-width="6" />
+  <text x="220" y="170" text-anchor="middle" fill="#f5f5f5" font-family="Bebas Neue, IBM Plex Mono, monospace" font-size="58" font-weight="700" letter-spacing="4">ALOWIN</text>
+  <text x="220" y="210" text-anchor="middle" fill="#ffffff" fill-opacity="0.72" font-family="IBM Plex Mono, monospace" font-size="16" font-weight="700" letter-spacing="3">GAME</text>
+</svg>

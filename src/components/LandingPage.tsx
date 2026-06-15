@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   Smartphone,
   Trophy,
-  Users,
   Wallet,
   X,
   Zap,
@@ -91,27 +90,6 @@ const PAYMENTS = [
   },
 ];
 
-const COMMUNITY_PERKS = [
-  {
-    icon: Users,
-    step: "01",
-    title: "Invite Easily",
-    body: "Simple tools to invite more players in just a few clicks.",
-  },
-  {
-    icon: Zap,
-    step: "02",
-    title: "Grow Faster",
-    body: "More invites, stronger community. Build your network.",
-  },
-  {
-    icon: Trophy,
-    step: "03",
-    title: "Earn Rewards",
-    body: "Grow with your players and unlock more opportunities.",
-  },
-];
-
 const AGENT_TIERS = [
   {
     tier: "Gold",
@@ -188,27 +166,123 @@ const promoVariants = {
 const GAME_CATEGORIES = ["All", "Casino", "Live Casino", "Games"] as const;
 type GameCategory = (typeof GAME_CATEGORIES)[number];
 
+const ALOWIN_SPORTSBOOK_URL = "https://www.alowin.club/en/sports/pre-match";
+const ALOWIN_SPORTSBOOK_LIVE_URL = "https://www.alowin.club/en/sports/live";
+const GAME_THUMB_FALLBACK = "/images/alowin-games/fallback.svg";
+
+const SPORTSBOOK_MODES = [
+  {
+    mode: "Live",
+    title: "Follow the action as it happens",
+    body: "Jump into active games and keep the matchday energy moving inside the Alowin sportsbook experience.",
+    cta: "Open live sports",
+    href: ALOWIN_SPORTSBOOK_LIVE_URL,
+  },
+  {
+    mode: "Pre-match",
+    title: "Plan before kickoff",
+    body: "Browse upcoming fixtures, choose your sport, and enter before the game starts.",
+    cta: "View pre-match sports",
+    href: ALOWIN_SPORTSBOOK_URL,
+  },
+];
+
 const ALOWIN_GAMES: {
   name: string;
   category: GameCategory;
   thumb: string;
   path: string;
 }[] = [
-  { name: "Super Ace Deluxe", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/95fe3270a1002bf3793311b20fe2e473_casinoGameIcon3.webp", path: "/en/casino/slots/" },
-  { name: "Sweet Bonanza 1000", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/e8859ce1d80a188cc3e65ee14d48b7fe_casinoGameIcon3.svg", path: "/en/casino/slots/" },
-  { name: "Gates of Olympus Super Scatter", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/f37451e67e4dffc1e1dac08ba8e6f4a9_casinoGameIcon3.svg", path: "/en/casino/slots/" },
-  { name: "Pinata Wins", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/e0dda6320a58ac2df5e8fd33e6f1b528_casinoGameIcon3.webp", path: "/en/casino/slots/" },
-  { name: "Super Ace 2", category: "Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/e182b0d8904ea392723cc82f8d569810_casinoGameIcon3.webp", path: "/en/casino/slots/" },
-  { name: "Super Color Game", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/53d072e492e036d0d2f3d54e2e71496e_casinoGameIcon3.webp", path: "/en/live-casino/home" },
-  { name: "Speed Baccarat A", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/5862ad95cb3499606cc0661e058ceaaf_casinoGameIcon3.webp", path: "/en/live-casino/home" },
-  { name: "Klasik Free Bet Blackjack 1", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/6a0d095980275571a1c6f0ed14531f46_casinoGameIcon3.webp", path: "/en/live-casino/home" },
-  { name: "Turkish Crazy Time", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/02fa7864ae587e4e9ba4701f1bc24d67_casinoGameIcon3.webp", path: "/en/live-casino/home" },
-  { name: "VIP Always 6 Blackjack 1", category: "Live Casino", thumb: "https://icons.alowin.club/content/images/casino/icon3/442e8c2c8bd825062e7d55cd83a5564d_casinoGameIcon3.webp", path: "/en/live-casino/home" },
-  { name: "Color Game", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/bd52470b4d6c76c7c4791735b5951e65_casinoGameIcon3.webp", path: "/en/games/home" },
-  { name: "Color Hunt", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/ff8e0d0db54429196eda2e930675e038_casinoGameIcon3.webp", path: "/en/games/home" },
-  { name: "Chicky Choice", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/cfceb577827a86981c4e68eb289ed811_casinoGameIcon3.gif", path: "/en/games/home" },
-  { name: "Fruit X", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/f22dfb48471daec21aa54436e251d29c_casinoGameIcon3.webp", path: "/en/games/home" },
-  { name: "Mines", category: "Games", thumb: "https://icons.alowin.club/content/images/casino/icon3/51a4bb644233ca36ecf61aba4c3d86d4_casinoGameIcon3.svg", path: "/en/games/home" },
+  {
+    name: "Super Ace Deluxe",
+    category: "Casino",
+    thumb: "/images/alowin-games/super-ace-deluxe.webp",
+    path: "/en/casino/slots/",
+  },
+  {
+    name: "Sweet Bonanza 1000",
+    category: "Casino",
+    thumb: "/images/alowin-games/sweet-bonanza-1000.svg",
+    path: "/en/casino/slots/",
+  },
+  {
+    name: "Gates of Olympus Super Scatter",
+    category: "Casino",
+    thumb: "/images/alowin-games/gates-of-olympus-super-scatter.svg",
+    path: "/en/casino/slots/",
+  },
+  {
+    name: "Pinata Wins",
+    category: "Casino",
+    thumb: "/images/alowin-games/pinata-wins.webp",
+    path: "/en/casino/slots/",
+  },
+  {
+    name: "Super Ace 2",
+    category: "Casino",
+    thumb: "/images/alowin-games/super-ace-2.webp",
+    path: "/en/casino/slots/",
+  },
+  {
+    name: "Super Color Game",
+    category: "Live Casino",
+    thumb: "/images/alowin-games/super-color-game.webp",
+    path: "/en/live-casino/home",
+  },
+  {
+    name: "Speed Baccarat A",
+    category: "Live Casino",
+    thumb: "/images/alowin-games/speed-baccarat-a.webp",
+    path: "/en/live-casino/home",
+  },
+  {
+    name: "Klasik Free Bet Blackjack 1",
+    category: "Live Casino",
+    thumb: "/images/alowin-games/klasik-free-bet-blackjack-1.webp",
+    path: "/en/live-casino/home",
+  },
+  {
+    name: "Turkish Crazy Time",
+    category: "Live Casino",
+    thumb: "/images/alowin-games/turkish-crazy-time.webp",
+    path: "/en/live-casino/home",
+  },
+  {
+    name: "VIP Always 6 Blackjack 1",
+    category: "Live Casino",
+    thumb: "/images/alowin-games/vip-always-6-blackjack-1.webp",
+    path: "/en/live-casino/home",
+  },
+  {
+    name: "Color Game",
+    category: "Games",
+    thumb: "/images/alowin-games/color-game.webp",
+    path: "/en/games/home",
+  },
+  {
+    name: "Color Hunt",
+    category: "Games",
+    thumb: "/images/alowin-games/color-hunt.webp",
+    path: "/en/games/home",
+  },
+  {
+    name: "Chicky Choice",
+    category: "Games",
+    thumb: "/images/alowin-games/chicky-choice.gif",
+    path: "/en/games/home",
+  },
+  {
+    name: "Fruit X",
+    category: "Games",
+    thumb: "/images/alowin-games/fruit-x.webp",
+    path: "/en/games/home",
+  },
+  {
+    name: "Mines",
+    category: "Games",
+    thumb: "/images/alowin-games/mines.svg",
+    path: "/en/games/home",
+  },
 ];
 
 export function LandingPage() {
@@ -942,107 +1016,6 @@ export function LandingPage() {
           />
         </section>
 
-        <section className="border-y border-[#f2c14e]/16 bg-[#070707]">
-          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-            <div className="text-center">
-              <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Community
-              </motion.p>
-              <motion.h2
-                {...viewReveal(1)}
-                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
-                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-              >
-                Grow with{" "}
-                <span className="text-[#f2c14e]">less stress.</span>
-              </motion.h2>
-              <motion.p
-                {...viewReveal(2)}
-                className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
-                style={{ fontFamily: '"Fraunces", serif' }}
-              >
-                When the process is simpler, it's easier to focus on building
-                your community. Invite more players, grow together.
-              </motion.p>
-            </div>
-
-            <div className="mt-14 grid gap-6 sm:grid-cols-3">
-              {COMMUNITY_PERKS.map((perk, i) => (
-                <motion.div
-                  key={perk.title}
-                  {...viewReveal(i)}
-                  className="relative border border-[#f2c14e]/16 bg-[#050505] p-8"
-                  style={{
-                    clipPath:
-                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
-                  }}
-                >
-                  <div className="flex items-center gap-4">
-                    <span
-                      className="text-3xl leading-none text-[#f2c14e]/32"
-                      style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                    >
-                      {perk.step}
-                    </span>
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/30 bg-[#f2c14e]/8 text-[#f2c14e]">
-                      <perk.icon className="h-5 w-5" />
-                    </span>
-                  </div>
-                  <h3
-                    className="mt-6 text-2xl leading-none text-[#f5f5f5]"
-                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                  >
-                    {perk.title}
-                  </h3>
-                  <p
-                    className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
-                    style={{ fontFamily: '"Fraunces", serif' }}
-                  >
-                    {perk.body}
-                  </p>
-                  {i < COMMUNITY_PERKS.length - 1 && (
-                    <span
-                      aria-hidden
-                      className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-[#f2c14e]/32 sm:block"
-                    >
-                      <ArrowUpRight className="h-5 w-5 -rotate-0" />
-                    </span>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              {...viewReveal(3)}
-              className="mt-12 text-center"
-            >
-              <a
-                href="https://wkf.ms/4uzhYLR"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-7 py-3 text-sm font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] active:scale-[0.98]"
-                style={{
-                  clipPath:
-                    "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
-                }}
-              >
-                Invite more players
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
-              </a>
-              <p
-                className="mt-4 text-[12px] text-[#d7d7d7]/48"
-                style={{ fontFamily: '"Fraunces", serif' }}
-              >
-                Build a stronger community together
-              </p>
-            </motion.div>
-          </div>
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
-          />
-        </section>
-
         <section className="border-y border-[#1e4fa8]/20 bg-[#070707]">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <div className="text-center">
@@ -1114,7 +1087,16 @@ export function LandingPage() {
                     <img
                       src={game.thumb}
                       alt={game.name}
+                      width={440}
+                      height={310}
                       loading="lazy"
+                      decoding="async"
+                      onError={(event) => {
+                        const img = event.currentTarget;
+                        if (img.dataset.fallbackApplied === "1") return;
+                        img.dataset.fallbackApplied = "1";
+                        img.src = GAME_THUMB_FALLBACK;
+                      }}
                       className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                     />
                     <div
@@ -1167,6 +1149,146 @@ export function LandingPage() {
             aria-hidden
             className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
           />
+        </section>
+
+        <section className="relative overflow-hidden border-b border-[#f2c14e]/16 bg-[#050505]">
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-70"
+            style={{
+              background:
+                "linear-gradient(115deg, rgba(30,79,168,0.18), transparent 30%, transparent 68%, rgba(217,31,38,0.2)), repeating-linear-gradient(90deg, transparent 0 78px, rgba(242,193,78,0.045) 79px 80px)",
+            }}
+          />
+          <div className="relative mx-auto grid max-w-[1440px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-12 lg:py-24">
+            <motion.div {...viewReveal(0)} className="max-w-2xl self-center">
+              <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                Sportsbook
+              </p>
+              <h2
+                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-7xl"
+                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+              >
+                Alowin{" "}
+                <span className="text-[#f2c14e]">Sportsbook.</span>
+              </h2>
+              <p
+                className="mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
+                style={{ fontFamily: '"Fraunces", serif' }}
+              >
+                Move between live sports and pre-match action across football,
+                basketball, tennis, and more with the same Alowin account
+                experience.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                {["Live sports", "Pre-match", "Multi-sport"].map((label) => (
+                  <span
+                    key={label}
+                    className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-3 py-2 text-[10px] font-bold uppercase text-[#d7d7d7]/75"
+                  >
+                    <ShieldCheck className="h-3.5 w-3.5 text-[#f2c14e]" />
+                    {label}
+                  </span>
+                ))}
+              </div>
+              <a
+                href={ALOWIN_SPORTSBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-8 inline-flex min-h-12 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.22)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
+                style={{
+                  clipPath:
+                    "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                }}
+              >
+                Open Sportsbook
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+              </a>
+            </motion.div>
+
+            <motion.div
+              {...viewReveal(1)}
+              className="relative overflow-hidden border border-[#f2c14e]/20 bg-[#080808]"
+              style={{
+                clipPath:
+                  "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)",
+              }}
+            >
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(30,79,168,0.16), transparent 44%), radial-gradient(circle at 88% 18%, rgba(242,193,78,0.18), transparent 28%)",
+                }}
+              />
+              <div className="relative p-5 sm:p-7">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                      Sportsbook board
+                    </p>
+                    <p className="mt-1 text-[12px] font-bold uppercase text-[#f5f5f5]">
+                      Live and pre-match
+                    </p>
+                  </div>
+                  <span className="inline-flex h-10 w-10 items-center justify-center border border-[#f2c14e]/35 bg-[#f2c14e]/10 text-[#f2c14e]">
+                    <Trophy className="h-5 w-5" />
+                  </span>
+                </div>
+
+                <div className="mt-5 grid gap-3">
+                  {SPORTSBOOK_MODES.map((item) => (
+                    <div
+                      key={item.mode}
+                      className="group border border-white/8 bg-black/24 p-4 transition duration-300 hover:border-[#f2c14e]/28 hover:bg-[#f2c14e]/[0.04]"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                            {item.mode}
+                          </p>
+                          <p className="mt-1 text-[13px] font-bold uppercase text-[#f5f5f5]">
+                            {item.title}
+                          </p>
+                        </div>
+                        <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-[#d7d7d7]/34 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#f2c14e]" />
+                      </div>
+                      <p
+                        className="mt-3 max-w-xl text-[13px] leading-6 text-[#d7d7d7]/66"
+                        style={{ fontFamily: '"Fraunces", serif' }}
+                      >
+                        {item.body}
+                      </p>
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex min-h-9 items-center gap-2 border border-white/10 px-3 py-2 text-[10px] font-bold uppercase text-[#d7d7d7]/70 transition hover:border-[#f2c14e]/40 hover:text-[#f2c14e]"
+                      >
+                        {item.cta}
+                        <ChevronRight className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-5 border border-[#f2c14e]/16 bg-[#f2c14e]/[0.05] p-4">
+                  <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                    One sportsbook flow
+                  </p>
+                  <p
+                    className="mt-2 text-[14px] leading-6 text-[#d7d7d7]/78"
+                    style={{ fontFamily: '"Fraunces", serif' }}
+                  >
+                    Start with upcoming matches, switch into live events, and
+                    continue straight into Alowin when you are ready.
+                  </p>
+                </div>
+
+              </div>
+            </motion.div>
+          </div>
         </section>
 
         <section className="mx-auto max-w-[1440px] px-5 pb-20 pt-20 sm:px-8 lg:px-12 lg:pb-28 lg:pt-28">
