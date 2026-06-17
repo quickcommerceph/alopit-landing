@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-17T00:00:00Z",
+  "title": "Design System: Alopit",
+  "extensions": {
+    "colorMeta": {
+      "pit-gold": {
+        "role": "primary",
+        "displayName": "Pit Gold",
+        "canonical": "oklch(0.83 0.15 80)",
+        "tonalRamp": ["#4a3a16", "#6b521e", "#8c6e29", "#ad8a3a", "#cda44c", "#f2c14e", "#fad585", "#fde6b0"]
+      },
+      "cockpit-red": {
+        "role": "primary",
+        "displayName": "Cockpit Red",
+        "canonical": "oklch(0.55 0.20 27)",
+        "tonalRamp": ["#3a0608", "#5e0c10", "#82121a", "#a8191f", "#d91f26", "#e8484e", "#f17a7e", "#f7abad"]
+      },
+      "slate-blue": {
+        "role": "secondary",
+        "displayName": "Slate Blue",
+        "canonical": "oklch(0.42 0.15 260)",
+        "tonalRamp": ["#071226", "#0c2043", "#122e63", "#1e4fa8", "#3a6bc4", "#5d8cd6", "#86ace6", "#b3cdf2"]
+      },
+      "pit-black": {
+        "role": "neutral",
+        "displayName": "Pit Black",
+        "canonical": "oklch(0.02 0 0)",
+        "tonalRamp": ["#000000", "#050505", "#070707", "#080808", "#0a0a0a", "#121212", "#1d1d1d", "#2a2a2a"]
+      },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#f5f5f5" },
+      "prose": { "role": "neutral", "displayName": "Prose", "canonical": "#d7d7d7" },
+      "ember": { "role": "tertiary", "displayName": "Ember (hover only)", "canonical": "#ff7a00" },
+      "ember-hot": { "role": "tertiary", "displayName": "Ember Hot (hover only)", "canonical": "#ff3a2f" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Bebas Neue)", "purpose": "Hero + section headlines only. The arena announcer." },
+      "body": { "displayName": "Body (Fraunces)", "purpose": "All prose, 65-75ch. The premium analyst voice." },
+      "label": { "displayName": "Label (IBM Plex Mono)", "purpose": "Eyebrows, CTAs, nav, metadata. Uppercase + tracked signage." }
+    },
+    "shadows": [
+      { "name": "cta-glow-red", "value": "0 22px 60px rgba(217,31,38,0.35)", "purpose": "Ambient heat under primary red CTAs." },
+      { "name": "cta-glow-gold", "value": "0 22px 60px rgba(242,193,78,0.22)", "purpose": "Softer glow under gold secondary CTAs." },
+      { "name": "live-halo", "value": "0 0 14px rgba(242,193,78,0.65)", "purpose": "Tight halo on active carousel dots / live indicators." },
+      { "name": "hero-display", "value": "0 0 30px rgba(217,31,38,0.42), 0 18px 60px rgba(0,0,0,0.55)", "purpose": "Hero text-shadow for legibility over imagery (applied as text-shadow, not box-shadow)." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Every reveal/transition. Ease-out-quint. No bounce/elastic." },
+      { "name": "stagger", "value": "i * 0.08s (reveal base delay 0.12s)", "purpose": "Staggered entrance across siblings." },
+      { "name": "reveal-duration", "value": "0.6s opacity + y:24px", "purpose": "reveal(i) on-mount and viewReveal(i) whileInView, once." },
+      { "name": "marquee", "value": "36s linear infinite", "purpose": "Marquee strip scroll." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (Register/Deposit)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Cockpit Red CTA with red glow, notched corners; warms on hover.",
+      "html": "<button class=\"ds-btn-primary\">REGISTER NOW</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 56px; padding: 12px 28px; background: #d91f26; color: #ffffff; border: 1px solid rgba(255,122,0,0.6); font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; box-shadow: 0 22px 60px rgba(217,31,38,0.35); clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s; cursor: pointer; } .ds-btn-primary:hover { background: #ff3a2f; transform: translateY(-2px); } .ds-btn-primary:active { transform: scale(0.98); } .ds-btn-primary:focus-visible { outline: 2px solid #f2c14e; outline-offset: 2px; }"
+    },
+    {
+      "name": "Gold Button (Secondary)",
+      "kind": "button",
+      "refersTo": "button-gold",
+      "description": "Pit Gold CTA with black text, softer gold glow; warms to ember on hover.",
+      "html": "<button class=\"ds-btn-gold\">OPEN LIVE ROOMS</button>",
+      "css": ".ds-btn-gold { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 48px; padding: 12px 28px; background: #f2c14e; color: #050505; border: 1px solid rgba(242,193,78,0.6); font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; box-shadow: 0 22px 60px rgba(242,193,78,0.22); clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s, color 0.3s; cursor: pointer; } .ds-btn-gold:hover { background: #ff7a00; color: #ffffff; transform: translateY(-2px); } .ds-btn-gold:active { transform: scale(0.98); } .ds-btn-gold:focus-visible { outline: 2px solid #f2c14e; outline-offset: 2px; }"
+    },
+    {
+      "name": "Eyebrow Label",
+      "kind": "custom",
+      "refersTo": "eyebrow",
+      "description": "Gold uppercase IBM Plex Mono signpost above section titles.",
+      "html": "<p class=\"ds-eyebrow\">PREMIUM E-SABONG</p>",
+      "css": ".ds-eyebrow { margin: 0; color: #f2c14e; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; line-height: 1.4; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat Pit Black plane with a low-opacity gold border; border lightens on hover. No card shadow.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card__title\">Original live feed</h3><p class=\"ds-card__body\">Crystal-clear HD streams with low latency.</p></div>",
+      "css": ".ds-card { background: #050505; color: #f5f5f5; padding: 32px; border: 1px solid rgba(242,193,78,0.18); clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); transition: border-color 0.3s, background 0.3s; } .ds-card:hover { border-color: rgba(242,193,78,0.32); background: rgba(242,193,78,0.04); } .ds-card__title { margin: 0 0 8px; font-family: 'Bebas Neue', monospace; font-size: 28px; font-weight: 400; line-height: 1; letter-spacing: 0.01em; } .ds-card__body { margin: 0; font-family: 'Fraunces', serif; font-size: 15px; line-height: 1.6; color: #d7d7d7; }"
+    },
+    {
+      "name": "Tri-Color Accent Bar",
+      "kind": "custom",
+      "refersTo": "tri-color-bar",
+      "description": "Signature section/card seal: blue through gold to red gradient strip.",
+      "html": "<div class=\"ds-accent-bar\"></div>",
+      "css": ".ds-accent-bar { width: 100%; height: 4px; background: linear-gradient(to right, #1e4fa8, #f2c14e, #d91f26); border: none; }"
+    },
+    {
+      "name": "Live Pulse Dot",
+      "kind": "custom",
+      "refersTo": "live-dot",
+      "description": "Red dot with a pinging halo = the 'happening now' signal.",
+      "html": "<span class=\"ds-live-dot\"><span class=\"ds-live-dot__ping\"></span><span class=\"ds-live-dot__core\"></span></span>",
+      "css": ".ds-live-dot { position: relative; display: inline-flex; width: 8px; height: 8px; } .ds-live-dot__ping { position: absolute; inset: 0; border-radius: 9999px; background: #d91f26; opacity: 0.75; animation: ds-ping 1.6s cubic-bezier(0,0,0.2,1) infinite; } .ds-live-dot__core { position: relative; display: inline-block; width: 8px; height: 8px; border-radius: 9999px; background: #d91f26; } @keyframes ds-ping { 75%,100% { transform: scale(2.2); opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-live-dot__ping { animation: none; } }"
+    },
+    {
+      "name": "Section Headline (Display)",
+      "kind": "custom",
+      "refersTo": "display-headline",
+      "description": "Bebas Neue two-line headline; second line carries the Pit Gold accent.",
+      "html": "<h2 class=\"ds-display\">Where the pit <span class=\"ds-display__accent\">meets the pulse.</span></h2>",
+      "css": ".ds-display { margin: 0; font-family: 'Bebas Neue', 'IBM Plex Mono', monospace; font-weight: 400; font-size: clamp(2.75rem, 8vw, 5.5rem); line-height: 1; letter-spacing: 0.01em; color: #f5f5f5; text-shadow: 0 0 30px rgba(217,31,38,0.42), 0 18px 60px rgba(0,0,0,0.55); } .ds-display__accent { color: #f2c14e; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Ringside Pulse",
+    "overview": "Alopit is the electricity of the live cockfighting pit, condensed into a phone screen. A near-black canvas scored by three saturated signals — gold, red, and blue — that fire like arena lights against the dark. Everything exists to make the visitor feel something is happening right now, and that the next CTA is the way in. Intensity comes from contrast, type, and motion, not clutter: big Bebas Neue display lines hit and step aside; Fraunces serif prose carries the argument; IBM Plex Mono labels stitch the sections like ringside signage. Depth is built from stacked near-black shades, not shadows. Signature moves: notched corners (clip-path polygon, never border-radius), the tri-color accent bar (blue through gold to red) that seals every section, and rationed glow reserved for CTAs and live signals.",
+    "keyCharacteristics": [
+      "Near-black, layer-banded canvas (#050505 to #090909) — depth without shadows.",
+      "Three saturated signals only: Pit Gold, Cockpit Red, Slate Blue.",
+      "Notched corners (clip-path polygon), never rounded.",
+      "Tri-color accent bar (blue -> gold -> red) seals every section.",
+      "Display type shouts (Bebas Neue); prose argues (Fraunces); labels signpost (IBM Plex Mono).",
+      "Glow is rationed — reserved for CTAs and live signals, never decorative."
+    ],
+    "rules": [
+      { "name": "The Three-Signal Rule", "body": "Gold, red, and blue are the only saturated hues on any screen. Ember/ember-hot appear on hover only. No fourth accent; no gradients between signals except the canonical tri-color bar.", "section": "colors" },
+      { "name": "The Tonal-Banding Rule", "body": "Depth comes from stepping between #050505, #070707, #080808, and #090909 across adjacent sections — not from drop shadows. Glow shadows are reserved for CTAs and live signals.", "section": "elevation" },
+      { "name": "The Announcer Rule", "body": "Bebas Neue is reserved for headlines — display and headline roles only. Never set body, labels, or buttons in Bebas Neue.", "section": "typography" },
+      { "name": "The Label Floor", "body": "Labels are never below 10px and always uppercase + tracked (>=0.14em).", "section": "typography" },
+      { "name": "The Glow Budget Rule", "body": "If it isn't a CTA or a live signal, it doesn't glow. Cards, borders, images, and backgrounds stay flat.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do build depth by stepping adjacent sections between #050505, #070707, #080808, and #090909 — tonal banding, not shadows.",
+      "Do notch corners with a clip-path polygon (top-left + bottom-right cuts, 8-14px by scale) and leave border-radius at 0 everywhere.",
+      "Do seal sections with the tri-color accent bar (#1e4fa8 -> #f2c14e -> #d91f26).",
+      "Do reserve glow for primary CTAs (0 22px 60px rgba(217,31,38,0.35)) and live signals only.",
+      "Do keep body copy in Fraunces at 65-75ch, body color #d7d7d7 or darker; verify >=4.5:1 contrast.",
+      "Do gate every animation on prefers-reduced-motion (reuse reveal(i)/viewReveal(i), ease [0.16,1,0.3,1], stagger i*0.08)."
+    ],
+    "donts": [
+      "Don't introduce a fourth saturated hue — Gold, Red, Blue are the only signals (Ember/Ember-Hot are hover-only).",
+      "Don't look like cheap cluttered online-casino: no neon spam, blinking banners, or busy tile walls.",
+      "Don't look like generic corporate fintech: no sterile blue-chip banking sterility that erases the sport's grit.",
+      "Don't look like the Western SaaS / AI template: no Inter, no purple-to-blue gradients, no cream cards, no rounded-square icon tile above every heading, no background-clip:text gradient headlines.",
+      "Don't look like cartoonish / mascot gambling: no rooster mascots, cartoon chips, or childish iconography.",
+      "Don't use border-radius; corners are notched or square.",
+      "Don't nest cards inside cards, or use side-stripe (border-left/right >1px) accents.",
+      "Don't put a tracked uppercase eyebrow above every section by reflex, or number every section 01/02/03 unless it is genuinely an ordered sequence.",
+      "Don't use bounce/elastic easing — ease out with [0.16, 1, 0.3, 1]."
+    ]
+  }
+}

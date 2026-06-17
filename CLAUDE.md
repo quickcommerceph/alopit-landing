@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Design Context
+
+This project is set up with [Impeccable](https://impeccable.style) (`/impeccable`). Before any design/UI work, read these two root files — they are the source of truth that every Impeccable command consumes:
+
+- **`PRODUCT.md`** — strategic context: register (`brand`), users, purpose, brand personality, anti-references, design principles, accessibility. Answers *who/what/why*.
+- **`DESIGN.md`** — visual system (Google Stitch format): the "Ringside Pulse" dark palette (Pit Gold `#f2c14e` / Cockpit Red `#d91f26` / Slate Blue `#1e4fa8` on Pit Black), Bebas Neue / Fraunces / IBM Plex Mono type, notched clip-path corners, tri-color accent bars, tonal banding + rationed glow. Answers *how it looks*. Visual sidecar: `.impeccable/design.json`.
+
+Run `/impeccable` (no args) for context-aware next-step suggestions, or e.g. `/impeccable critique landing`, `/impeccable polish`, `/impeccable live`.
+
 ## Commands
 
 ```bash
