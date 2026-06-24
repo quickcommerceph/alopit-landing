@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   Check,
@@ -14,53 +14,15 @@ import {
   Zap,
 } from "lucide-react";
 import { ALOWIN_URL, LOGIN_URL, REGISTER_URL } from "../lib/constants";
+import { LanguageSelector } from "./LanguageSelector";
 import { openLiveChat } from "../lib/liveChat";
+import { COPY } from "../lib/copy";
+import {
+  getInitialLocale,
+  persistLocale,
+  type Locale,
+} from "../lib/i18n";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
-
-const MARQUEE = [
-  "LIVE ACTION",
-  "REAL PASSION",
-  "PREMIUM E-SABONG",
-  "RINGSIDE FROM ANYWHERE",
-  "ONE COMMUNITY",
-  "BROADCAST DAILY",
-  "ALOPIT",
-  "MAS SIMPLE",
-  "MAS CONVENIENT",
-  "ORIGINAL LIVE FEED",
-];
-
-const TRUST = [
-  {
-    icon: ShieldCheck,
-    title: "Safe & secure",
-    body: "Trusted room entry and reliable system.",
-  },
-  {
-    icon: Zap,
-    title: "Self cash-in & out",
-    body: "Fast deposits and withdrawals on your terms.",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile-first",
-    body: "Designed for phones, scaled up cleanly.",
-  },
-  {
-    icon: Headphones,
-    title: "Live support",
-    body: "Help is close when you need it most.",
-    liveChat: true,
-  },
-];
-
-const FEATURES = [
-  { no: "I", title: "Original live feed", body: "Crystal-clear HD streams with low latency. Not all live viewing is created equal." },
-  { no: "II", title: "Self-service transactions", body: "Cash in and cash out anytime — no manual process, no waiting." },
-  { no: "III", title: "Multiple payment channels", body: "GCash, Maya, and QRPH-supported banks all in one platform." },
-  { no: "IV", title: "Smooth viewing", body: "A dedicated platform environment built for uninterrupted streaming." },
-  { no: "V", title: "Exclusive community", body: "Invite players, grow your network, and unlock more rewards together." },
-];
 
 const ROOM_BOARD = [
   {
@@ -68,6 +30,8 @@ const ROOM_BOARD = [
     state: "Live now",
   },
 ];
+
+const TRUST_ICONS = [ShieldCheck, Zap, Smartphone, Headphones] as const;
 
 const PAYMENTS = [
   {
@@ -163,7 +127,7 @@ const promoVariants = {
   exit: (dir: number) => ({ x: dir >= 0 ? "-100%" : "100%", opacity: 0.5 }),
 };
 
-const GAME_CATEGORIES = ["All", "Casino", "Live Casino", "Games"] as const;
+const GAME_CATEGORIES = ["all", "casino", "liveCasino", "games"] as const;
 type GameCategory = (typeof GAME_CATEGORIES)[number];
 
 const ALOWIN_SPORTSBOOK_URL = "https://www.alowin.club/en/sports/pre-match";
@@ -195,91 +159,91 @@ const ALOWIN_GAMES: {
 }[] = [
   {
     name: "Super Ace Deluxe",
-    category: "Casino",
+    category: "casino",
     thumb: "/images/alowin-games/super-ace-deluxe.webp",
     path: "/en/casino/slots/",
   },
   {
     name: "Sweet Bonanza 1000",
-    category: "Casino",
+    category: "casino",
     thumb: "/images/alowin-games/sweet-bonanza-1000.svg",
     path: "/en/casino/slots/",
   },
   {
     name: "Gates of Olympus Super Scatter",
-    category: "Casino",
+    category: "casino",
     thumb: "/images/alowin-games/gates-of-olympus-super-scatter.svg",
     path: "/en/casino/slots/",
   },
   {
     name: "Pinata Wins",
-    category: "Casino",
+    category: "casino",
     thumb: "/images/alowin-games/pinata-wins.webp",
     path: "/en/casino/slots/",
   },
   {
     name: "Super Ace 2",
-    category: "Casino",
+    category: "casino",
     thumb: "/images/alowin-games/super-ace-2.webp",
     path: "/en/casino/slots/",
   },
   {
     name: "Super Color Game",
-    category: "Live Casino",
+    category: "liveCasino",
     thumb: "/images/alowin-games/super-color-game.webp",
     path: "/en/live-casino/home",
   },
   {
     name: "Speed Baccarat A",
-    category: "Live Casino",
+    category: "liveCasino",
     thumb: "/images/alowin-games/speed-baccarat-a.webp",
     path: "/en/live-casino/home",
   },
   {
     name: "Klasik Free Bet Blackjack 1",
-    category: "Live Casino",
+    category: "liveCasino",
     thumb: "/images/alowin-games/klasik-free-bet-blackjack-1.webp",
     path: "/en/live-casino/home",
   },
   {
     name: "Turkish Crazy Time",
-    category: "Live Casino",
+    category: "liveCasino",
     thumb: "/images/alowin-games/turkish-crazy-time.webp",
     path: "/en/live-casino/home",
   },
   {
     name: "VIP Always 6 Blackjack 1",
-    category: "Live Casino",
+    category: "liveCasino",
     thumb: "/images/alowin-games/vip-always-6-blackjack-1.webp",
     path: "/en/live-casino/home",
   },
   {
     name: "Color Game",
-    category: "Games",
+    category: "games",
     thumb: "/images/alowin-games/color-game.webp",
     path: "/en/games/home",
   },
   {
     name: "Color Hunt",
-    category: "Games",
+    category: "games",
     thumb: "/images/alowin-games/color-hunt.webp",
     path: "/en/games/home",
   },
   {
     name: "Chicky Choice",
-    category: "Games",
+    category: "games",
     thumb: "/images/alowin-games/chicky-choice.gif",
     path: "/en/games/home",
   },
   {
     name: "Fruit X",
-    category: "Games",
+    category: "games",
     thumb: "/images/alowin-games/fruit-x.webp",
     path: "/en/games/home",
   },
   {
     name: "Mines",
-    category: "Games",
+    category: "games",
     thumb: "/images/alowin-games/mines.svg",
     path: "/en/games/home",
   },
@@ -287,11 +251,19 @@ const ALOWIN_GAMES: {
 
 export function LandingPage() {
   const reduced = usePrefersReducedMotion();
+  const [locale, setLocale] = useState<Locale>(() => getInitialLocale());
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [headerScrolled, setHeaderScrolled] = useState(false);
+  const lastScrollY = useRef(0);
+  const scrollTicking = useRef(false);
+  const scrollFrame = useRef<number | null>(null);
 
   const [[promoIndex, promoDir], setPromo] = useState<[number, number]>([0, 0]);
-  const [activeCategory, setActiveCategory] = useState<GameCategory>("All");
+  const [activeCategory, setActiveCategory] = useState<GameCategory>("all");
   const [promoPaused, setPromoPaused] = useState(false);
   const goToPromo = (i: number) => setPromo(([cur]) => [i, i >= cur ? 1 : -1]);
+
+  const copy = COPY[locale];
 
   useEffect(() => {
     if (reduced || promoPaused) return;
@@ -301,6 +273,47 @@ export function LandingPage() {
     );
     return () => clearInterval(id);
   }, [reduced, promoIndex, promoPaused]);
+
+  useEffect(() => {
+    persistLocale(locale);
+    document.documentElement.lang = locale;
+  }, [locale]);
+
+  useEffect(() => {
+    const updateHeaderState = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - lastScrollY.current;
+      const nearTop = currentY < 24;
+
+      setHeaderScrolled(!nearTop);
+
+      if (nearTop || delta < -8) {
+        setHeaderVisible(true);
+      } else if (delta > 8) {
+        setHeaderVisible(false);
+      }
+
+      lastScrollY.current = currentY;
+      scrollTicking.current = false;
+    };
+
+    const onScroll = () => {
+      if (scrollTicking.current) return;
+      scrollTicking.current = true;
+      scrollFrame.current = window.requestAnimationFrame(updateHeaderState);
+    };
+
+    lastScrollY.current = window.scrollY;
+    updateHeaderState();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (scrollFrame.current !== null) {
+        window.cancelAnimationFrame(scrollFrame.current);
+      }
+    };
+  }, []);
 
   const reveal = (i: number) =>
     reduced
@@ -328,6 +341,10 @@ export function LandingPage() {
         },
   });
 
+  const handleLocaleChange = (nextLocale: Locale) => {
+    setLocale(nextLocale);
+  };
+
   return (
     <div
       className="relative min-h-screen overflow-x-clip"
@@ -346,22 +363,78 @@ export function LandingPage() {
         }}
       />
 
-      <header className="absolute inset-x-0 top-0 z-30">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
-          <span className="hidden text-[10px] font-bold uppercase text-[#f2c14e] sm:inline">
-            Premium E-Sabong
-          </span>
-          <a href="#top" className="mx-auto text-[11px] font-bold uppercase tracking-[0.42em] text-[#f5f5f5] sm:mx-0" aria-label="Alopit home">
-            Alopit
-          </a>
-          <div className="flex items-center gap-2.5 sm:gap-4">
+      <header
+        className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-5 sm:pt-5 lg:px-8"
+        aria-hidden={!headerVisible}
+        style={{
+          pointerEvents: headerVisible ? "auto" : "none",
+        }}
+      >
+        <motion.nav
+          initial={false}
+          animate={
+            headerVisible
+              ? { y: 0, opacity: 1 }
+              : { y: -120, opacity: 0 }
+          }
+          transition={
+            reduced
+              ? { duration: 0 }
+              : { duration: 0.28, ease: [0.16, 1, 0.3, 1] }
+          }
+          className={`mx-auto flex max-w-[1344px] flex-col gap-3 border px-4 py-3 backdrop-blur-xl sm:px-5 lg:flex-row lg:items-center lg:justify-between ${
+            headerScrolled
+              ? "border-[#f2c14e]/18 bg-[#050505]/78 shadow-[0_16px_60px_rgba(0,0,0,0.28)]"
+              : "border-white/8 bg-[#050505]/28"
+          }`}
+          style={{
+            clipPath:
+              "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)",
+          }}
+        >
+          <div className="flex items-center justify-between gap-4">
+            <a href="#top" className="inline-flex items-center gap-2" aria-label="Alopit home">
+              <img src="/images/logo.png" alt="" className="h-7 w-auto opacity-90" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.42em] text-[#f5f5f5]">
+                Alopit
+              </span>
+            </a>
+
+            <div className="flex items-center gap-2 lg:hidden">
+              <LanguageSelector locale={locale} onChange={handleLocaleChange} />
+              <a
+                href={LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#f5f5f5]/75 transition hover:text-[#f2c14e]"
+              >
+                {copy.header.login}
+              </a>
+              <a
+                href={REGISTER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1.5 border border-[#f2c14e]/60 bg-[#f2c14e] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
+                style={{
+                  clipPath:
+                    "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                }}
+              >
+                {copy.header.register}
+                <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" />
+              </a>
+            </div>
+          </div>
+
+          <div className="hidden items-center gap-2.5 sm:gap-4 lg:flex">
+            <LanguageSelector locale={locale} onChange={handleLocaleChange} />
             <a
               href={LOGIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#f5f5f5]/75 transition hover:text-[#f2c14e]"
             >
-              Login
+              {copy.header.login}
             </a>
             <a
               href={REGISTER_URL}
@@ -373,18 +446,18 @@ export function LandingPage() {
                   "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
               }}
             >
-              Register
+              {copy.header.register}
               <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" />
             </a>
           </div>
-        </div>
+        </motion.nav>
       </header>
 
       <main className="relative z-10">
         <section id="top" className="relative isolate min-h-[88svh] overflow-hidden">
-          <img
-            src="/images/e-sabong-thumbnail.jpg"
-            alt="Live sabong arena"
+            <img
+              src="/images/e-sabong-thumbnail.jpg"
+              alt={copy.hero.alt}
             className="absolute inset-0 -z-30 h-full w-full object-cover object-[58%_center]"
             draggable={false}
           />
@@ -450,7 +523,7 @@ export function LandingPage() {
               />
               <img
                 src="/images/hero-img.svg"
-                alt=""
+                alt={copy.hero.alt}
                 className="relative w-full select-none object-contain drop-shadow-[0_0_34px_rgba(217,31,38,0.42)]"
                 draggable={false}
               />
@@ -470,7 +543,7 @@ export function LandingPage() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d91f26] opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d91f26]" />
                   </span>
-                  Broadcast daily · Manila
+                  {copy.hero.badge}
                 </motion.div>
 
                 <h1
@@ -483,12 +556,12 @@ export function LandingPage() {
                 >
                   <span className="block overflow-hidden">
                     <motion.span {...reveal(1)} className="inline-block">
-                      Where the pit
+                      {copy.hero.titleLead}
                     </motion.span>
                   </span>
                   <span className="block overflow-hidden">
                     <motion.span {...reveal(2)} className="inline-block text-[#f2c14e]">
-                      meets the pulse.
+                      {copy.hero.titleAccent}
                     </motion.span>
                   </span>
                 </h1>
@@ -498,9 +571,7 @@ export function LandingPage() {
                   className="mt-6 max-w-2xl text-base leading-7 text-[#d7d7d7] sm:text-lg"
                   style={{ fontFamily: '"Fraunces", serif' }}
                 >
-                  Original live feeds. Self-service transactions. GCash, Maya, QRPH
-                  — all in one platform. A premium experience built for sabong fans
-                  who demand more.
+                  {copy.hero.body}
                 </motion.p>
 
                 <motion.div {...reveal(4)} className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -515,7 +586,7 @@ export function LandingPage() {
                     }}
                   >
                     <Play className="h-4 w-4 fill-current" />
-                    Step into the ring
+                    {copy.hero.cta}
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
                   </a>
                 </motion.div>
@@ -528,12 +599,13 @@ export function LandingPage() {
               {...reveal(6)}
               className="mt-8 grid border border-[#f2c14e]/24 bg-black/58 backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4"
             >
-              {TRUST.map((item) => {
+              {copy.trust.map((item, index) => {
                 const isLiveSupport = "liveChat" in item && item.liveChat;
+                const Icon = TRUST_ICONS[index];
                 const content = (
                   <>
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f2c14e]/40 bg-[#f2c14e]/10 text-[#f2c14e]">
-                      <item.icon className="h-5 w-5" />
+                      <Icon className="h-5 w-5" />
                     </span>
                     <span>
                       <span className="block text-[11px] font-bold uppercase text-[#f5f5f5]">
@@ -578,7 +650,7 @@ export function LandingPage() {
             animate={reduced ? undefined : { x: ["0%", "-50%"] }}
             transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
           >
-              {[...MARQUEE, ...MARQUEE, ...MARQUEE, ...MARQUEE].map((item, i) => (
+              {[...copy.marquee, ...copy.marquee, ...copy.marquee, ...copy.marquee].map((item, i) => (
                 <span
                   key={`${item}-${i}`}
                   className="mx-8 inline-flex shrink-0 items-center text-[11px] font-bold uppercase text-[#f5f5f5]/58"
@@ -607,7 +679,7 @@ export function LandingPage() {
                   <motion.img
                     key={promoIndex}
                     src={PROMOS[promoIndex].src}
-                    alt={PROMOS[promoIndex].alt}
+                    alt={`${copy.promo.ariaPrefix} ${promoIndex + 1}`}
                     width={1365}
                     height={455}
                     custom={promoDir}
@@ -649,7 +721,7 @@ export function LandingPage() {
                 key={i}
                 type="button"
                 onClick={() => goToPromo(i)}
-                aria-label={`Show promotion ${i + 1}`}
+                aria-label={`${copy.promo.ariaPrefix} ${i + 1}`}
                 aria-current={i === promoIndex}
                 className="group flex h-10 items-center justify-center px-1"
               >
@@ -666,25 +738,24 @@ export function LandingPage() {
         </section>
 
 
-<section id="rooms" className="border-y border-[#1e4fa8]/24 bg-[#070707]">
+        <section id="rooms" className="border-y border-[#1e4fa8]/24 bg-[#070707]">
           <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-28">
             <div className="lg:col-span-5">
               <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Why Alopit
+                {copy.why.eyebrow}
               </p>
               <h2
                 className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
                 style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
               >
-                Built for sabong fans,{" "}
-                <span className="text-[#d91f26]">end to end.</span>
+                {copy.why.titleLead}{" "}
+                <span className="text-[#d91f26]">{copy.why.titleAccent}</span>
               </h2>
               <p
                 className="mt-6 max-w-md text-[15px] leading-7 text-[#d7d7d7]/76"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                Original feeds, smooth viewing, self-service transactions —
-                everything you need in one platform.
+                {copy.why.body}
               </p>
 
               <div className="mt-10 space-y-3">
@@ -696,10 +767,10 @@ export function LandingPage() {
                   >
                     <div>
                       <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                        Alopit Arena · {room.state}
+                        Alopit Arena · {copy.why.roomState}
                       </p>
                       <p className="mt-1 text-sm font-bold uppercase text-[#f5f5f5]">
-                        {room.title}
+                        {copy.why.roomTitle}
                       </p>
                     </div>
                   </motion.div>
@@ -708,9 +779,9 @@ export function LandingPage() {
             </div>
 
             <div className="grid gap-px sm:grid-cols-2 lg:col-span-7">
-              {FEATURES.map((feature, i) => (
+              {copy.why.features.map((feature, i) => (
                 <motion.article
-                  key={feature.no}
+                  key={feature}
                   {...viewReveal(i)}
                   className="group bg-[#080808] p-6 transition duration-300 hover:bg-[#0f1118]"
                 >
@@ -719,23 +790,23 @@ export function LandingPage() {
                       className="text-4xl leading-none text-[#f2c14e]"
                       style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
                     >
-                      {feature.no}
+                      {["I", "II", "III", "IV", "V"][i]}
                     </span>
                     <span className="text-[10px] font-bold uppercase text-white/32">
-                      Feature
+                      {copy.why.featureLabel}
                     </span>
                   </div>
                   <h3
                     className="mt-7 text-3xl leading-none text-[#f5f5f5]"
                     style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
                   >
-                    {feature.title}
+                    {feature}
                   </h3>
                   <p
                     className="mt-4 text-[14px] leading-6 text-[#d7d7d7]/72"
                     style={{ fontFamily: '"Fraunces", serif' }}
                   >
-                    {feature.body}
+                      {copy.why.featureBodies[i]}
                   </p>
                   <div className="mt-7 h-px w-full origin-left scale-x-0 bg-[#d91f26] transition duration-500 group-hover:scale-x-100" />
                 </motion.article>
@@ -744,13 +815,13 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="border-y border-[#1e4fa8]/20 bg-[#080808]">
+        <section id="payments" className="border-y border-[#1e4fa8]/20 bg-[#080808]">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <div className="text-center">
               <motion.div {...viewReveal(0)} className="inline-flex items-center gap-3">
                 <Wallet className="h-5 w-5 text-[#f2c14e]" />
                 <span className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                  Convenience Matters
+                  {copy.payments.eyebrow}
                 </span>
               </motion.div>
               <motion.h2
@@ -758,16 +829,15 @@ export function LandingPage() {
                 className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
                 style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
               >
-                Self-service{" "}
-                <span className="text-[#f2c14e]">transactions.</span>
+                {copy.payments.titleLead}{" "}
+                <span className="text-[#f2c14e]">{copy.payments.titleAccent}</span>
               </motion.h2>
               <motion.p
                 {...viewReveal(2)}
                 className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                Smooth deposits, fast withdrawals, multiple payment channels — all
-                in one reliable platform. No manual process, no waiting.
+                {copy.payments.body}
               </motion.p>
             </div>
 
@@ -809,7 +879,7 @@ export function LandingPage() {
                     className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
                     style={{ fontFamily: '"Fraunces", serif' }}
                   >
-                    {pm.body}
+                    {copy.payments.paymentBodies[i as 0 | 1 | 2]}
                   </p>
                   <div className="mt-6 flex items-center gap-2 border-t border-white/6 pt-4">
                     <span
@@ -817,7 +887,7 @@ export function LandingPage() {
                       style={{ backgroundColor: pm.color }}
                     />
                     <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/52">
-                      Supported
+                      {copy.payments.supported}
                     </span>
                   </div>
                 </motion.div>
@@ -830,52 +900,51 @@ export function LandingPage() {
             >
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#1e4fa8]" />
-                Self Cash-In
+                {copy.payments.statusLabels[0]}
               </span>
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#d91f26]" />
-                Self Cash-Out
+                {copy.payments.statusLabels[1]}
               </span>
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#f2c14e]" />
-                Fast Processing
+                {copy.payments.statusLabels[2]}
               </span>
             </motion.div>
           </div>
         </section>
 
 
-        <section className="relative border-y border-[#f2c14e]/16 bg-[#070707]">
+        <section id="affiliate" className="relative border-y border-[#f2c14e]/16 bg-[#070707]">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <div className="text-center">
               <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Affiliate Partner Program
+                {copy.affiliate.eyebrow}
               </motion.p>
               <motion.h2
                 {...viewReveal(1)}
                 className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
                 style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
               >
-                Grow your network,{" "}
-                <span className="text-[#f2c14e]">earn real commissions.</span>
+                {copy.affiliate.titleLead}{" "}
+                <span className="text-[#f2c14e]">{copy.affiliate.titleAccent}</span>
               </motion.h2>
               <motion.p
                 {...viewReveal(2)}
                 className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-[#d7d7d7]/76"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                Become an Alopit affiliate and earn commissions from downline betting
-                turnover across Sabong Arena. Turnover-based commissions — your network, your earnings.
+                {copy.affiliate.body}
               </motion.p>
             </div>
 
             <div className="mt-14 grid items-end gap-5 lg:grid-cols-3">
-              {AGENT_TIERS.map((t, i) => (
+              {AGENT_TIERS.map((visualTier, i) => (
                 <motion.div
-                  key={t.tier}
+                  key={copy.affiliate.tiers[i].tierLabel}
                   {...viewReveal(i)}
                   className={`relative overflow-hidden border ${
-                    t.badge
+                    copy.affiliate.tiers[i].badge
                       ? "border-[#f5d880]/30 lg:-mt-6 shadow-[0_20px_80px_rgba(184,134,11,0.18)]"
                       : "border-white/8"
                   }`}
@@ -885,64 +954,70 @@ export function LandingPage() {
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                   }}
                 >
-                  {t.badge && (
+                  {copy.affiliate.tiers[i].badge && (
                     <div
                       className="absolute top-4 right-4 z-10 px-3 py-1 text-[9px] font-bold uppercase tracking-wider"
                       style={{
-                        backgroundColor: t.accent,
+                        backgroundColor: visualTier.accent,
                         color: "#1a1a1a",
                         clipPath:
                           "polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px)",
                       }}
                     >
-                      {t.badge}
+                      {copy.affiliate.tiers[i].badge}
                     </div>
                   )}
 
                   <div
                     className="px-7 pt-8 pb-6"
-                    style={{ background: t.headerGradient }}
+                    style={{ background: visualTier.headerGradient }}
                   >
                     <p className="text-[10px] font-bold uppercase tracking-wider text-white/70">
-                      {t.tier} Affiliate
+                      {copy.affiliate.tiers[i].tierLabel} Affiliate
                     </p>
                     <p
                       className="mt-2 text-5xl leading-none text-white sm:text-6xl"
                       style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
                     >
-                      {t.commission}
+                      {copy.affiliate.tiers[i].commission}
                     </p>
                     <p className="mt-1 text-[11px] font-medium text-white/56">
-                      max commission rate
+                      {copy.affiliate.tiers[i].maxLabel}
                     </p>
                   </div>
 
                   <div className="px-7 pt-6 pb-7">
                     <div className="space-y-3.5">
-                      {t.features.map((f) => (
-                        <div key={f.text} className="flex items-start gap-3">
-                          {f.included ? (
+                      {copy.affiliate.tiers[i].features.map((feature, featureIndex) => {
+                        const included = visualTier.features[featureIndex]?.included ?? true;
+                        const FeatureIcon = included ? Check : X;
+
+                        return (
+                          <div key={feature} className="flex items-start gap-3">
                             <span
                               className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
-                              style={{ backgroundColor: t.accent + "24" }}
+                              style={{
+                                backgroundColor: included
+                                  ? visualTier.accent + "24"
+                                  : "rgba(255,255,255,0.06)",
+                              }}
                             >
-                              <Check className="h-3 w-3" style={{ color: t.accent }} />
+                              <FeatureIcon
+                                className={`h-3 w-3 ${included ? "" : "text-white/24"}`}
+                                style={included ? { color: visualTier.accent } : undefined}
+                              />
                             </span>
-                          ) : (
-                            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white/6">
-                              <X className="h-3 w-3 text-white/24" />
+                            <span
+                              className={`text-[13px] leading-5 ${
+                                included ? "text-[#d7d7d7]/80" : "text-white/26 line-through"
+                              }`}
+                              style={{ fontFamily: '"Fraunces", serif' }}
+                            >
+                              {feature}
                             </span>
-                          )}
-                          <span
-                            className={`text-[13px] leading-5 ${
-                              f.included ? "text-[#d7d7d7]/80" : "text-white/26 line-through"
-                            }`}
-                            style={{ fontFamily: '"Fraunces", serif' }}
-                          >
-                            {f.text}
-                          </span>
-                        </div>
-                      ))}
+                          </div>
+                        );
+                      })}
                     </div>
 
                     <div className="mt-8">
@@ -952,19 +1027,19 @@ export function LandingPage() {
                         rel="noopener noreferrer"
                         className="group inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-[11px] font-bold uppercase tracking-wider transition duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
                         style={{
-                          backgroundColor: t.accent,
+                          backgroundColor: visualTier.accent,
                           color: "#0a0a0a",
                           clipPath:
                             "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                         }}
                       >
-                        Become an Affiliate
+                        {copy.affiliate.cta}
                         <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-45" />
                       </a>
                     </div>
 
                     <p className="mt-4 text-center text-[10px] text-white/26">
-                      Created by: {t.createdBy}
+                      {copy.affiliate.createdByLabel} {copy.affiliate.tiers[i].createdBy}
                     </p>
                   </div>
                 </motion.div>
@@ -976,29 +1051,26 @@ export function LandingPage() {
               className="mt-16 flex flex-col items-center"
             >
               <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Recruitment Hierarchy
+                {copy.affiliate.hierarchyEyebrow}
               </p>
               <div className="mt-5 flex items-center">
                 {AGENT_HIERARCHY.map((h, i) => (
                   <Fragment key={h.label}>
-                    {i > 0 && (
-                      <div className="mx-2 flex items-center sm:mx-3">
-                        <div className="h-px w-4 bg-white/12 sm:w-8" />
-                        <ChevronRight className="h-3.5 w-3.5 text-white/24" />
-                      </div>
-                    )}
-                    <div className="flex flex-col items-center gap-2">
+                    <div className="flex flex-col items-center">
                       <span
-                        className="flex h-12 w-12 items-center justify-center rounded-full border-2 text-[9px] font-bold uppercase text-white sm:h-14 sm:w-14 sm:text-[10px]"
+                        className="flex h-14 w-14 items-center justify-center rounded-full border-2 text-[10px] font-bold uppercase"
                         style={{
                           borderColor: h.color,
-                          backgroundColor: h.color + "18",
-                          boxShadow: `0 0 24px ${h.color}20`,
+                          color: h.color,
+                          backgroundColor: `${h.color}14`,
                         }}
                       >
                         {h.label}
                       </span>
                     </div>
+                    {i < AGENT_HIERARCHY.length - 1 && (
+                      <ChevronRight className="mx-2 h-5 w-5 text-[#d7d7d7]/24 sm:mx-4" />
+                    )}
                   </Fragment>
                 ))}
               </div>
@@ -1006,37 +1078,32 @@ export function LandingPage() {
                 className="mt-4 max-w-md text-center text-[12px] text-[#d7d7d7]/44"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                Each tier can recruit and manage affiliates below them in the chain
+                {copy.affiliate.hierarchyNote}
               </p>
             </motion.div>
           </div>
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
-          />
         </section>
 
-        <section className="border-y border-[#1e4fa8]/20 bg-[#070707]">
+        <section className="relative overflow-hidden border-y border-white/6 bg-[#050505]">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <div className="text-center">
               <motion.p {...viewReveal(0)} className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Beyond Sabong
+                {copy.beyond.eyebrow}
               </motion.p>
               <motion.h2
                 {...viewReveal(1)}
                 className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
                 style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
               >
-                Like Alopit?{" "}
-                <span className="text-[#f2c14e]">Try Alowin.</span>
+                {copy.beyond.titleLead}{" "}
+                <span className="text-[#f2c14e]">{copy.beyond.titleAccent}</span>
               </motion.h2>
               <motion.p
                 {...viewReveal(2)}
                 className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                World-class slots, live casino, and game shows — all on one
-                platform. Same trusted experience, unlimited entertainment.
+                {copy.beyond.body}
               </motion.p>
             </div>
 
@@ -1044,19 +1111,19 @@ export function LandingPage() {
               {...viewReveal(3)}
               className="mt-10 flex flex-wrap items-center justify-center gap-2"
             >
-              {GAME_CATEGORIES.map((cat) => (
+              {copy.beyond.categories.map((cat, index) => (
                 <button
                   key={cat}
                   type="button"
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => setActiveCategory(GAME_CATEGORIES[index])}
                   className="px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition duration-300"
                   style={{
                     backgroundColor:
-                      activeCategory === cat ? "#f2c14e" : "transparent",
+                      activeCategory === GAME_CATEGORIES[index] ? "#f2c14e" : "transparent",
                     color:
-                      activeCategory === cat ? "#050505" : "rgba(215,215,215,0.72)",
+                      activeCategory === GAME_CATEGORIES[index] ? "#050505" : "rgba(215,215,215,0.72)",
                     border: `1px solid ${
-                      activeCategory === cat ? "#f2c14e" : "rgba(255,255,255,0.1)"
+                      activeCategory === GAME_CATEGORIES[index] ? "#f2c14e" : "rgba(255,255,255,0.1)"
                     }`,
                     clipPath:
                       "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
@@ -1069,124 +1136,111 @@ export function LandingPage() {
 
             <div className="mt-10 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
               {ALOWIN_GAMES.filter(
-                (g) => activeCategory === "All" || g.category === activeCategory,
+                (g) => activeCategory === "all" || g.category === activeCategory,
               ).map((game, i) => (
                 <motion.a
                   key={game.name}
                   href={`${ALOWIN_URL}${game.path}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  {...viewReveal(i % 4)}
-                  className="group relative block overflow-hidden border border-white/8 bg-[#0a0a0a] transition duration-300 hover:border-white/20"
+                  {...viewReveal(i)}
+                  className="group overflow-hidden border border-white/8 bg-[#0a0a0a] transition duration-300 hover:-translate-y-1 hover:border-[#f2c14e]/30 hover:bg-[#0f1118]"
                   style={{
                     clipPath:
-                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
                   }}
                 >
-                  <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#111111]">
                     <img
                       src={game.thumb}
                       alt={game.name}
-                      width={440}
-                      height={310}
                       loading="lazy"
-                      decoding="async"
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                       onError={(event) => {
-                        const img = event.currentTarget;
-                        if (img.dataset.fallbackApplied === "1") return;
-                        img.dataset.fallbackApplied = "1";
-                        img.src = GAME_THUMB_FALLBACK;
+                        event.currentTarget.src = GAME_THUMB_FALLBACK;
                       }}
-                      className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                     />
                     <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition duration-300 group-hover:opacity-100"
-                    >
-                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f2c14e] text-[#050505] shadow-lg shadow-[#f2c14e]/40">
-                        <Play className="h-5 w-5 fill-current" />
-                      </span>
-                    </div>
+                      className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, transparent 0%, rgba(5,5,5,0.62) 100%)",
+                      }}
+                    />
                   </div>
-                  <div className="px-4 py-3">
-                    <p className="truncate text-[12px] font-bold uppercase text-[#f5f5f5]">
-                      {game.name}
-                    </p>
-                    <p className="mt-0.5 text-[9px] font-bold uppercase text-[#f2c14e]/70">
-                      {game.category}
-                    </p>
+                  <div className="flex items-center justify-between gap-3 px-4 py-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-[12px] font-bold uppercase text-[#f5f5f5]">
+                        {game.name}
+                      </p>
+                      <p className="mt-1 text-[10px] font-bold uppercase text-[#f2c14e]/70">
+                        Alowin
+                      </p>
+                    </div>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-[#d7d7d7]/36 transition duration-300 group-hover:rotate-45 group-hover:text-[#f2c14e]" />
                   </div>
                 </motion.a>
               ))}
             </div>
 
-            <motion.div
-              {...viewReveal(4)}
-              className="mt-12 text-center"
-            >
+            <motion.div {...viewReveal(5)} className="mt-12 text-center">
               <a
                 href={ALOWIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-7 py-3 text-sm font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] active:scale-[0.98]"
+                className="group inline-flex items-center gap-2 bg-[#f2c14e] px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white"
                 style={{
                   clipPath:
                     "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
                 }}
               >
-                Explore all games on Alowin
+                {copy.beyond.cta}
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
               </a>
               <p
                 className="mt-4 text-[12px] text-[#d7d7d7]/48"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                Slots · Live Casino · Table Games · Game Shows
+                {copy.beyond.footer}
               </p>
             </motion.div>
           </div>
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
-          />
         </section>
 
-        <section className="relative overflow-hidden border-b border-[#f2c14e]/16 bg-[#050505]">
+        <section className="relative overflow-hidden bg-[#080808]">
           <div
             aria-hidden
-            className="absolute inset-0 opacity-70"
+            className="absolute inset-0 opacity-60"
             style={{
               background:
-                "linear-gradient(115deg, rgba(30,79,168,0.18), transparent 30%, transparent 68%, rgba(217,31,38,0.2)), repeating-linear-gradient(90deg, transparent 0 78px, rgba(242,193,78,0.045) 79px 80px)",
+                "radial-gradient(circle at 78% 28%, rgba(30,79,168,0.22), transparent 34%), linear-gradient(135deg, rgba(242,193,78,0.08), transparent 42%)",
             }}
           />
           <div className="relative mx-auto grid max-w-[1440px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-12 lg:py-24">
             <motion.div {...viewReveal(0)} className="max-w-2xl self-center">
               <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                Sportsbook
+                {copy.sportsbook.eyebrow}
               </p>
               <h2
                 className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-7xl"
                 style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
               >
-                Alowin{" "}
-                <span className="text-[#f2c14e]">Sportsbook.</span>
+                {copy.sportsbook.titleLead}{" "}
+                <span className="text-[#f2c14e]">{copy.sportsbook.titleAccent}</span>
               </h2>
               <p
                 className="mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
                 style={{ fontFamily: '"Fraunces", serif' }}
               >
-                Move between live sports and pre-match action across football,
-                basketball, tennis, and more with the same Alowin account
-                experience.
+                {copy.sportsbook.body}
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
-                {["Live sports", "Pre-match", "Multi-sport"].map((label) => (
+                {copy.sportsbook.tags.map((label) => (
                   <span
                     key={label}
                     className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-3 py-2 text-[10px] font-bold uppercase text-[#d7d7d7]/75"
                   >
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#f2c14e]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#f2c14e]" />
                     {label}
                   </span>
                 ))}
@@ -1195,41 +1249,33 @@ export function LandingPage() {
                 href={ALOWIN_SPORTSBOOK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-8 inline-flex min-h-12 items-center justify-center gap-3 border border-[#f2c14e]/60 bg-[#f2c14e] px-7 py-3 text-sm font-bold uppercase text-[#050505] shadow-[0_22px_60px_rgba(242,193,78,0.22)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
+                className="group mt-9 inline-flex items-center gap-2 bg-[#f2c14e] px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white"
                 style={{
                   clipPath:
                     "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
                 }}
               >
-                Open Sportsbook
+                {copy.sportsbook.cta}
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
               </a>
             </motion.div>
 
             <motion.div
-              {...viewReveal(1)}
-              className="relative overflow-hidden border border-[#f2c14e]/20 bg-[#080808]"
+              {...viewReveal(2)}
+              className="relative border border-[#f2c14e]/16 bg-[#050505]/78 p-4 shadow-[0_24px_90px_rgba(0,0,0,0.34)] sm:p-6"
               style={{
                 clipPath:
-                  "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)",
+                  "polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px)",
               }}
             >
-              <div
-                aria-hidden
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(30,79,168,0.16), transparent 44%), radial-gradient(circle at 88% 18%, rgba(242,193,78,0.18), transparent 28%)",
-                }}
-              />
-              <div className="relative p-5 sm:p-7">
+              <div className="border border-white/8 bg-black/30 p-4 sm:p-5">
                 <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
                   <div>
                     <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                      Sportsbook board
+                      {copy.sportsbook.boardEyebrow}
                     </p>
                     <p className="mt-1 text-[12px] font-bold uppercase text-[#f5f5f5]">
-                      Live and pre-match
+                      {copy.sportsbook.boardTitle}
                     </p>
                   </div>
                   <span className="inline-flex h-10 w-10 items-center justify-center border border-[#f2c14e]/35 bg-[#f2c14e]/10 text-[#f2c14e]">
@@ -1238,7 +1284,7 @@ export function LandingPage() {
                 </div>
 
                 <div className="mt-5 grid gap-3">
-                  {SPORTSBOOK_MODES.map((item) => (
+                  {copy.sportsbook.modes.map((item, index) => (
                     <div
                       key={item.mode}
                       className="group border border-white/8 bg-black/24 p-4 transition duration-300 hover:border-[#f2c14e]/28 hover:bg-[#f2c14e]/[0.04]"
@@ -1261,13 +1307,13 @@ export function LandingPage() {
                         {item.body}
                       </p>
                       <a
-                        href={item.href}
+                        href={SPORTSBOOK_MODES[index].href}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mt-4 inline-flex min-h-9 items-center gap-2 border border-white/10 px-3 py-2 text-[10px] font-bold uppercase text-[#d7d7d7]/70 transition hover:border-[#f2c14e]/40 hover:text-[#f2c14e]"
                       >
                         {item.cta}
-                        <ChevronRight className="h-3.5 w-3.5" />
+                        <ArrowUpRight className="h-3.5 w-3.5" />
                       </a>
                     </div>
                   ))}
@@ -1275,56 +1321,54 @@ export function LandingPage() {
 
                 <div className="mt-5 border border-[#f2c14e]/16 bg-[#f2c14e]/[0.05] p-4">
                   <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                    One sportsbook flow
+                    {copy.sportsbook.flowEyebrow}
                   </p>
                   <p
                     className="mt-2 text-[14px] leading-6 text-[#d7d7d7]/78"
                     style={{ fontFamily: '"Fraunces", serif' }}
                   >
-                    Start with upcoming matches, switch into live events, and
-                    continue straight into Alowin when you are ready.
+                    {copy.sportsbook.flowBody}
                   </p>
                 </div>
-
               </div>
             </motion.div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-[1440px] px-5 pb-20 pt-20 sm:px-8 lg:px-12 lg:pb-28 lg:pt-28">
-          <div className="relative overflow-hidden border border-[#f2c14e]/24 bg-[#080808]">
-            <img
-              src="/images/e-sabong-thumbnail.jpg"
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover opacity-20"
-              draggable={false}
-            />
+        <section className="bg-[#050505] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+          <motion.div
+            {...viewReveal(0)}
+            className="relative mx-auto max-w-[1440px] overflow-hidden border border-[#f2c14e]/24 bg-[#0a0a0a]"
+            style={{
+              clipPath:
+                "polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px)",
+            }}
+          >
             <div
               aria-hidden
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(90deg, #050505 0%, rgba(5,5,5,0.88) 48%, rgba(5,5,5,0.64) 100%)",
+                  "linear-gradient(135deg, rgba(217,31,38,0.22), transparent 38%), radial-gradient(circle at 86% 18%, rgba(242,193,78,0.18), transparent 30%)",
               }}
             />
             <div className="relative grid items-end gap-8 p-6 sm:p-10 lg:grid-cols-[1.35fr_1fr] lg:p-16">
               <div>
                 <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                  Join today
+                  {copy.final.eyebrow}
                 </p>
                 <h2
                   className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-7xl"
                   style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
                 >
-                  Welcome to the{" "}
-                  <span className="text-[#d91f26]">Alopit community.</span>
+                  {copy.final.titleLead}{" "}
+                  <span className="text-[#d91f26]">{copy.final.titleAccent}</span>
                 </h2>
                 <p
                   className="mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
                   style={{ fontFamily: '"Fraunces", serif' }}
                 >
-                  Where convenience meets community. Self-service transactions,
-                  premium streams, and exclusive access — all in one platform.
+                  {copy.final.body}
                 </p>
               </div>
               <div className="flex flex-col items-start gap-4 lg:items-end">
@@ -1332,21 +1376,21 @@ export function LandingPage() {
                   href={REGISTER_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex min-h-14 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-7 py-3 text-sm font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] active:scale-[0.98]"
+                  className="group inline-flex items-center gap-2 bg-[#f2c14e] px-7 py-4 text-[11px] font-bold uppercase tracking-wider text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white"
                   style={{
                     clipPath:
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                   }}
                 >
-                  Enter the arena
+                  {copy.final.cta}
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
                 </a>
                 <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/52">
-                  Free · Web · No download
+                  {copy.final.note}
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
       </main>
 
@@ -1355,12 +1399,12 @@ export function LandingPage() {
           <div className="flex items-center gap-3">
             <img src="/images/logo.png" alt="" className="h-7 w-auto opacity-85" />
             <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/54">
-              Alopit
+              {copy.footer.brand}
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase text-[#d7d7d7]/45">
-            <span>© 2026 Alopit</span>
-            <span>Play responsibly · 21+</span>
+            <span>{copy.footer.copyright}</span>
+            <span>{copy.footer.responsible}</span>
           </div>
         </div>
       </footer>
