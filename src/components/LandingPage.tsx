@@ -347,6 +347,8 @@ export function LandingPage() {
   };
   const navClipPath =
     "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)";
+  const smallButtonClipPath =
+    "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)";
 
   return (
     <div
@@ -394,7 +396,7 @@ export function LandingPage() {
           }}
         >
           <div
-            className="flex flex-col gap-3 bg-[#050505]/78 px-4 py-3 backdrop-blur-xl sm:px-5 lg:flex-row lg:items-center lg:justify-between"
+            className="flex flex-col gap-3 bg-[#050505]/82 px-3 py-3 backdrop-blur-xl sm:px-5 lg:flex-row lg:items-center lg:justify-between"
             style={{
               clipPath: navClipPath,
             }}
@@ -407,36 +409,36 @@ export function LandingPage() {
                 </span>
               </a>
 
-              <div className="flex items-center gap-3 lg:hidden">
-                <LanguageSelector locale={locale} onChange={handleLocaleChange} />
-                <a
-                  href={LOGIN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => capture("login_clicked", { location: "header" })}
-                  className="inline-flex items-center justify-center border border-[#ff7a00]/60 bg-[#d91f26] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:bg-[#ff3a2f] active:scale-[0.98]"
-                  style={{
-                    clipPath:
-                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                  }}
-                >
-                  {copy.header.login}
-                </a>
-                <a
-                  href={REGISTER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => capture("register_clicked", { location: "header" })}
-                  className="group inline-flex items-center gap-1.5 border border-[#f2c14e]/60 bg-[#f2c14e] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
-                  style={{
-                    clipPath:
-                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                  }}
-                >
-                  {copy.header.register}
-                  <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" />
-                </a>
-              </div>
+              <div className="h-px flex-1 bg-gradient-to-r from-[#f2c14e]/35 via-[#d91f26]/28 to-transparent lg:hidden" />
+            </div>
+
+            <div className="grid grid-cols-[5rem_minmax(0,0.9fr)_minmax(0,1.25fr)] items-stretch gap-2 lg:hidden">
+              <LanguageSelector locale={locale} onChange={handleLocaleChange} />
+              <a
+                href={LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => capture("login_clicked", { location: "header" })}
+                className="inline-flex min-w-0 items-center justify-center border border-[#ff7a00]/60 bg-[#d91f26] px-2.5 text-center text-[clamp(8px,2.35vw,10px)] font-bold uppercase leading-none tracking-[0.12em] text-white transition duration-300 hover:bg-[#ff3a2f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#f2c14e] active:scale-[0.98]"
+                style={{
+                  clipPath: smallButtonClipPath,
+                }}
+              >
+                {copy.header.login}
+              </a>
+              <a
+                href={REGISTER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => capture("register_clicked", { location: "header" })}
+                className="group inline-flex min-w-0 items-center justify-center gap-1 border border-[#f2c14e]/60 bg-[#f2c14e] px-2.5 text-center text-[clamp(8px,2.35vw,10px)] font-bold uppercase leading-none tracking-[0.12em] text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white active:scale-[0.98]"
+                style={{
+                  clipPath: smallButtonClipPath,
+                }}
+              >
+                <span className="min-w-0">{copy.header.register}</span>
+                <ArrowUpRight className="h-3 w-3 shrink-0 transition-transform duration-300 group-hover:rotate-45" />
+              </a>
             </div>
 
             <div className="hidden items-center gap-5 lg:flex">
@@ -447,8 +449,7 @@ export function LandingPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center border border-[#ff7a00]/60 bg-[#d91f26] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:bg-[#ff3a2f] active:scale-[0.98]"
                 style={{
-                  clipPath:
-                    "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  clipPath: smallButtonClipPath,
                 }}
               >
                 {copy.header.login}
@@ -459,8 +460,7 @@ export function LandingPage() {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-1.5 border border-[#f2c14e]/60 bg-[#f2c14e] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
                 style={{
-                  clipPath:
-                    "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  clipPath: smallButtonClipPath,
                 }}
               >
                 {copy.header.register}
