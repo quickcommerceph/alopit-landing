@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
 import { localeNames, localeShortLabels, locales, type Locale } from "../lib/i18n";
 
@@ -20,10 +21,17 @@ interface LanguageSelectorProps {
 export function LanguageSelector({ locale, onChange }: LanguageSelectorProps) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
 
   useEffect(() => {
     const onPointerDown = (event: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      const clickedButton = buttonRef.current?.contains(target) ?? false;
+      const clickedMenu = menuRef.current?.contains(target) ?? false;
+
+      if (!clickedButton && !clickedMenu && rootRef.current) {
         setOpen(false);
       }
     };
@@ -43,6 +51,36 @@ export function LanguageSelector({ locale, onChange }: LanguageSelectorProps) {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    if (!open || !buttonRef.current) return;
+
+    const updatePosition = () => {
+      const rect = buttonRef.current?.getBoundingClientRect();
+      if (!rect) return;
+
+      const menuWidth = 184;
+      const viewportPadding = 8;
+      const left = Math.max(
+        viewportPadding,
+        Math.min(rect.left, window.innerWidth - menuWidth - viewportPadding),
+      );
+
+      setMenuPosition({
+        top: rect.bottom + 8,
+        right: window.innerWidth - left - menuWidth,
+      });
+    };
+
+    updatePosition();
+    window.addEventListener("scroll", updatePosition, true);
+    window.addEventListener("resize", updatePosition);
+
+    return () => {
+      window.removeEventListener("scroll", updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [open]);
+
   const handleSelect = (nextLocale: Locale) => {
     setOpen(false);
     if (nextLocale !== locale) {
@@ -53,10 +91,12 @@ export function LanguageSelector({ locale, onChange }: LanguageSelectorProps) {
   return (
     <div ref={rootRef} className="relative">
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-label="Select language"
         aria-expanded={open}
+        aria-haspopup="menu"
         className="inline-flex h-9 min-w-[5rem] items-center justify-center gap-1.5 border border-[#f2c14e]/20 bg-[#0a0a0a] px-2.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#f5f5f5]/90 transition duration-300 hover:border-[#f2c14e]/45 hover:bg-[#111111] hover:text-[#f2c14e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f2c14e]"
         style={{
           clipPath:
@@ -75,41 +115,52 @@ export function LanguageSelector({ locale, onChange }: LanguageSelectorProps) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-[calc(100%+0.45rem)] z-50 min-w-[152px] overflow-hidden border border-[#f2c14e]/18 bg-[#080808] shadow-[0_16px_36px_rgba(0,0,0,0.28)]">
-          {locales.map((item) => {
-            const active = item === locale;
+        createPortal(
+          <div
+            ref={menuRef}
+            role="menu"
+            className="fixed z-50 min-w-[184px] overflow-hidden border border-[#f2c14e]/18 bg-[#080808] shadow-[0_16px_36px_rgba(0,0,0,0.28)]"
+            style={{
+              top: `${menuPosition.top}px`,
+              right: `${menuPosition.right}px`,
+            }}
+          >
+            {locales.map((item) => {
+              const active = item === locale;
 
-            return (
-              <button
-                key={item}
-                type="button"
-                onClick={() => handleSelect(item)}
-                className={`flex w-full items-center gap-2 px-3 py-2 text-left text-[10px] font-bold uppercase tracking-[0.14em] transition duration-300 ${
-                  active
-                    ? "bg-[#f2c14e] text-[#050505]"
-                    : "text-[#f5f5f5]/82 hover:bg-white/[0.05] hover:text-[#f2c14e]"
-                }`}
-              >
-                <span aria-hidden className="text-sm leading-none">
-                  {localeFlags[item]}
-                </span>
-                <span className="flex min-w-0 flex-1 flex-col leading-none">
-                  <span className="text-[10px] tracking-[0.18em]">
-                    {localeShortLabels[item]}
+              return (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => handleSelect(item)}
+                  className={`flex w-full items-center gap-2 px-3 py-2 text-left text-[10px] font-bold uppercase tracking-[0.14em] transition duration-300 ${
+                    active
+                      ? "bg-[#f2c14e] text-[#050505]"
+                      : "text-[#f5f5f5]/82 hover:bg-white/[0.05] hover:text-[#f2c14e]"
+                  }`}
+                >
+                  <span aria-hidden className="text-sm leading-none">
+                    {localeFlags[item]}
                   </span>
-                  <span
-                    className={`mt-0.5 truncate text-[9px] font-medium uppercase tracking-[0.12em] ${
-                      active ? "text-[#050505]/72" : "text-[#d7d7d7]/62"
-                    }`}
-                  >
-                    {localeNames[item]}
+                  <span className="flex min-w-0 flex-1 flex-col leading-none">
+                    <span className="text-[10px] tracking-[0.18em]">
+                      {localeShortLabels[item]}
+                    </span>
+                    <span
+                      className={`mt-0.5 truncate text-[9px] font-medium uppercase tracking-[0.12em] ${
+                        active ? "text-[#050505]/72" : "text-[#d7d7d7]/62"
+                      }`}
+                    >
+                      {localeNames[item]}
+                    </span>
                   </span>
-                </span>
-                {active && <Check className="h-3 w-3 shrink-0" />}
-              </button>
-            );
-          })}
-        </div>
+                  {active && <Check className="h-3 w-3 shrink-0" />}
+                </button>
+              );
+            })}
+          </div>,
+          document.body,
+        )
       )}
     </div>
   );
