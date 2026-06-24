@@ -24,6 +24,8 @@ export function LanguageSelector({ locale, onChange }: LanguageSelectorProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
+  const clipPath =
+    "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)";
 
   useEffect(() => {
     const onPointerDown = (event: MouseEvent) => {
@@ -90,29 +92,33 @@ export function LanguageSelector({ locale, onChange }: LanguageSelectorProps) {
 
   return (
     <div ref={rootRef} className="relative">
-      <button
-        ref={buttonRef}
-        type="button"
-        onClick={() => setOpen((value) => !value)}
-        aria-label="Select language"
-        aria-expanded={open}
-        aria-haspopup="menu"
-        className="inline-flex h-9 min-w-[5rem] items-center justify-center gap-1.5 border border-[#f2c14e]/20 bg-[#0a0a0a] px-2.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#f5f5f5]/90 transition duration-300 hover:border-[#f2c14e]/45 hover:bg-[#111111] hover:text-[#f2c14e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f2c14e]"
-        style={{
-          clipPath:
-            "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-        }}
+      <div
+        className={`inline-flex p-px transition-colors duration-300 ${
+          open ? "bg-[#f2c14e]/45" : "bg-[#f2c14e]/20 hover:bg-[#f2c14e]/45"
+        }`}
+        style={{ clipPath }}
       >
-        <span aria-hidden className="text-sm leading-none">
-          {localeFlags[locale]}
-        </span>
-        <span>{localeShortLabels[locale]}</span>
-        <ChevronDown
-          className={`h-3.5 w-3.5 transition-transform duration-300 ${
-            open ? "rotate-180" : "opacity-70"
-          }`}
-        />
-      </button>
+        <button
+          ref={buttonRef}
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          aria-label="Select language"
+          aria-expanded={open}
+          aria-haspopup="menu"
+          className="inline-flex h-9 min-w-[5rem] items-center justify-center gap-1.5 bg-[#0a0a0a] px-2.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#f5f5f5]/90 transition duration-300 hover:bg-[#111111] hover:text-[#f2c14e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#f2c14e]"
+          style={{ clipPath }}
+        >
+          <span aria-hidden className="text-sm leading-none">
+            {localeFlags[locale]}
+          </span>
+          <span>{localeShortLabels[locale]}</span>
+          <ChevronDown
+            className={`h-3.5 w-3.5 transition-transform duration-300 ${
+              open ? "rotate-180" : "opacity-70"
+            }`}
+          />
+        </button>
+      </div>
 
       {open && (
         createPortal(

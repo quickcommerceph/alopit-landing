@@ -344,6 +344,8 @@ export function LandingPage() {
   const handleLocaleChange = (nextLocale: Locale) => {
     setLocale(nextLocale);
   };
+  const navClipPath =
+    "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)";
 
   return (
     <div
@@ -373,40 +375,78 @@ export function LandingPage() {
         <motion.nav
           initial={false}
           animate={
-            headerVisible
-              ? { y: 0, opacity: 1 }
-              : { y: -120, opacity: 0 }
+            headerVisible ? { y: 0, opacity: 1 } : { y: -120, opacity: 0 }
           }
           transition={
             reduced
               ? { duration: 0 }
               : { duration: 0.28, ease: [0.16, 1, 0.3, 1] }
           }
-          className={`mx-auto flex max-w-[1344px] flex-col gap-3 border px-4 py-3 backdrop-blur-xl sm:px-5 lg:flex-row lg:items-center lg:justify-between ${
-            headerScrolled
-              ? "border-[#f2c14e]/18 bg-[#050505]/78 shadow-[0_16px_60px_rgba(0,0,0,0.28)]"
-              : "border-white/8 bg-[#050505]/28"
+          className={`mx-auto max-w-[1344px] p-px transition-colors duration-300 ${
+            headerScrolled ? "bg-[#f2c14e]/18" : "bg-white/8"
           }`}
           style={{
-            clipPath:
-              "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)",
+            clipPath: navClipPath,
+            boxShadow: headerScrolled
+              ? "0 16px 60px rgba(0, 0, 0, 0.28)"
+              : undefined,
           }}
         >
-          <div className="flex items-center justify-between gap-4">
-            <a href="#top" className="inline-flex items-center gap-2" aria-label="Alopit home">
-              <img src="/images/logo.png" alt="" className="h-7 w-auto opacity-90" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.42em] text-[#f5f5f5]">
-                Alopit
-              </span>
-            </a>
+          <div
+            className="flex flex-col gap-3 bg-[#050505]/78 px-4 py-3 backdrop-blur-xl sm:px-5 lg:flex-row lg:items-center lg:justify-between"
+            style={{
+              clipPath: navClipPath,
+            }}
+          >
+            <div className="flex items-center justify-between gap-4">
+              <a href="#top" className="inline-flex items-center gap-2" aria-label="Alopit home">
+                <img src="/images/logo.png" alt="" className="h-7 w-auto opacity-90" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.42em] text-[#f5f5f5]">
+                  Alopit
+                </span>
+              </a>
 
-            <div className="flex items-center gap-2 lg:hidden">
+              <div className="flex items-center gap-3 lg:hidden">
+                <LanguageSelector locale={locale} onChange={handleLocaleChange} />
+                <a
+                  href={LOGIN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center border border-[#ff7a00]/60 bg-[#d91f26] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:bg-[#ff3a2f] active:scale-[0.98]"
+                  style={{
+                    clipPath:
+                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  }}
+                >
+                  {copy.header.login}
+                </a>
+                <a
+                  href={REGISTER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1.5 border border-[#f2c14e]/60 bg-[#f2c14e] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
+                  style={{
+                    clipPath:
+                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  }}
+                >
+                  {copy.header.register}
+                  <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" />
+                </a>
+              </div>
+            </div>
+
+            <div className="hidden items-center gap-5 lg:flex">
               <LanguageSelector locale={locale} onChange={handleLocaleChange} />
               <a
                 href={LOGIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#f5f5f5]/75 transition hover:text-[#f2c14e]"
+                className="inline-flex items-center justify-center border border-[#ff7a00]/60 bg-[#d91f26] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:bg-[#ff3a2f] active:scale-[0.98]"
+                style={{
+                  clipPath:
+                    "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                }}
               >
                 {copy.header.login}
               </a>
@@ -424,31 +464,6 @@ export function LandingPage() {
                 <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" />
               </a>
             </div>
-          </div>
-
-          <div className="hidden items-center gap-2.5 sm:gap-4 lg:flex">
-            <LanguageSelector locale={locale} onChange={handleLocaleChange} />
-            <a
-              href={LOGIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#f5f5f5]/75 transition hover:text-[#f2c14e]"
-            >
-              {copy.header.login}
-            </a>
-            <a
-              href={REGISTER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 border border-[#f2c14e]/60 bg-[#f2c14e] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
-              style={{
-                clipPath:
-                  "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-              }}
-            >
-              {copy.header.register}
-              <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" />
-            </a>
           </div>
         </motion.nav>
       </header>
@@ -531,23 +546,8 @@ export function LandingPage() {
 
             <div className="grid items-end gap-8 lg:grid-cols-[1fr_400px] lg:gap-12">
               <div className="max-w-5xl">
-                <motion.div
-                  {...reveal(0)}
-                  className="inline-flex items-center gap-3 border border-[#f2c14e]/35 bg-[#050505]/70 px-4 py-2 text-[10px] font-bold uppercase text-[#f2c14e] backdrop-blur-md"
-                  style={{
-                    clipPath:
-                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
-                  }}
-                >
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d91f26] opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d91f26]" />
-                  </span>
-                  {copy.hero.badge}
-                </motion.div>
-
                 <h1
-                  className="mt-6 max-w-5xl text-6xl leading-none text-[#f5f5f5] sm:text-7xl lg:text-9xl"
+                  className="max-w-5xl text-6xl leading-none text-[#f5f5f5] sm:text-7xl lg:text-9xl"
                   style={{
                     fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace',
                     textShadow:
@@ -943,104 +943,111 @@ export function LandingPage() {
                 <motion.div
                   key={copy.affiliate.tiers[i].tierLabel}
                   {...viewReveal(i)}
-                  className={`relative overflow-hidden border ${
+                  className={`relative p-px ${
                     copy.affiliate.tiers[i].badge
-                      ? "border-[#f5d880]/30 lg:-mt-6 shadow-[0_20px_80px_rgba(184,134,11,0.18)]"
-                      : "border-white/8"
+                      ? "bg-[#f5d880]/30 lg:-mt-6 shadow-[0_20px_80px_rgba(184,134,11,0.18)]"
+                      : "bg-white/8"
                   }`}
                   style={{
-                    background: "#0a0a0a",
                     clipPath:
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                   }}
                 >
-                  {copy.affiliate.tiers[i].badge && (
-                    <div
-                      className="absolute top-4 right-4 z-10 px-3 py-1 text-[9px] font-bold uppercase tracking-wider"
-                      style={{
-                        backgroundColor: visualTier.accent,
-                        color: "#1a1a1a",
-                        clipPath:
-                          "polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px)",
-                      }}
-                    >
-                      {copy.affiliate.tiers[i].badge}
-                    </div>
-                  )}
-
                   <div
-                    className="px-7 pt-8 pb-6"
-                    style={{ background: visualTier.headerGradient }}
+                    className="relative overflow-hidden bg-[#0a0a0a]"
+                    style={{
+                      clipPath:
+                        "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                    }}
                   >
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-white/70">
-                      {copy.affiliate.tiers[i].tierLabel} Affiliate
-                    </p>
-                    <p
-                      className="mt-2 text-5xl leading-none text-white sm:text-6xl"
-                      style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                    >
-                      {copy.affiliate.tiers[i].commission}
-                    </p>
-                    <p className="mt-1 text-[11px] font-medium text-white/56">
-                      {copy.affiliate.tiers[i].maxLabel}
-                    </p>
-                  </div>
-
-                  <div className="px-7 pt-6 pb-7">
-                    <div className="space-y-3.5">
-                      {copy.affiliate.tiers[i].features.map((feature, featureIndex) => {
-                        const included = visualTier.features[featureIndex]?.included ?? true;
-                        const FeatureIcon = included ? Check : X;
-
-                        return (
-                          <div key={feature} className="flex items-start gap-3">
-                            <span
-                              className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
-                              style={{
-                                backgroundColor: included
-                                  ? visualTier.accent + "24"
-                                  : "rgba(255,255,255,0.06)",
-                              }}
-                            >
-                              <FeatureIcon
-                                className={`h-3 w-3 ${included ? "" : "text-white/24"}`}
-                                style={included ? { color: visualTier.accent } : undefined}
-                              />
-                            </span>
-                            <span
-                              className={`text-[13px] leading-5 ${
-                                included ? "text-[#d7d7d7]/80" : "text-white/26 line-through"
-                              }`}
-                              style={{ fontFamily: '"Fraunces", serif' }}
-                            >
-                              {feature}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    <div className="mt-8">
-                      <a
-                        href="https://wkf.ms/4uzhYLR"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-[11px] font-bold uppercase tracking-wider transition duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+                    {copy.affiliate.tiers[i].badge && (
+                      <div
+                        className="absolute top-4 right-4 z-10 px-3 py-1 text-[9px] font-bold uppercase tracking-wider"
                         style={{
                           backgroundColor: visualTier.accent,
-                          color: "#0a0a0a",
+                          color: "#1a1a1a",
                           clipPath:
-                            "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                            "polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px)",
                         }}
                       >
-                        {copy.affiliate.cta}
-                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-45" />
-                      </a>
+                        {copy.affiliate.tiers[i].badge}
+                      </div>
+                    )}
+
+                    <div
+                      className="px-7 pt-8 pb-6"
+                      style={{ background: visualTier.headerGradient }}
+                    >
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-white/70">
+                        {copy.affiliate.tiers[i].tierLabel} Affiliate
+                      </p>
+                      <p
+                        className="mt-2 text-5xl leading-none text-white sm:text-6xl"
+                        style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                      >
+                        {copy.affiliate.tiers[i].commission}
+                      </p>
+                      <p className="mt-1 text-[11px] font-medium text-white/56">
+                        {copy.affiliate.tiers[i].maxLabel}
+                      </p>
                     </div>
 
-                    <p className="mt-4 text-center text-[10px] text-white/26">
-                      {copy.affiliate.createdByLabel} {copy.affiliate.tiers[i].createdBy}
-                    </p>
+                    <div className="px-7 pt-6 pb-7">
+                      <div className="space-y-3.5">
+                        {copy.affiliate.tiers[i].features.map((feature, featureIndex) => {
+                          const included = visualTier.features[featureIndex]?.included ?? true;
+                          const FeatureIcon = included ? Check : X;
+
+                          return (
+                            <div key={feature} className="flex items-start gap-3">
+                              <span
+                                className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
+                                style={{
+                                  backgroundColor: included
+                                    ? visualTier.accent + "24"
+                                    : "rgba(255,255,255,0.06)",
+                                }}
+                              >
+                                <FeatureIcon
+                                  className={`h-3 w-3 ${included ? "" : "text-white/24"}`}
+                                  style={included ? { color: visualTier.accent } : undefined}
+                                />
+                              </span>
+                              <span
+                                className={`text-[13px] leading-5 ${
+                                  included ? "text-[#d7d7d7]/80" : "text-white/26 line-through"
+                                }`}
+                                style={{ fontFamily: '"Fraunces", serif' }}
+                              >
+                                {feature}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <div className="mt-8">
+                        <a
+                          href="https://wkf.ms/4uzhYLR"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-[11px] font-bold uppercase tracking-wider transition duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+                          style={{
+                            backgroundColor: visualTier.accent,
+                            color: "#0a0a0a",
+                            clipPath:
+                              "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                          }}
+                        >
+                          {copy.affiliate.cta}
+                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-45" />
+                        </a>
+                      </div>
+
+                      <p className="mt-4 text-center text-[10px] text-white/26">
+                        {copy.affiliate.createdByLabel} {copy.affiliate.tiers[i].createdBy}
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -1262,73 +1269,81 @@ export function LandingPage() {
 
             <motion.div
               {...viewReveal(2)}
-              className="relative border border-[#f2c14e]/16 bg-[#050505]/78 p-4 shadow-[0_24px_90px_rgba(0,0,0,0.34)] sm:p-6"
+              className="relative bg-[#f2c14e]/16 p-px shadow-[0_24px_90px_rgba(0,0,0,0.34)]"
               style={{
                 clipPath:
                   "polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px)",
               }}
             >
-              <div className="border border-white/8 bg-black/30 p-4 sm:p-5">
-                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
-                  <div>
+              <div
+                className="bg-[#050505]/78 p-4 sm:p-6"
+                style={{
+                  clipPath:
+                    "polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px)",
+                }}
+              >
+                <div className="p-4 sm:p-5">
+                  <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                        {copy.sportsbook.boardEyebrow}
+                      </p>
+                      <p className="mt-1 text-[12px] font-bold uppercase text-[#f5f5f5]">
+                        {copy.sportsbook.boardTitle}
+                      </p>
+                    </div>
+                    <span className="inline-flex h-10 w-10 items-center justify-center border border-[#f2c14e]/35 bg-[#f2c14e]/10 text-[#f2c14e]">
+                      <Trophy className="h-5 w-5" />
+                    </span>
+                  </div>
+
+                  <div className="mt-5 grid gap-3">
+                    {copy.sportsbook.modes.map((item, index) => (
+                      <div
+                        key={item.mode}
+                        className="group border border-white/8 bg-black/24 p-4 transition duration-300 hover:border-[#f2c14e]/28 hover:bg-[#f2c14e]/[0.04]"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                              {item.mode}
+                            </p>
+                            <p className="mt-1 text-[13px] font-bold uppercase text-[#f5f5f5]">
+                              {item.title}
+                            </p>
+                          </div>
+                          <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-[#d7d7d7]/34 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#f2c14e]" />
+                        </div>
+                        <p
+                          className="mt-3 max-w-xl text-[13px] leading-6 text-[#d7d7d7]/66"
+                          style={{ fontFamily: '"Fraunces", serif' }}
+                        >
+                          {item.body}
+                        </p>
+                        <a
+                          href={SPORTSBOOK_MODES[index].href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-4 inline-flex min-h-9 items-center gap-2 border border-white/10 px-3 py-2 text-[10px] font-bold uppercase text-[#d7d7d7]/70 transition hover:border-[#f2c14e]/40 hover:text-[#f2c14e]"
+                        >
+                          {item.cta}
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-5 border border-[#f2c14e]/16 bg-[#f2c14e]/[0.05] p-4">
                     <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                      {copy.sportsbook.boardEyebrow}
+                      {copy.sportsbook.flowEyebrow}
                     </p>
-                    <p className="mt-1 text-[12px] font-bold uppercase text-[#f5f5f5]">
-                      {copy.sportsbook.boardTitle}
+                    <p
+                      className="mt-2 text-[14px] leading-6 text-[#d7d7d7]/78"
+                      style={{ fontFamily: '"Fraunces", serif' }}
+                    >
+                      {copy.sportsbook.flowBody}
                     </p>
                   </div>
-                  <span className="inline-flex h-10 w-10 items-center justify-center border border-[#f2c14e]/35 bg-[#f2c14e]/10 text-[#f2c14e]">
-                    <Trophy className="h-5 w-5" />
-                  </span>
-                </div>
-
-                <div className="mt-5 grid gap-3">
-                  {copy.sportsbook.modes.map((item, index) => (
-                    <div
-                      key={item.mode}
-                      className="group border border-white/8 bg-black/24 p-4 transition duration-300 hover:border-[#f2c14e]/28 hover:bg-[#f2c14e]/[0.04]"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                            {item.mode}
-                          </p>
-                          <p className="mt-1 text-[13px] font-bold uppercase text-[#f5f5f5]">
-                            {item.title}
-                          </p>
-                        </div>
-                        <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-[#d7d7d7]/34 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#f2c14e]" />
-                      </div>
-                      <p
-                        className="mt-3 max-w-xl text-[13px] leading-6 text-[#d7d7d7]/66"
-                        style={{ fontFamily: '"Fraunces", serif' }}
-                      >
-                        {item.body}
-                      </p>
-                      <a
-                        href={SPORTSBOOK_MODES[index].href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-4 inline-flex min-h-9 items-center gap-2 border border-white/10 px-3 py-2 text-[10px] font-bold uppercase text-[#d7d7d7]/70 transition hover:border-[#f2c14e]/40 hover:text-[#f2c14e]"
-                      >
-                        {item.cta}
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                      </a>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-5 border border-[#f2c14e]/16 bg-[#f2c14e]/[0.05] p-4">
-                  <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                    {copy.sportsbook.flowEyebrow}
-                  </p>
-                  <p
-                    className="mt-2 text-[14px] leading-6 text-[#d7d7d7]/78"
-                    style={{ fontFamily: '"Fraunces", serif' }}
-                  >
-                    {copy.sportsbook.flowBody}
-                  </p>
                 </div>
               </div>
             </motion.div>
@@ -1338,56 +1353,64 @@ export function LandingPage() {
         <section className="bg-[#050505] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
           <motion.div
             {...viewReveal(0)}
-            className="relative mx-auto max-w-[1440px] overflow-hidden border border-[#f2c14e]/24 bg-[#0a0a0a]"
+            className="relative mx-auto max-w-[1440px] bg-[#f2c14e]/24 p-px"
             style={{
               clipPath:
                 "polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px)",
             }}
           >
             <div
-              aria-hidden
-              className="absolute inset-0"
+              className="relative overflow-hidden bg-[#0a0a0a]"
               style={{
-                background:
-                  "linear-gradient(135deg, rgba(217,31,38,0.22), transparent 38%), radial-gradient(circle at 86% 18%, rgba(242,193,78,0.18), transparent 30%)",
+                clipPath:
+                  "polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px)",
               }}
-            />
-            <div className="relative grid items-end gap-8 p-6 sm:p-10 lg:grid-cols-[1.35fr_1fr] lg:p-16">
-              <div>
-                <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                  {copy.final.eyebrow}
-                </p>
-                <h2
-                  className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-7xl"
-                  style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                >
-                  {copy.final.titleLead}{" "}
-                  <span className="text-[#d91f26]">{copy.final.titleAccent}</span>
-                </h2>
-                <p
-                  className="mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
-                  style={{ fontFamily: '"Fraunces", serif' }}
-                >
-                  {copy.final.body}
-                </p>
-              </div>
-              <div className="flex flex-col items-start gap-4 lg:items-end">
-                <a
-                  href={REGISTER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 bg-[#f2c14e] px-7 py-4 text-[11px] font-bold uppercase tracking-wider text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white"
-                  style={{
-                    clipPath:
-                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                  }}
-                >
-                  {copy.final.cta}
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
-                </a>
-                <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/52">
-                  {copy.final.note}
-                </span>
+            >
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(217,31,38,0.22), transparent 38%), radial-gradient(circle at 86% 18%, rgba(30,79,168,0.26), transparent 30%)",
+                }}
+              />
+              <div className="relative grid items-end gap-8 p-6 sm:p-10 lg:grid-cols-[1.35fr_1fr] lg:p-16">
+                <div>
+                  <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                    {copy.final.eyebrow}
+                  </p>
+                  <h2
+                    className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-7xl"
+                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                  >
+                    {copy.final.titleLead}{" "}
+                    <span className="text-[#d91f26]">{copy.final.titleAccent}</span>
+                  </h2>
+                  <p
+                    className="mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
+                    style={{ fontFamily: '"Fraunces", serif' }}
+                  >
+                    {copy.final.body}
+                  </p>
+                </div>
+                <div className="flex flex-col items-start gap-4 lg:items-end">
+                  <a
+                    href={REGISTER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 bg-[#f2c14e] px-7 py-4 text-[11px] font-bold uppercase tracking-wider text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white"
+                    style={{
+                      clipPath:
+                        "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                    }}
+                  >
+                    {copy.final.cta}
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+                  </a>
+                  <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/52">
+                    {copy.final.note}
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>
