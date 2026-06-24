@@ -23,6 +23,7 @@ import {
   type Locale,
 } from "../lib/i18n";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
+import { capture } from "../lib/analytics";
 
 const ROOM_BOARD = [
   {
@@ -412,6 +413,7 @@ export function LandingPage() {
                   href={LOGIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => capture("login_clicked", { location: "header" })}
                   className="inline-flex items-center justify-center border border-[#ff7a00]/60 bg-[#d91f26] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:bg-[#ff3a2f] active:scale-[0.98]"
                   style={{
                     clipPath:
@@ -424,6 +426,7 @@ export function LandingPage() {
                   href={REGISTER_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => capture("register_clicked", { location: "header" })}
                   className="group inline-flex items-center gap-1.5 border border-[#f2c14e]/60 bg-[#f2c14e] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white active:scale-[0.98]"
                   style={{
                     clipPath:
@@ -579,6 +582,7 @@ export function LandingPage() {
                     href={LOGIN_URL}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => capture("cta_clicked", { location: "hero" })}
                     className="group inline-flex min-h-14 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-7 py-3 text-sm font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] active:scale-[0.98]"
                     style={{
                       clipPath:
@@ -626,7 +630,7 @@ export function LandingPage() {
                     <button
                       key={item.title}
                       type="button"
-                      onClick={openLiveChat}
+                      onClick={() => { capture("live_chat_opened"); openLiveChat(); }}
                       className={`${className} text-left transition hover:bg-[#f2c14e]/8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#f2c14e]`}
                     >
                       {content}
@@ -671,6 +675,7 @@ export function LandingPage() {
               clipPath:
                 "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
             }}
+            onClick={() => capture("promo_banner_clicked", { banner_index: promoIndex })}
             onMouseEnter={() => setPromoPaused(true)}
             onMouseLeave={() => setPromoPaused(false)}
           >
@@ -720,7 +725,7 @@ export function LandingPage() {
               <button
                 key={i}
                 type="button"
-                onClick={() => goToPromo(i)}
+                onClick={() => { goToPromo(i); capture("promo_slide_navigated", { slide_index: i }); }}
                 aria-label={`${copy.promo.ariaPrefix} ${i + 1}`}
                 aria-current={i === promoIndex}
                 className="group flex h-10 items-center justify-center px-1"
@@ -1031,6 +1036,7 @@ export function LandingPage() {
                           href="https://wkf.ms/4uzhYLR"
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={() => capture("affiliate_apply_clicked", { tier: copy.affiliate.tiers[i].tierLabel })}
                           className="group inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-[11px] font-bold uppercase tracking-wider transition duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
                           style={{
                             backgroundColor: visualTier.accent,
@@ -1150,6 +1156,7 @@ export function LandingPage() {
                   href={`${ALOWIN_URL}${game.path}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => capture("game_clicked", { game_name: game.name, game_category: game.category })}
                   {...viewReveal(i)}
                   className="group overflow-hidden border border-white/8 bg-[#0a0a0a] transition duration-300 hover:-translate-y-1 hover:border-[#f2c14e]/30 hover:bg-[#0f1118]"
                   style={{
@@ -1256,6 +1263,7 @@ export function LandingPage() {
                 href={ALOWIN_SPORTSBOOK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => capture("sportsbook_cta_clicked", { mode: "main" })}
                 className="group mt-9 inline-flex items-center gap-2 bg-[#f2c14e] px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white"
                 style={{
                   clipPath:
@@ -1398,6 +1406,7 @@ export function LandingPage() {
                     href={REGISTER_URL}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => capture("register_clicked", { location: "final_cta" })}
                     className="group inline-flex items-center gap-2 bg-[#f2c14e] px-7 py-4 text-[11px] font-bold uppercase tracking-wider text-[#050505] transition duration-300 hover:bg-[#ff7a00] hover:text-white"
                     style={{
                       clipPath:

@@ -2,6 +2,7 @@ import { createPortal } from "react-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
 import { localeNames, localeShortLabels, locales, type Locale } from "../lib/i18n";
+import { capture } from "../lib/analytics";
 
 const localeFlags: Record<Locale, string> = {
   en: "🇺🇸",
@@ -86,6 +87,7 @@ export function LanguageSelector({ locale, onChange }: LanguageSelectorProps) {
   const handleSelect = (nextLocale: Locale) => {
     setOpen(false);
     if (nextLocale !== locale) {
+      capture("language_changed", { from_locale: locale, to_locale: nextLocale });
       onChange(nextLocale);
     }
   };
