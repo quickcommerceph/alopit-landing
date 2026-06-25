@@ -1,5 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useEffect, useRef, useState } from "react";
+import {
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import {
   ArrowUpRight,
   Check,
@@ -262,6 +268,15 @@ export function LandingPage() {
   const [[promoIndex, promoDir], setPromo] = useState<[number, number]>([0, 0]);
   const [activeCategory, setActiveCategory] = useState<GameCategory>("all");
   const [promoPaused, setPromoPaused] = useState(false);
+  const promoSwipeRef = useRef({
+    pointerId: null as number | null,
+    startX: 0,
+    startY: 0,
+    lastX: 0,
+    lastY: 0,
+    active: false,
+    dragging: false,
+  });
   const goToPromo = (i: number) => setPromo(([cur]) => [i, i >= cur ? 1 : -1]);
 
   const copy = COPY[locale];
@@ -344,6 +359,65 @@ export function LandingPage() {
 
   const handleLocaleChange = (nextLocale: Locale) => {
     setLocale(nextLocale);
+  };
+  const handlePromoSwipeEnd = (nextIndex: number) => {
+    setPromo(([cur]) => [nextIndex, nextIndex >= cur ? 1 : -1]);
+    capture("promo_slide_navigated", { slide_index: nextIndex });
+  };
+  const handlePromoPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (reduced || event.button !== 0) return;
+
+    const swipe = promoSwipeRef.current;
+    swipe.pointerId = event.pointerId;
+    swipe.startX = event.clientX;
+    swipe.startY = event.clientY;
+    swipe.lastX = event.clientX;
+    swipe.lastY = event.clientY;
+    swipe.active = true;
+    swipe.dragging = false;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setPromoPaused(true);
+  };
+  const handlePromoPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const swipe = promoSwipeRef.current;
+    if (!swipe.active || swipe.pointerId !== event.pointerId) return;
+
+    swipe.lastX = event.clientX;
+    swipe.lastY = event.clientY;
+
+    const deltaX = event.clientX - swipe.startX;
+    const deltaY = event.clientY - swipe.startY;
+
+    if (!swipe.dragging) {
+      if (Math.abs(deltaX) < 10 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+      swipe.dragging = true;
+    }
+
+    event.preventDefault();
+  };
+  const finishPromoSwipe = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const swipe = promoSwipeRef.current;
+    if (!swipe.active || swipe.pointerId !== event.pointerId) return;
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+
+    const deltaX = event.clientX - swipe.startX;
+    const deltaY = event.clientY - swipe.startY;
+    const isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
+    const shouldChange = swipe.dragging && isHorizontal && Math.abs(deltaX) > 56;
+
+    swipe.pointerId = null;
+    swipe.active = false;
+    swipe.dragging = false;
+    setPromoPaused(false);
+
+    if (!shouldChange) return;
+
+    const direction = deltaX < 0 ? 1 : -1;
+    const nextIndex = (promoIndex + direction + PROMOS.length) % PROMOS.length;
+    handlePromoSwipeEnd(nextIndex);
   };
   const navClipPath =
     "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)";
@@ -666,18 +740,27 @@ export function LandingPage() {
         </div>
 
         <section className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
-          <a
-            href={LOGIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block relative overflow-hidden border border-[#f2c14e]/18 bg-[#070707] cursor-pointer"
+          <div
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Promotion carousel"
+            className="block relative overflow-hidden border border-[#f2c14e]/18 bg-[#070707]"
             style={{
               clipPath:
                 "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+              touchAction: "pan-y",
             }}
-            onClick={() => capture("promo_banner_clicked", { banner_index: promoIndex })}
             onMouseEnter={() => setPromoPaused(true)}
-            onMouseLeave={() => setPromoPaused(false)}
+            onMouseLeave={() => {
+              const swipe = promoSwipeRef.current;
+              if (!swipe.active) {
+                setPromoPaused(false);
+              }
+            }}
+            onPointerDown={handlePromoPointerDown}
+            onPointerMove={handlePromoPointerMove}
+            onPointerUp={finishPromoSwipe}
+            onPointerCancel={finishPromoSwipe}
           >
             <div className="relative" style={{ aspectRatio: "1365 / 455" }}>
                <AnimatePresence initial={false} custom={promoDir}>
@@ -718,7 +801,7 @@ export function LandingPage() {
                 className="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
               />
             </div>
-          </a>
+          </div>
 
           <div className="mt-5 flex items-center justify-center gap-3">
             {PROMOS.map((_, i) => (
