@@ -74,7 +74,7 @@ export const COPY = {
       eyebrow: "Convenience Matters",
       titleLead: "Self-service",
       titleAccent: "transactions.",
-      body: "Smooth deposits, fast withdrawals, multiple payment channels — all in one reliable platform. No manual process, no waiting.",
+      body: "Smooth deposits, fast withdrawals, wallets, QR rails, bank channels, and crypto options — all in one reliable platform. No manual process, no waiting.",
       supported: "Supported",
       statusLabels: ["Self Cash-In", "Self Cash-Out", "Fast Processing"],
       paymentBodies: [
@@ -261,7 +261,7 @@ export const COPY = {
       eyebrow: "ความสะดวกคือเรื่องสำคัญ",
       titleLead: "ธุรกรรม",
       titleAccent: "ด้วยตนเอง",
-      body: "ฝากง่าย ถอนเร็ว หลายช่องทางการชำระเงิน — ทั้งหมดอยู่ในแพลตฟอร์มเดียวที่เชื่อถือได้ ไม่ต้องรอ ไม่ต้องใช้ขั้นตอนยุ่งยาก",
+      body: "ฝากง่าย ถอนเร็ว รองรับวอลเล็ต QR ธนาคาร และคริปโต — ทั้งหมดอยู่ในแพลตฟอร์มเดียวที่เชื่อถือได้ ไม่ต้องรอ ไม่ต้องใช้ขั้นตอนยุ่งยาก",
       supported: "รองรับ",
       statusLabels: ["ฝากเอง", "ถอนเอง", "ประมวลผลเร็ว"],
       paymentBodies: [
@@ -448,7 +448,7 @@ export const COPY = {
       eyebrow: "Kemudahan itu penting",
       titleLead: "Transaksi",
       titleAccent: "layan diri.",
-      body: "Deposit lancar, pengeluaran pantas, pelbagai saluran pembayaran — semuanya dalam satu platform yang boleh dipercayai. Tiada proses manual, tiada menunggu.",
+      body: "Deposit lancar, pengeluaran pantas, dompet, QR, saluran bank, dan pilihan kripto — semuanya dalam satu platform yang boleh dipercayai. Tiada proses manual, tiada menunggu.",
       supported: "Disokong",
       statusLabels: ["Deposit Layan Diri", "Pengeluaran Layan Diri", "Pemprosesan Pantas"],
       paymentBodies: [
@@ -635,7 +635,7 @@ export const COPY = {
       eyebrow: "Kemudahan itu penting",
       titleLead: "Transaksi",
       titleAccent: "mandiri.",
-      body: "Deposit lancar, penarikan cepat, berbagai saluran pembayaran — semuanya dalam satu platform yang andal. Tanpa proses manual, tanpa menunggu.",
+      body: "Deposit lancar, penarikan cepat, dompet, QR, kanal bank, dan opsi kripto — semuanya dalam satu platform yang andal. Tanpa proses manual, tanpa menunggu.",
       supported: "Didukung",
       statusLabels: ["Setor Mandiri", "Tarik Mandiri", "Pemrosesan Cepat"],
       paymentBodies: [
@@ -822,7 +822,7 @@ export const COPY = {
       eyebrow: "Sự tiện lợi rất quan trọng",
       titleLead: "Giao dịch",
       titleAccent: "tự phục vụ.",
-      body: "Nạp mượt, rút nhanh, nhiều kênh thanh toán — tất cả trong một nền tảng đáng tin cậy. Không thủ công, không chờ đợi.",
+      body: "Nạp mượt, rút nhanh, ví điện tử, QR, kênh ngân hàng và tùy chọn crypto — tất cả trong một nền tảng đáng tin cậy. Không thủ công, không chờ đợi.",
       supported: "Hỗ trợ",
       statusLabels: ["Tự Nạp", "Tự Rút", "Xử Lý Nhanh"],
       paymentBodies: [
@@ -1009,7 +1009,7 @@ export const COPY = {
       eyebrow: "La comodidad importa",
       titleLead: "Transacciones",
       titleAccent: "de autoservicio.",
-      body: "Depósitos fluidos, retiros rápidos, múltiples canales de pago: todo en una plataforma confiable. Sin procesos manuales, sin esperas.",
+      body: "Depósitos fluidos, retiros rápidos, billeteras, QR, canales bancarios y opciones cripto: todo en una plataforma confiable. Sin procesos manuales, sin esperas.",
       supported: "Disponible",
       statusLabels: ["Depósito propio", "Retiro propio", "Procesamiento rápido"],
       paymentBodies: [
@@ -1196,7 +1196,7 @@ export const COPY = {
       eyebrow: "सुविधा मायने रखती है",
       titleLead: "सेल्फ-सर्विस",
       titleAccent: "ट्रांज़ैक्शन.",
-      body: "स्मूद डिपॉज़िट, तेज़ निकासी, कई भुगतान चैनल - सब कुछ एक भरोसेमंद प्लेटफ़ॉर्म में। कोई मैन्युअल प्रक्रिया नहीं, कोई इंतज़ार नहीं।",
+      body: "स्मूद डिपॉज़िट, तेज़ निकासी, वॉलेट, QR, बैंक चैनल और क्रिप्टो विकल्प - सब कुछ एक भरोसेमंद प्लेटफ़ॉर्म में। कोई मैन्युअल प्रक्रिया नहीं, कोई इंतज़ार नहीं।",
       supported: "समर्थित",
       statusLabels: ["स्वयं जमा", "स्वयं निकासी", "तेज़ प्रोसेसिंग"],
       paymentBodies: [

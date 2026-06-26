@@ -40,25 +40,28 @@ const ROOM_BOARD = [
 
 const TRUST_ICONS = [ShieldCheck, Zap, Smartphone, Headphones] as const;
 
-const PAYMENTS = [
+const PAYMENT_LOGOS = [
+  { name: "GCash", logo: "/images/payment-logos/gcash-logo.svg" },
+  { name: "Maya", logo: "/images/payment-logos/maya-logo.svg" },
+  { name: "QRPH", logo: "/images/payment-logos/qrph-logo.svg" },
+  { name: "Thai QR", logo: "/images/payment-logos/thaiqr-logo.svg" },
+  { name: "DANA", logo: "/images/payment-logos/dana-logo.svg" },
   {
-    name: "GCash",
-    body: "Instant cash-in and cash-out via GCash wallet.",
-    color: "#1e4fa8",
-    logo: "/images/gcash-logo.svg",
+    name: "Virtual Account",
+    logo: "/images/payment-logos/virtualaccount-logo.svg",
+    needsLightSurface: true,
   },
-  {
-    name: "Maya",
-    body: "Seamless transactions with Maya support.",
-    color: "#d91f26",
-    logo: "/images/maya-logo.svg",
-  },
-  {
-    name: "QRPH Banks",
-    body: "Supported bank transfers via QRPH nationwide.",
-    color: "#f2c14e",
-    logo: "/images/qrph-logo.svg",
-  },
+  { name: "DuitNow", logo: "/images/payment-logos/duit-logo.svg", needsLightSurface: true },
+  { name: "OVO", logo: "/images/payment-logos/ovo-logo.svg" },
+  { name: "QRIS", logo: "/images/payment-logos/qris-logo.svg", needsLightSurface: true },
+  { name: "Paytm", logo: "/images/payment-logos/paytm-logo.svg" },
+  { name: "SPEI", logo: "/images/payment-logos/spei-logo.svg" },
+  { name: "UPI", logo: "/images/payment-logos/upi-logo.svg", needsLightSurface: true },
+  { name: "VietQR", logo: "/images/payment-logos/vietqr-logo.svg" },
+  { name: "PhonePe", logo: "/images/payment-logos/phonepe-logo.svg" },
+  { name: "MoMo", logo: "/images/payment-logos/momo-logo.svg" },
+  { name: "USDT TRC", logo: "/images/payment-logos/usdt-trc-logo.png" },
+  { name: "USDT BEP", logo: "/images/payment-logos/usdt-bep-logo.png" },
 ];
 
 const AGENT_TIERS = [
@@ -356,6 +359,33 @@ export function LandingPage() {
           ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
         },
   });
+
+  const paymentGridReveal = reduced
+    ? undefined
+    : {
+        hidden: {},
+        visible: {
+          transition: {
+            delayChildren: 0.08,
+            staggerChildren: 0.035,
+          },
+        },
+      };
+
+  const paymentLogoReveal = reduced
+    ? undefined
+    : {
+        hidden: { opacity: 0, y: 14, filter: "blur(5px)" },
+        visible: {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          transition: {
+            duration: 0.42,
+            ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+          },
+        },
+      };
 
   const handleLocaleChange = (nextLocale: Locale) => {
     setLocale(nextLocale);
@@ -903,102 +933,138 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section id="payments" className="border-y border-[#1e4fa8]/20 bg-[#080808]">
-          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-            <div className="text-center">
-              <motion.div {...viewReveal(0)} className="inline-flex items-center gap-3">
-                <Wallet className="h-5 w-5 text-[#f2c14e]" />
-                <span className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                  {copy.payments.eyebrow}
-                </span>
-              </motion.div>
-              <motion.h2
-                {...viewReveal(1)}
-                className="mt-4 text-5xl leading-none text-[#f5f5f5] sm:text-6xl"
-                style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-              >
-                {copy.payments.titleLead}{" "}
-                <span className="text-[#f2c14e]">{copy.payments.titleAccent}</span>
-              </motion.h2>
-              <motion.p
-                {...viewReveal(2)}
-                className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-[#d7d7d7]/76"
-                style={{ fontFamily: '"Fraunces", serif' }}
-              >
-                {copy.payments.body}
-              </motion.p>
-            </div>
-
-            <div className="mt-14 grid gap-6 sm:grid-cols-3">
-              {PAYMENTS.map((pm, i) => (
+        <section id="payments" className="relative overflow-hidden border-y border-[#1e4fa8]/20 bg-[#080808]">
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-70"
+            style={{
+              background:
+                "linear-gradient(115deg, rgba(30,79,168,0.24), transparent 24%, transparent 72%, rgba(217,31,38,0.2)), linear-gradient(180deg, #080808 0%, #050505 100%)",
+            }}
+          />
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
+          />
+          <div className="relative mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+            <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+              <div className="lg:pr-8">
+                <motion.div {...viewReveal(0)} className="inline-flex items-center gap-3">
+                  <Wallet className="h-5 w-5 text-[#f2c14e]" />
+                  <span className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                    {copy.payments.eyebrow}
+                  </span>
+                </motion.div>
+                <motion.h2
+                  {...viewReveal(1)}
+                  className="mt-4 max-w-[11ch] text-5xl leading-none text-[#f5f5f5] sm:text-6xl lg:text-7xl"
+                  style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
+                >
+                  {copy.payments.titleLead}{" "}
+                  <span className="text-[#f2c14e]">{copy.payments.titleAccent}</span>
+                </motion.h2>
+                <motion.p
+                  {...viewReveal(2)}
+                  className="mt-6 max-w-[34rem] text-[15px] leading-7 text-[#d7d7d7]/80"
+                  style={{ fontFamily: '"Fraunces", serif' }}
+                >
+                  {copy.payments.body}
+                </motion.p>
                 <motion.div
-                  key={pm.name}
-                  {...viewReveal(i)}
-                  className="relative overflow-hidden border border-white/8 bg-[#050505] p-8 transition duration-300 hover:border-white/16"
+                  {...viewReveal(3)}
+                  className="mt-8 flex flex-wrap gap-3 text-[10px] font-bold uppercase text-[#d7d7d7]/58"
+                >
+                  {copy.payments.statusLabels.map((label) => (
+                    <span
+                      key={label}
+                      className="flex items-center gap-3 border border-white/8 bg-[#050505]/70 px-4 py-3"
+                    >
+                      <Check className="h-3.5 w-3.5 shrink-0 text-[#f2c14e]" />
+                      {label}
+                    </span>
+                  ))}
+                </motion.div>
+              </div>
+
+              <motion.div
+                {...viewReveal(4)}
+                className="relative bg-[#f2c14e]/22 p-px"
+                style={{
+                  clipPath:
+                    "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
+                }}
+              >
+                <div
+                  className="bg-[#070707] p-4 sm:p-5"
                   style={{
                     clipPath:
-                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                      "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                   }}
                 >
-                  <div
-                    className="absolute top-0 left-0 right-0 h-1"
-                    style={{ backgroundColor: pm.color }}
-                  />
-                  <span
-                    className="flex h-20 w-20 items-center justify-center border p-3"
-                    style={{
-                      borderColor: pm.color + "30",
-                      backgroundColor: pm.color + "12",
-                    }}
-                  >
-                    <img
-                      src={pm.logo}
-                      alt={pm.name}
-                      className="h-full w-full object-contain"
-                    />
-                  </span>
-                  <p
-                    className="mt-5 text-2xl font-bold text-[#f5f5f5]"
-                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                  >
-                    {pm.name}
-                  </p>
-                  <p
-                    className="mt-3 text-[13px] leading-6 text-[#d7d7d7]/68"
-                    style={{ fontFamily: '"Fraunces", serif' }}
-                  >
-                    {copy.payments.paymentBodies[i as 0 | 1 | 2]}
-                  </p>
-                  <div className="mt-6 flex items-center gap-2 border-t border-white/6 pt-4">
-                    <span
-                      className="h-1.5 w-6 rounded-full"
-                      style={{ backgroundColor: pm.color }}
-                    />
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/8 pb-4">
                     <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/52">
-                      {copy.payments.supported}
+                      {copy.payments.supported} channels
+                    </span>
+                    <span className="text-[10px] font-bold uppercase text-[#f2c14e]">
+                      Wallets · QR · bank rails · crypto
                     </span>
                   </div>
-                </motion.div>
-              ))}
+                  <motion.div
+                    className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 xl:grid-cols-4"
+                    initial={reduced ? false : "hidden"}
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-120px" }}
+                    variants={paymentGridReveal}
+                  >
+                    {PAYMENT_LOGOS.map((payment, i) => (
+                      <Fragment key={payment.name}>
+                        {i === 3 && (
+                          <div className="col-span-full flex items-center gap-3 py-1">
+                            <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/46">
+                              Others
+                            </span>
+                            <span className="h-px flex-1 bg-white/10" />
+                          </div>
+                        )}
+                        <motion.div
+                          variants={paymentLogoReveal}
+                          className="group min-w-0 bg-white/10 p-px transition duration-300 hover:bg-[#f2c14e]/32"
+                          style={{
+                            clipPath:
+                              "polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)",
+                          }}
+                        >
+                          <div
+                            className="flex min-h-28 min-w-0 flex-col items-center justify-center gap-2.5 bg-[#050505] px-3 py-4 transition duration-300 group-hover:bg-[#f2c14e]/[0.04]"
+                            style={{
+                              clipPath:
+                                "polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)",
+                            }}
+                          >
+                            <span
+                              className={`flex h-11 w-full max-w-[8.5rem] items-center justify-center px-2 transition duration-300 group-hover:scale-[1.03] ${
+                                payment.needsLightSurface
+                                  ? "border border-white/80 bg-[#f5f5f5] py-2"
+                                  : "py-1"
+                              }`}
+                            >
+                              <img
+                                src={payment.logo}
+                                alt={`${payment.name} payment logo`}
+                                className="max-h-full max-w-full object-contain"
+                              />
+                            </span>
+                            <span className="block min-h-[1rem] max-w-full truncate text-[10px] font-bold uppercase leading-4 text-[#d7d7d7]/60 transition duration-300 group-hover:text-[#f2c14e]">
+                              {payment.name}
+                            </span>
+                          </div>
+                        </motion.div>
+                      </Fragment>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.div>
             </div>
-
-            <motion.div
-              {...viewReveal(3)}
-              className="mt-10 flex flex-wrap items-center justify-center gap-8 text-[10px] font-bold uppercase text-[#d7d7d7]/48"
-            >
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#1e4fa8]" />
-                {copy.payments.statusLabels[0]}
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#d91f26]" />
-                {copy.payments.statusLabels[1]}
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#f2c14e]" />
-                {copy.payments.statusLabels[2]}
-              </span>
-            </motion.div>
           </div>
         </section>
 
@@ -1444,7 +1510,7 @@ export function LandingPage() {
         <section className="bg-[#050505] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
           <motion.div
             {...viewReveal(0)}
-            className="relative mx-auto max-w-[1440px] bg-[#f2c14e]/24 p-px"
+            className="relative mx-auto max-w-[1344px] bg-[#f2c14e]/24 p-px"
             style={{
               clipPath:
                 "polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px)",
