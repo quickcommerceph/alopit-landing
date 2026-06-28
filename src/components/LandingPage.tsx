@@ -1,11 +1,14 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Fragment,
   useEffect,
   useRef,
   useState,
-  type PointerEvent as ReactPointerEvent,
 } from "react";
+import { A11y, Autoplay, Keyboard } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper/types";
+import "swiper/css";
 import {
   ArrowUpRight,
   Check,
@@ -130,12 +133,6 @@ const PROMOS = [
   { src: "/images/banner-8.png", alt: "Alopit banner 8" },
   { src: "/images/banner-9.png", alt: "Alopit banner 9" },
 ];
-
-const promoVariants = {
-  enter: (dir: number) => ({ x: dir >= 0 ? "100%" : "-100%", opacity: 0.5 }),
-  center: { x: "0%", opacity: 1 },
-  exit: (dir: number) => ({ x: dir >= 0 ? "-100%" : "100%", opacity: 0.5 }),
-};
 
 const GAME_CATEGORIES = ["all", "casino", "liveCasino", "games"] as const;
 type GameCategory = (typeof GAME_CATEGORIES)[number];
@@ -268,35 +265,24 @@ export function LandingPage() {
   const scrollTicking = useRef(false);
   const scrollFrame = useRef<number | null>(null);
 
-  const [[promoIndex, promoDir], setPromo] = useState<[number, number]>([0, 0]);
+  const [promoIndex, setPromoIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState<GameCategory>("all");
-  const [promoPaused, setPromoPaused] = useState(false);
-  const promoSwipeRef = useRef({
-    pointerId: null as number | null,
-    startX: 0,
-    startY: 0,
-    lastX: 0,
-    lastY: 0,
-    active: false,
-    dragging: false,
-  });
-  const goToPromo = (i: number) => setPromo(([cur]) => [i, i >= cur ? 1 : -1]);
+  const promoSwiperRef = useRef<SwiperType | null>(null);
+  const promoManualNavigationRef = useRef(false);
+  const promoManualNavigationTimerRef = useRef<number | null>(null);
 
   const copy = COPY[locale];
-
-  useEffect(() => {
-    if (reduced || promoPaused) return;
-    const id = setInterval(
-      () => setPromo(([cur]) => [(cur + 1) % PROMOS.length, 1]),
-      5000,
-    );
-    return () => clearInterval(id);
-  }, [reduced, promoIndex, promoPaused]);
 
   useEffect(() => {
     persistLocale(locale);
     document.documentElement.lang = locale;
   }, [locale]);
+
+  useEffect(() => () => {
+    if (promoManualNavigationTimerRef.current !== null) {
+      window.clearTimeout(promoManualNavigationTimerRef.current);
+    }
+  }, []);
 
   useEffect(() => {
     const updateHeaderState = () => {
@@ -390,64 +376,49 @@ export function LandingPage() {
   const handleLocaleChange = (nextLocale: Locale) => {
     setLocale(nextLocale);
   };
-  const handlePromoSwipeEnd = (nextIndex: number) => {
-    setPromo(([cur]) => [nextIndex, nextIndex >= cur ? 1 : -1]);
+  const clearPromoManualNavigation = () => {
+    promoManualNavigationRef.current = false;
+
+    if (promoManualNavigationTimerRef.current !== null) {
+      window.clearTimeout(promoManualNavigationTimerRef.current);
+      promoManualNavigationTimerRef.current = null;
+    }
+  };
+  const markPromoManualNavigation = () => {
+    promoManualNavigationRef.current = true;
+
+    if (promoManualNavigationTimerRef.current !== null) {
+      window.clearTimeout(promoManualNavigationTimerRef.current);
+    }
+
+    promoManualNavigationTimerRef.current = window.setTimeout(() => {
+      promoManualNavigationRef.current = false;
+      promoManualNavigationTimerRef.current = null;
+    }, 1000);
+  };
+  const handlePromoSlideChange = (swiper: SwiperType) => {
+    const nextIndex = swiper.realIndex;
+    setPromoIndex(nextIndex);
+
+    if (!promoManualNavigationRef.current) return;
+
+    clearPromoManualNavigation();
     capture("promo_slide_navigated", { slide_index: nextIndex });
   };
-  const handlePromoPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (reduced || event.button !== 0) return;
+  const goToPromo = (i: number) => {
+    if (i === promoIndex) return;
 
-    const swipe = promoSwipeRef.current;
-    swipe.pointerId = event.pointerId;
-    swipe.startX = event.clientX;
-    swipe.startY = event.clientY;
-    swipe.lastX = event.clientX;
-    swipe.lastY = event.clientY;
-    swipe.active = true;
-    swipe.dragging = false;
-    event.currentTarget.setPointerCapture(event.pointerId);
-    setPromoPaused(true);
-  };
-  const handlePromoPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const swipe = promoSwipeRef.current;
-    if (!swipe.active || swipe.pointerId !== event.pointerId) return;
+    markPromoManualNavigation();
 
-    swipe.lastX = event.clientX;
-    swipe.lastY = event.clientY;
-
-    const deltaX = event.clientX - swipe.startX;
-    const deltaY = event.clientY - swipe.startY;
-
-    if (!swipe.dragging) {
-      if (Math.abs(deltaX) < 10 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
-      swipe.dragging = true;
+    const swiper = promoSwiperRef.current;
+    if (swiper) {
+      swiper.slideToLoop(i, reduced ? 0 : 550);
+      return;
     }
 
-    event.preventDefault();
-  };
-  const finishPromoSwipe = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const swipe = promoSwipeRef.current;
-    if (!swipe.active || swipe.pointerId !== event.pointerId) return;
-
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-
-    const deltaX = event.clientX - swipe.startX;
-    const deltaY = event.clientY - swipe.startY;
-    const isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
-    const shouldChange = swipe.dragging && isHorizontal && Math.abs(deltaX) > 56;
-
-    swipe.pointerId = null;
-    swipe.active = false;
-    swipe.dragging = false;
-    setPromoPaused(false);
-
-    if (!shouldChange) return;
-
-    const direction = deltaX < 0 ? 1 : -1;
-    const nextIndex = (promoIndex + direction + PROMOS.length) % PROMOS.length;
-    handlePromoSwipeEnd(nextIndex);
+    setPromoIndex(i);
+    clearPromoManualNavigation();
+    capture("promo_slide_navigated", { slide_index: i });
   };
   const navClipPath =
     "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)";
@@ -778,45 +749,56 @@ export function LandingPage() {
             style={{
               clipPath:
                 "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
-              touchAction: "pan-y",
             }}
-            onMouseEnter={() => setPromoPaused(true)}
-            onMouseLeave={() => {
-              const swipe = promoSwipeRef.current;
-              if (!swipe.active) {
-                setPromoPaused(false);
-              }
-            }}
-            onPointerDown={handlePromoPointerDown}
-            onPointerMove={handlePromoPointerMove}
-            onPointerUp={finishPromoSwipe}
-            onPointerCancel={finishPromoSwipe}
           >
             <div className="relative" style={{ aspectRatio: "1365 / 455" }}>
-               <AnimatePresence initial={false} custom={promoDir}>
-                  <motion.img
-                    key={promoIndex}
-                    src={PROMOS[promoIndex].src}
-                    alt={`${copy.promo.ariaPrefix} ${promoIndex + 1}`}
-                    width={1365}
-                    height={455}
-                    custom={promoDir}
-                    variants={promoVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={
-                      reduced
-                        ? { duration: 0 }
-                        : {
-                            x: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                            opacity: { duration: 0.35 },
-                          }
-                    }
-                    className="absolute inset-0 h-full w-full object-cover"
-                    draggable={false}
-                  />
-                </AnimatePresence>
+              <Swiper
+                modules={[A11y, Autoplay, Keyboard]}
+                loop
+                slidesPerView={1}
+                speed={reduced ? 0 : 550}
+                autoplay={
+                  reduced
+                    ? false
+                    : {
+                        delay: 5000,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true,
+                      }
+                }
+                keyboard={{ enabled: true, onlyInViewport: true }}
+                a11y={{
+                  enabled: true,
+                  containerMessage: "Promotion carousel",
+                  itemRoleDescriptionMessage: "slide",
+                  slideLabelMessage: "{{index}} / {{slidesLength}}",
+                }}
+                className="promo-swiper"
+                onSwiper={(swiper) => {
+                  promoSwiperRef.current = swiper;
+                }}
+                onAutoplay={clearPromoManualNavigation}
+                onSlideChange={handlePromoSlideChange}
+                onSliderMove={markPromoManualNavigation}
+                onKeyPress={(_, keyCode) => {
+                  if (["37", "39", "ArrowLeft", "ArrowRight"].includes(String(keyCode))) {
+                    markPromoManualNavigation();
+                  }
+                }}
+              >
+                {PROMOS.map((promo, i) => (
+                  <SwiperSlide key={promo.src}>
+                    <img
+                      src={promo.src}
+                      alt={promo.alt || `${copy.promo.ariaPrefix} ${i + 1}`}
+                      width={1365}
+                      height={455}
+                      className="h-full w-full object-cover"
+                      draggable={false}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
 
               <div
                 aria-hidden
@@ -838,7 +820,7 @@ export function LandingPage() {
               <button
                 key={i}
                 type="button"
-                onClick={() => { goToPromo(i); capture("promo_slide_navigated", { slide_index: i }); }}
+                onClick={() => goToPromo(i)}
                 aria-label={`${copy.promo.ariaPrefix} ${i + 1}`}
                 aria-current={i === promoIndex}
                 className="group flex h-10 items-center justify-center px-1"

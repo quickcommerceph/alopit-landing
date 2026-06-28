@@ -27,6 +27,21 @@
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
+
+  .promo-swiper,
+  .promo-swiper .swiper-wrapper,
+  .promo-swiper .swiper-slide {
+    height: 100%;
+  }
+
+  .promo-swiper {
+    width: 100%;
+    touch-action: pan-y;
+  }
+
+  .promo-swiper .swiper-slide {
+    overflow: hidden;
+  }
 }
 
 @layer base {
