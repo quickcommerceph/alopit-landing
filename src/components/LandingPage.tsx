@@ -61,7 +61,7 @@ const PAYMENT_LOGOS = [
   { name: "SPEI", logo: "/images/payment-logos/spei-logo.svg" },
   { name: "UPI", logo: "/images/payment-logos/upi-logo.svg", needsLightSurface: true },
   { name: "VietQR", logo: "/images/payment-logos/vietqr-logo.svg" },
-  { name: "Viettel", logo: "/images/payment-logos/viettel-logo.svg" },
+  { name: "Viettel Pay", logo: "/images/payment-logos/viettel-pay-logo.svg" },
   { name: "PhonePe", logo: "/images/payment-logos/phonepe-logo.svg" },
   { name: "MoMo", logo: "/images/payment-logos/momo-logo.svg" },
   { name: "USDT TRC", logo: "/images/payment-logos/usdt-trc-logo.png" },
