@@ -65,7 +65,7 @@ export const COPY = {
       featureBodies: [
         "Crystal-clear HD streams with low latency. Not all live viewing is created equal.",
         "Cash in and cash out anytime — no manual process, no waiting.",
-        "GCash, Maya, and QRPH-supported banks all in one platform.",
+        "Wallets, QR rails, bank channels, and crypto options all in one platform.",
         "A dedicated platform environment built for uninterrupted streaming.",
         "Invite players, grow your network, and unlock more rewards together.",
       ],
@@ -254,7 +254,7 @@ export const COPY = {
       featureBodies: [
         "สตรีม HD คมชัดและหน่วงต่ำ การรับชมสดที่ดีต้องต่างจากที่อื่น",
         "ฝากและถอนเมื่อไหร่ก็ได้ ไม่ต้องผ่านขั้นตอนแมนนวล ไม่ต้องรอ",
-        "รวม GCash, Maya และธนาคารที่รองรับ QRPH ไว้ในที่เดียว",
+        "รวมวอลเล็ต, QR, ช่องทางธนาคาร และคริปโตไว้ในแพลตฟอร์มเดียว",
         "แพลตฟอร์มที่ออกแบบมาเพื่อการสตรีมต่อเนื่องแบบไม่สะดุด",
         "ชวนผู้เล่น เพิ่มเครือข่าย และปลดล็อกผลตอบแทนได้มากขึ้น",
       ],
@@ -443,7 +443,7 @@ export const COPY = {
       featureBodies: [
         "Siaran HD yang jelas dengan kependaman rendah. Bukan semua tontonan langsung sama.",
         "Deposit dan keluarkan dana bila-bila masa — tanpa proses manual, tanpa menunggu.",
-        "GCash, Maya, dan bank yang disokong QRPH semuanya dalam satu platform.",
+        "Dompet, QR, saluran bank dan pilihan kripto semuanya dalam satu platform.",
         "Persekitaran platform khusus yang dibina untuk penstriman tanpa gangguan.",
         "Jemput pemain, besarkan rangkaian anda, dan buka lebih banyak ganjaran bersama.",
       ],
@@ -632,7 +632,7 @@ export const COPY = {
       featureBodies: [
         "Streaming HD jernih dengan latensi rendah. Tidak semua tayangan live setara.",
         "Isi dan tarik dana kapan saja — tanpa proses manual, tanpa menunggu.",
-        "GCash, Maya, dan bank yang didukung QRPH dalam satu platform.",
+        "Dompet, QR, kanal bank, dan opsi kripto dalam satu platform.",
         "Lingkungan platform khusus yang dibangun untuk streaming tanpa gangguan.",
         "Undang pemain, kembangkan jaringan Anda, dan buka lebih banyak reward bersama.",
       ],
@@ -821,7 +821,7 @@ export const COPY = {
       featureBodies: [
         "Luồng HD trong trẻo với độ trễ thấp. Không phải xem trực tiếp nào cũng như nhau.",
         "Nạp và rút bất cứ lúc nào - không thủ công, không chờ đợi.",
-        "GCash, Maya và các ngân hàng hỗ trợ QRPH trong cùng một nền tảng.",
+        "Ví điện tử, QR, kênh ngân hàng và tùy chọn crypto trong cùng một nền tảng.",
         "Môi trường nền tảng chuyên biệt được xây dựng cho phát trực tuyến liên tục.",
         "Mời người chơi, mở rộng mạng lưới và cùng nhau mở khóa nhiều phần thưởng hơn.",
       ],
@@ -1010,7 +1010,7 @@ export const COPY = {
       featureBodies: [
         "Transmisiones HD nítidas con baja latencia. No todas las experiencias en vivo son iguales.",
         "Deposita y retira cuando quieras, sin procesos manuales ni esperas.",
-        "GCash, Maya y bancos compatibles con QRPH, todo en una sola plataforma.",
+        "Billeteras, QR, canales bancarios y opciones cripto en una sola plataforma.",
         "Un entorno de plataforma dedicado para streaming ininterrumpido.",
         "Invita jugadores, amplía tu red y desbloquea más recompensas juntos.",
       ],
@@ -1199,7 +1199,7 @@ export const COPY = {
       featureBodies: [
         "क्रिस्टल-क्लियर HD स्ट्रीम, कम लेटेंसी के साथ। हर लाइव व्यू एक जैसा नहीं होता।",
         "कभी भी जमा और निकासी करें - कोई मैन्युअल प्रक्रिया नहीं, कोई इंतज़ार नहीं।",
-        "GCash, Maya और QRPH-समर्थित बैंक एक ही प्लेटफ़ॉर्म पर।",
+        "वॉलेट, QR, बैंक चैनल और क्रिप्टो विकल्प एक ही प्लेटफ़ॉर्म पर।",
         "बिना रुकावट स्ट्रीमिंग के लिए बनाया गया समर्पित प्लेटफ़ॉर्म वातावरण।",
         "प्लेयर्स को आमंत्रित करें, अपना नेटवर्क बढ़ाएँ, और साथ में ज़्यादा रिवार्ड्स खोलें।",
       ],
