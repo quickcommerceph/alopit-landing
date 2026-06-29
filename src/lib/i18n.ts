@@ -9,7 +9,7 @@ export const localeNames: Record<Locale, string> = {
   ms: "Malay",
   id: "Indonesian",
   vi: "Vietnamese",
-  es: "Spanish",
+  es: "Mexico",
   hi: "Hindi",
 };
 
@@ -19,7 +19,7 @@ export const localeShortLabels: Record<Locale, string> = {
   ms: "MY",
   id: "ID",
   vi: "VI",
-  es: "ES",
+  es: "MX",
   hi: "HI",
 };
 

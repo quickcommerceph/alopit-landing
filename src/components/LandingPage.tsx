@@ -61,6 +61,7 @@ const PAYMENT_LOGOS = [
   { name: "SPEI", logo: "/images/payment-logos/spei-logo.svg" },
   { name: "UPI", logo: "/images/payment-logos/upi-logo.svg", needsLightSurface: true },
   { name: "VietQR", logo: "/images/payment-logos/vietqr-logo.svg" },
+  { name: "Viettel", logo: "/images/payment-logos/viettel-logo.svg" },
   { name: "PhonePe", logo: "/images/payment-logos/phonepe-logo.svg" },
   { name: "MoMo", logo: "/images/payment-logos/momo-logo.svg" },
   { name: "USDT TRC", logo: "/images/payment-logos/usdt-trc-logo.png" },
@@ -966,10 +967,25 @@ export function LandingPage() {
                     </span>
                   ))}
                 </motion.div>
+                <motion.div {...viewReveal(4)} className="mt-7">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#d7d7d7]/52">
+                    {copy.payments.currencies}
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2.5">
+                    {copy.payments.currencyCodes.map((code) => (
+                      <span
+                        key={code}
+                        className="inline-flex items-center border border-white/10 bg-[#050505]/75 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#f5f5f5]/82"
+                      >
+                        {code}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
               </div>
 
               <motion.div
-                {...viewReveal(4)}
+                {...viewReveal(5)}
                 className="relative bg-[#f2c14e]/22 p-px"
                 style={{
                   clipPath:
@@ -998,50 +1014,41 @@ export function LandingPage() {
                     viewport={{ once: true, margin: "-120px" }}
                     variants={paymentGridReveal}
                   >
-                    {PAYMENT_LOGOS.map((payment, i) => (
-                      <Fragment key={payment.name}>
-                        {i === 3 && (
-                          <div className="col-span-full flex items-center gap-3 py-1">
-                            <span className="text-[10px] font-bold uppercase text-[#d7d7d7]/46">
-                              Others
-                            </span>
-                            <span className="h-px flex-1 bg-white/10" />
-                          </div>
-                        )}
-                        <motion.div
-                          variants={paymentLogoReveal}
-                          className="group min-w-0 bg-white/10 p-px transition duration-300 hover:bg-[#f2c14e]/32"
+                    {PAYMENT_LOGOS.map((payment) => (
+                      <motion.div
+                        key={payment.name}
+                        variants={paymentLogoReveal}
+                        className="group min-w-0 bg-white/10 p-px transition duration-300 hover:bg-[#f2c14e]/32"
+                        style={{
+                          clipPath:
+                            "polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)",
+                        }}
+                      >
+                        <div
+                          className="flex min-h-28 min-w-0 flex-col items-center justify-center gap-2.5 bg-[#050505] px-3 py-4 transition duration-300 group-hover:bg-[#f2c14e]/[0.04]"
                           style={{
                             clipPath:
                               "polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)",
                           }}
                         >
-                          <div
-                            className="flex min-h-28 min-w-0 flex-col items-center justify-center gap-2.5 bg-[#050505] px-3 py-4 transition duration-300 group-hover:bg-[#f2c14e]/[0.04]"
-                            style={{
-                              clipPath:
-                                "polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)",
-                            }}
+                          <span
+                            className={`flex h-11 w-full max-w-[8.5rem] items-center justify-center px-2 transition duration-300 group-hover:scale-[1.03] ${
+                              payment.needsLightSurface
+                                ? "border border-white/80 bg-[#f5f5f5] py-2"
+                                : "py-1"
+                            }`}
                           >
-                            <span
-                              className={`flex h-11 w-full max-w-[8.5rem] items-center justify-center px-2 transition duration-300 group-hover:scale-[1.03] ${
-                                payment.needsLightSurface
-                                  ? "border border-white/80 bg-[#f5f5f5] py-2"
-                                  : "py-1"
-                              }`}
-                            >
-                              <img
-                                src={payment.logo}
-                                alt={`${payment.name} payment logo`}
-                                className="max-h-full max-w-full object-contain"
-                              />
-                            </span>
-                            <span className="block min-h-[1rem] max-w-full truncate text-[10px] font-bold uppercase leading-4 text-[#d7d7d7]/60 transition duration-300 group-hover:text-[#f2c14e]">
-                              {payment.name}
-                            </span>
-                          </div>
-                        </motion.div>
-                      </Fragment>
+                            <img
+                              src={payment.logo}
+                              alt={`${payment.name} payment logo`}
+                              className="max-h-full max-w-full object-contain"
+                            />
+                          </span>
+                          <span className="block min-h-[1rem] max-w-full truncate text-[10px] font-bold uppercase leading-4 text-[#d7d7d7]/60 transition duration-300 group-hover:text-[#f2c14e]">
+                            {payment.name}
+                          </span>
+                        </div>
+                      </motion.div>
                     ))}
                   </motion.div>
                 </div>

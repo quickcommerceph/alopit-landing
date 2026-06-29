@@ -76,6 +76,8 @@ export const COPY = {
       titleAccent: "transactions.",
       body: "Smooth deposits, fast withdrawals, wallets, QR rails, bank channels, and crypto options — all in one reliable platform. No manual process, no waiting.",
       supported: "Supported",
+      currencies: "Supported currencies",
+      currencyCodes: ["PHP", "THB", "VND", "MYR", "MXN", "INR", "USDT"],
       statusLabels: ["Self Cash-In", "Self Cash-Out", "Fast Processing"],
       paymentBodies: [
         "Instant cash-in and cash-out via GCash wallet.",
@@ -263,6 +265,8 @@ export const COPY = {
       titleAccent: "ด้วยตนเอง",
       body: "ฝากง่าย ถอนเร็ว รองรับวอลเล็ต QR ธนาคาร และคริปโต — ทั้งหมดอยู่ในแพลตฟอร์มเดียวที่เชื่อถือได้ ไม่ต้องรอ ไม่ต้องใช้ขั้นตอนยุ่งยาก",
       supported: "รองรับ",
+      currencies: "Supported currencies",
+      currencyCodes: ["PHP", "THB", "VND", "MYR", "MXN", "INR", "USDT"],
       statusLabels: ["ฝากเอง", "ถอนเอง", "ประมวลผลเร็ว"],
       paymentBodies: [
         "ฝากและถอนทันทีผ่านกระเป๋า GCash",
@@ -450,6 +454,8 @@ export const COPY = {
       titleAccent: "layan diri.",
       body: "Deposit lancar, pengeluaran pantas, dompet, QR, saluran bank, dan pilihan kripto — semuanya dalam satu platform yang boleh dipercayai. Tiada proses manual, tiada menunggu.",
       supported: "Disokong",
+      currencies: "Supported currencies",
+      currencyCodes: ["PHP", "THB", "VND", "MYR", "MXN", "INR", "USDT"],
       statusLabels: ["Deposit Layan Diri", "Pengeluaran Layan Diri", "Pemprosesan Pantas"],
       paymentBodies: [
         "Deposit dan keluarkan dana segera melalui dompet GCash.",
@@ -637,6 +643,8 @@ export const COPY = {
       titleAccent: "mandiri.",
       body: "Deposit lancar, penarikan cepat, dompet, QR, kanal bank, dan opsi kripto — semuanya dalam satu platform yang andal. Tanpa proses manual, tanpa menunggu.",
       supported: "Didukung",
+      currencies: "Supported currencies",
+      currencyCodes: ["PHP", "THB", "VND", "MYR", "MXN", "INR", "USDT"],
       statusLabels: ["Setor Mandiri", "Tarik Mandiri", "Pemrosesan Cepat"],
       paymentBodies: [
         "Setor dan tarik dana instan melalui dompet GCash.",
@@ -824,6 +832,8 @@ export const COPY = {
       titleAccent: "tự phục vụ.",
       body: "Nạp mượt, rút nhanh, ví điện tử, QR, kênh ngân hàng và tùy chọn crypto — tất cả trong một nền tảng đáng tin cậy. Không thủ công, không chờ đợi.",
       supported: "Hỗ trợ",
+      currencies: "Supported currencies",
+      currencyCodes: ["PHP", "THB", "VND", "MYR", "MXN", "INR", "USDT"],
       statusLabels: ["Tự Nạp", "Tự Rút", "Xử Lý Nhanh"],
       paymentBodies: [
         "Nạp và rút tức thì qua ví GCash.",
@@ -1011,6 +1021,8 @@ export const COPY = {
       titleAccent: "de autoservicio.",
       body: "Depósitos fluidos, retiros rápidos, billeteras, QR, canales bancarios y opciones cripto: todo en una plataforma confiable. Sin procesos manuales, sin esperas.",
       supported: "Disponible",
+      currencies: "Supported currencies",
+      currencyCodes: ["PHP", "THB", "VND", "MYR", "MXN", "INR", "USDT"],
       statusLabels: ["Depósito propio", "Retiro propio", "Procesamiento rápido"],
       paymentBodies: [
         "Depósitos y retiros instantáneos mediante la billetera GCash.",
@@ -1198,6 +1210,8 @@ export const COPY = {
       titleAccent: "ट्रांज़ैक्शन.",
       body: "स्मूद डिपॉज़िट, तेज़ निकासी, वॉलेट, QR, बैंक चैनल और क्रिप्टो विकल्प - सब कुछ एक भरोसेमंद प्लेटफ़ॉर्म में। कोई मैन्युअल प्रक्रिया नहीं, कोई इंतज़ार नहीं।",
       supported: "समर्थित",
+      currencies: "Supported currencies",
+      currencyCodes: ["PHP", "THB", "VND", "MYR", "MXN", "INR", "USDT"],
       statusLabels: ["स्वयं जमा", "स्वयं निकासी", "तेज़ प्रोसेसिंग"],
       paymentBodies: [
         "GCash वॉलेट से तुरंत जमा और निकासी।",

@@ -10,7 +10,7 @@ const localeFlags: Record<Locale, string> = {
   ms: "🇲🇾",
   id: "🇮🇩",
   vi: "🇻🇳",
-  es: "🇪🇸",
+  es: "🇲🇽",
   hi: "🇮🇳",
 };
 
