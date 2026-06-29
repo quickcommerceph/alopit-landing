@@ -653,7 +653,17 @@ export function LandingPage() {
                   {copy.hero.body}
                 </motion.p>
 
-                <motion.div {...reveal(4)} className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <motion.div
+                  {...reveal(4)}
+                  className="mt-5 flex max-w-2xl flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-bold uppercase tracking-[0.14em]"
+                >
+                  <span className="text-[#f2c14e]">{copy.payments.currencies}</span>
+                  <span className="text-[#d7d7d7]/64">
+                    {copy.payments.currencyCodes.join(" · ")}
+                  </span>
+                </motion.div>
+
+                <motion.div {...reveal(5)} className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <a
                     href={LOGIN_URL}
                     target="_blank"

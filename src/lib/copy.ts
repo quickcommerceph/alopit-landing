@@ -9,7 +9,7 @@ export const COPY = {
       titleLead: "Where the pit",
       titleAccent: "meets the pulse.",
       body:
-        "Original live feeds. Self-service transactions. GCash, Maya, QRPH — all in one platform. A premium experience built for sabong fans who demand more.",
+        "Original live feeds. Self-service transactions across wallets, QR rails, bank channels, and crypto. A premium experience built for sabong fans worldwide.",
       cta: "Step into the ring",
       alt: "Live sabong arena",
     },
@@ -198,7 +198,7 @@ export const COPY = {
       titleLead: "สนามจริง",
       titleAccent: "กับจังหวะที่ชัดเจน.",
       body:
-        "ถ่ายทอดสดต้นฉบับ ธุรกรรมด้วยตนเอง รองรับ GCash, Maya, QRPH — ทุกอย่างอยู่ในแพลตฟอร์มเดียว ประสบการณ์พรีเมียมที่สร้างมาเพื่อแฟนซาบองที่ต้องการมากกว่าเดิม",
+        "ถ่ายทอดสดต้นฉบับ ธุรกรรมด้วยตนเองผ่านวอลเล็ต, QR, ช่องทางธนาคาร และคริปโต — ทั้งหมดในแพลตฟอร์มเดียว ประสบการณ์พรีเมียมสำหรับแฟนซาบองทั่วโลก",
       cta: "เข้าสู่สนาม",
       alt: "สนามซาบองแบบสด",
     },
@@ -387,7 +387,7 @@ export const COPY = {
       titleLead: "Di mana arena",
       titleAccent: "bertemu nadi.",
       body:
-        "Siaran langsung asli. Transaksi layan diri. GCash, Maya, QRPH — semuanya dalam satu platform. Pengalaman premium yang dibina untuk peminat sabong yang mahukan lebih.",
+        "Siaran langsung asli. Transaksi layan diri merentasi dompet, QR, saluran bank dan kripto — semuanya dalam satu platform. Pengalaman premium untuk peminat sabong di seluruh dunia.",
       cta: "Masuk ke gelanggang",
       alt: "Arena sabong langsung",
     },
@@ -576,7 +576,7 @@ export const COPY = {
       titleLead: "Saat arena",
       titleAccent: "bertemu denyut.",
       body:
-        "Siaran langsung asli. Transaksi mandiri. GCash, Maya, QRPH — semuanya dalam satu platform. Pengalaman premium yang dibuat untuk penggemar sabong yang menginginkan lebih.",
+        "Siaran langsung asli. Transaksi mandiri lewat dompet, QR, kanal bank, dan kripto — semuanya dalam satu platform. Pengalaman premium untuk penggemar sabong di seluruh dunia.",
       cta: "Masuk ke arena",
       alt: "Arena sabong langsung",
     },
@@ -765,7 +765,7 @@ export const COPY = {
       titleLead: "Nơi sàn đấu",
       titleAccent: "gặp nhịp đập.",
       body:
-        "Luồng trực tiếp gốc. Giao dịch tự phục vụ. GCash, Maya, QRPH — tất cả trong một nền tảng. Trải nghiệm cao cấp dành cho người hâm mộ sabong muốn nhiều hơn.",
+        "Luồng trực tiếp gốc. Giao dịch tự phục vụ qua ví điện tử, QR, kênh ngân hàng và crypto — tất cả trong một nền tảng. Trải nghiệm cao cấp cho người hâm mộ sabong trên toàn cầu.",
       cta: "Bước vào sàn đấu",
       alt: "Sân sabong trực tiếp",
     },
@@ -954,7 +954,7 @@ export const COPY = {
       titleLead: "Donde el ring",
       titleAccent: "se encuentra con el pulso.",
       body:
-        "Transmisiones en vivo originales. Transacciones de autoservicio. GCash, Maya, QRPH: todo en una sola plataforma. Una experiencia premium creada para los fanáticos de sabong que exigen más.",
+        "Transmisiones en vivo originales. Transacciones de autoservicio con billeteras, QR, canales bancarios y cripto, todo en una sola plataforma. Una experiencia premium para fanáticos de sabong en todo el mundo.",
       cta: "Entrar al ring",
       alt: "Arena de sabong en vivo",
     },
@@ -1143,7 +1143,7 @@ export const COPY = {
       titleLead: "जहां रिंग",
       titleAccent: "धड़कन से मिलती है.",
       body:
-        "मूल लाइव फीड। सेल्फ-सर्विस ट्रांज़ैक्शन। GCash, Maya, QRPH - सब कुछ एक ही प्लेटफ़ॉर्म पर। यह प्रीमियम अनुभव उन sabong प्रशंसकों के लिए बनाया गया है जिन्हें और चाहिए।",
+        "मूल लाइव फीड। वॉलेट, QR, बैंक चैनल और क्रिप्टो पर सेल्फ-सर्विस ट्रांज़ैक्शन - सब कुछ एक ही प्लेटफ़ॉर्म पर। दुनिया भर के sabong प्रशंसकों के लिए प्रीमियम अनुभव।",
       cta: "रिंग में कदम रखें",
       alt: "लाइव sabong arena",
     },
