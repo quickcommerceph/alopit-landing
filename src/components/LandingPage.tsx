@@ -34,13 +34,6 @@ import {
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 import { capture } from "../lib/analytics";
 
-const ROOM_BOARD = [
-  {
-    title: "Sabong Traditional",
-    state: "Live now",
-  },
-];
-
 const TRUST_ICONS = [ShieldCheck, Zap, Smartphone, Headphones] as const;
 
 const PAYMENT_LOGOS = [
@@ -849,7 +842,11 @@ export function LandingPage() {
         </section>
 
 
-        <section id="rooms" className="border-y border-[#1e4fa8]/24 bg-[#070707]">
+        <section id="rooms" className="relative border-y border-[#1e4fa8]/24 bg-[#070707]">
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1e4fa8] via-[#f2c14e] to-[#d91f26]"
+          />
           <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-28">
             <div className="lg:col-span-5">
               <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
@@ -869,24 +866,58 @@ export function LandingPage() {
                 {copy.why.body}
               </p>
 
-              <div className="mt-10 space-y-3">
-                {ROOM_BOARD.map((room, i) => (
-                  <motion.div
-                    key={room.title}
-                    {...viewReveal(i)}
-                    className="grid grid-cols-[1fr_auto] gap-4 border border-white/10 bg-black/34 p-4"
+              <motion.div
+                {...viewReveal(0)}
+                className="relative bg-[#f2c14e]/22 p-px mt-4"
+                style={{
+                  clipPath:
+                    "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                }}
+              >
+                <div
+                  className="bg-[#050505] p-6 sm:p-7"
+                  style={{
+                    clipPath:
+                      "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#f2c14e]">
+                      <span className="relative flex h-2 w-2 items-center justify-center">
+                        {!reduced && (
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d91f26]/70" />
+                        )}
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d91f26]" />
+                      </span>
+                      {copy.why.roomState}
+                    </span>
+                    <span className="text-[10px] font-bold uppercase text-white/32">
+                      Alopit Arena
+                    </span>
+                  </div>
+                  <p
+                    className="mt-6 text-4xl leading-none text-[#f5f5f5]"
+                    style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
                   >
-                    <div>
-                      <p className="text-[10px] font-bold uppercase text-[#f2c14e]">
-                        Alopit Arena · {copy.why.roomState}
-                      </p>
-                      <p className="mt-1 text-sm font-bold uppercase text-[#f5f5f5]">
-                        {copy.why.roomTitle}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+                    {copy.why.roomTitle}
+                  </p>
+                  <a
+                    href={REGISTER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => capture("register_clicked", { location: "why" })}
+                    className="group mt-7 inline-flex w-full min-h-12 items-center justify-center gap-3 border border-[#ff7a00]/60 bg-[#d91f26] px-6 py-3 text-xs font-bold uppercase text-white shadow-[0_22px_60px_rgba(217,31,38,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ff3a2f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#f2c14e] active:scale-[0.98]"
+                    style={{
+                      clipPath:
+                        "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
+                    }}
+                  >
+                    <Play className="h-4 w-4 fill-current" />
+                    {copy.why.cta}
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+                  </a>
+                </div>
+              </motion.div>
             </div>
 
             <div className="grid gap-px sm:grid-cols-2 lg:col-span-7">
@@ -894,21 +925,12 @@ export function LandingPage() {
                 <motion.article
                   key={feature}
                   {...viewReveal(i)}
-                  className="group bg-[#080808] p-6 transition duration-300 hover:bg-[#0f1118]"
+                  className={`group p-6 transition duration-300 hover:bg-[#0f1118] ${
+                    i % 2 === 0 ? "bg-[#080808]" : "bg-[#0a0a0a]"
+                  }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span
-                      className="text-4xl leading-none text-[#f2c14e]"
-                      style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
-                    >
-                      {["I", "II", "III", "IV", "V"][i]}
-                    </span>
-                    <span className="text-[10px] font-bold uppercase text-white/32">
-                      {copy.why.featureLabel}
-                    </span>
-                  </div>
                   <h3
-                    className="mt-7 text-3xl leading-none text-[#f5f5f5]"
+                    className="text-3xl leading-none text-[#f5f5f5]"
                     style={{ fontFamily: '"Bebas Neue", "IBM Plex Mono", monospace' }}
                   >
                     {feature}
@@ -917,7 +939,7 @@ export function LandingPage() {
                     className="mt-4 text-[14px] leading-6 text-[#d7d7d7]/72"
                     style={{ fontFamily: '"Fraunces", serif' }}
                   >
-                      {copy.why.featureBodies[i]}
+                    {copy.why.featureBodies[i]}
                   </p>
                   <div className="mt-7 h-px w-full origin-left scale-x-0 bg-[#d91f26] transition duration-500 group-hover:scale-x-100" />
                 </motion.article>

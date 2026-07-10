@@ -54,7 +54,7 @@ export const COPY = {
       body: "Original feeds, smooth viewing, self-service transactions — everything you need in one platform.",
       roomState: "Live now",
       roomTitle: "Sabong Traditional",
-      featureLabel: "Feature",
+      cta: "Join the action",
       features: [
         "Original live feed",
         "Self-service transactions",
@@ -243,7 +243,7 @@ export const COPY = {
       body: "ฟีดต้นฉบับ การรับชมลื่นไหล และธุรกรรมด้วยตนเอง ทุกอย่างที่ต้องใช้รวมอยู่ในแพลตฟอร์มเดียว",
       roomState: "กำลังถ่ายทอดสด",
       roomTitle: "Sabong Traditional",
-      featureLabel: "ฟีเจอร์",
+      cta: "เข้าร่วมการแข่งขัน",
       features: [
         "ฟีดสดต้นฉบับ",
         "ธุรกรรมด้วยตนเอง",
@@ -432,7 +432,7 @@ export const COPY = {
       body: "Siaran asal, tontonan lancar, transaksi layan diri — semua yang anda perlukan dalam satu platform.",
       roomState: "Sedang langsung",
       roomTitle: "Sabong Traditional",
-      featureLabel: "Ciri",
+      cta: "Sertai aksi",
       features: [
         "Siaran langsung asal",
         "Transaksi layan diri",
@@ -621,7 +621,7 @@ export const COPY = {
       body: "Siaran asli, pengalaman menonton mulus, transaksi mandiri — semua yang Anda butuhkan dalam satu platform.",
       roomState: "Sedang live",
       roomTitle: "Sabong Traditional",
-      featureLabel: "Fitur",
+      cta: "Gabung aksi",
       features: [
         "Siaran langsung asli",
         "Transaksi mandiri",
@@ -810,7 +810,7 @@ export const COPY = {
       body: "Luồng gốc, xem mượt, giao dịch tự phục vụ — mọi thứ bạn cần trong một nền tảng.",
       roomState: "Đang live",
       roomTitle: "Sabong Traditional",
-      featureLabel: "Tính năng",
+      cta: "Tham gia ngay",
       features: [
         "Luồng trực tiếp gốc",
         "Giao dịch tự phục vụ",
@@ -999,7 +999,7 @@ export const COPY = {
       body: "Transmisiones originales, visualización fluida, transacciones de autoservicio: todo lo que necesitas en una sola plataforma.",
       roomState: "En vivo ahora",
       roomTitle: "Sabong Traditional",
-      featureLabel: "Función",
+      cta: "Únete a la acción",
       features: [
         "Transmisión original en vivo",
         "Transacciones de autoservicio",
@@ -1188,7 +1188,7 @@ export const COPY = {
       body: "मूल फीड, स्मूद व्यूइंग, सेल्फ-सर्विस ट्रांज़ैक्शन - आपकी ज़रूरत की हर चीज़ एक ही प्लेटफ़ॉर्म में।",
       roomState: "अभी लाइव",
       roomTitle: "Sabong Traditional",
-      featureLabel: "फीचर",
+      cta: "कार्रवाई में शामिल हों",
       features: [
         "मूल लाइव फीड",
         "सेल्फ-सर्विस ट्रांज़ैक्शन",
