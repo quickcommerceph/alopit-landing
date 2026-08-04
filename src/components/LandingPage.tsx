@@ -117,15 +117,11 @@ const AGENT_HIERARCHY = [
 ];
 
 const PROMOS = [
-  { src: "/images/banner-1.png", alt: "Alopit banner 1" },
-  { src: "/images/banner-2.png", alt: "Alopit banner 2" },
-  { src: "/images/banner-3.png", alt: "Alopit banner 3" },
-  { src: "/images/banner-4.png", alt: "Alopit banner 4" },
-  { src: "/images/banner-5.png", alt: "Alopit banner 5" },
-  { src: "/images/banner-6.png", alt: "Alopit banner 6" },
-  { src: "/images/banner-7.png", alt: "Alopit banner 7" },
-  { src: "/images/banner-8.png", alt: "Alopit banner 8" },
-  { src: "/images/banner-9.png", alt: "Alopit banner 9" },
+  { src: "/images/banner-new-1.jpg", alt: "Alopit banner 1" },
+  { src: "/images/banner-new-2.jpg", alt: "Alopit banner 2" },
+  { src: "/images/banner-new-3.jpg", alt: "Alopit banner 3" },
+  { src: "/images/banner-new-4.jpg", alt: "Alopit banner 4" },
+  { src: "/images/banner-new-5.jpg", alt: "Alopit banner 5" },
 ];
 
 const GAME_CATEGORIES = ["all", "casino", "liveCasino", "games"] as const;
@@ -261,6 +257,7 @@ export function LandingPage() {
 
   const [promoIndex, setPromoIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState<GameCategory>("all");
+  const promoContainerRef = useRef<HTMLDivElement | null>(null);
   const promoSwiperRef = useRef<SwiperType | null>(null);
   const promoManualNavigationRef = useRef(false);
   const promoManualNavigationTimerRef = useRef<number | null>(null);
@@ -277,6 +274,31 @@ export function LandingPage() {
       window.clearTimeout(promoManualNavigationTimerRef.current);
     }
   }, []);
+
+  useEffect(() => {
+    const container = promoContainerRef.current;
+    const swiper = promoSwiperRef.current;
+
+    if (!container || !swiper || reduced) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          swiper.autoplay?.start();
+        } else {
+          swiper.autoplay?.stop();
+        }
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+      swiper.autoplay?.stop();
+    };
+  }, [reduced]);
 
   useEffect(() => {
     const updateHeaderState = () => {
@@ -746,6 +768,7 @@ export function LandingPage() {
 
         <section className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
           <div
+            ref={promoContainerRef}
             role="region"
             aria-roledescription="carousel"
             aria-label="Promotion carousel"
@@ -780,6 +803,7 @@ export function LandingPage() {
                 className="promo-swiper"
                 onSwiper={(swiper) => {
                   promoSwiperRef.current = swiper;
+                  if (!reduced) swiper.autoplay?.stop();
                 }}
                 onAutoplay={clearPromoManualNavigation}
                 onSlideChange={handlePromoSlideChange}
